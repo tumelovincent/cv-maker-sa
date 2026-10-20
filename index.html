@@ -1,0 +1,90 @@
+<!doctype html>
+<html lang="en-ZA">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="cvm-offline" content="sw.js">
+<meta name="theme-color" content="#0B5D4B">
+<title>CV Maker SA – make your CV on your phone</title>
+<meta name="description" content="Make a professional South African CV on your phone in a few minutes. 20+ templates, cover letter, Z83 form and PDF tools. Your details stay on your phone.">
+<link rel="icon" type="image/png" sizes="32x32" href="img/icons/favicon-32.png">
+<link rel="icon" type="image/png" sizes="48x48" href="img/icons/favicon-48.png">
+<link rel="apple-touch-icon" href="img/icons/apple-touch-icon.png">
+<link rel="manifest" href="manifest.webmanifest">
+<meta name="mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-title" content="CV Maker SA">
+<link rel="canonical" href="https://tumelovincent.github.io/cv-maker-sa/">
+<meta property="og:url" content="https://tumelovincent.github.io/cv-maker-sa/">
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="CV Maker SA">
+<meta property="og:title" content="CV Maker SA – make your CV on your phone">
+<meta property="og:description" content="Fill in your details, choose from 20+ templates and download your CV as a PDF. Cover letter and Z83 included. By Tumelo Vincent Tau.">
+<meta property="og:image" content="https://tumelovincent.github.io/cv-maker-sa/img/og.jpg">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta property="og:image:alt" content="CV Maker SA - make your CV on your phone">
+<meta name="twitter:card" content="summary_large_image">
+<link rel="stylesheet" href="css/fonts.css">
+<link rel="stylesheet" href="css/cv.css">
+<link rel="stylesheet" href="css/app.css">
+</head>
+<body>
+<header class="bar">
+  <button class="bar-btn" id="btn-back" aria-label="Back" hidden>
+    <svg viewBox="0 0 24 24"><path d="M20 11H7.83l5.59-5.59L12 4l-8 8 8 8 1.41-1.41L7.83 13H20v-2z"/></svg>
+  </button>
+  <div class="bar-title" id="bar-title">CV Maker SA</div>
+  <div class="bar-extra" id="bar-extra"></div>
+  <button class="bar-btn" id="btn-menu" aria-label="Menu">
+    <svg viewBox="0 0 24 24"><path d="M12 8c1.1 0 2-.9 2-2s-.9-2-2-2-2 .9-2 2 .9 2 2 2zm0 2c-1.1 0-2 .9-2 2s.9 2 2 2 2-.9 2-2-.9-2-2-2zm0 6c-1.1 0-2 .9-2 2s.9 2 2 2 2-.9 2-2-.9-2-2-2z"/></svg>
+  </button>
+</header>
+
+<main id="main">
+  <section class="view" id="v-home"></section>
+  <section class="view" id="v-edit" hidden></section>
+  <section class="view" id="v-tpl" hidden></section>
+  <section class="view" id="v-prev" hidden></section>
+  <section class="view" id="v-docs" hidden></section>
+</main>
+
+<nav class="actions" id="actions" hidden></nav>
+<div class="scrim" id="scrim" hidden></div>
+<div class="sheet" id="sheet" hidden></div>
+<div class="busy" id="busy" hidden><div class="busy-card"><div class="spin"></div><div id="busy-msg">Working…</div></div></div>
+<div class="toast" id="toast" hidden></div>
+<input type="file" id="file-photo" accept="image/*" hidden>
+<input type="file" id="file-restore" accept="application/json,.json" hidden>
+<input type="file" id="file-cam" accept="image/*" capture="environment" hidden>
+<input type="file" id="file-docs" accept="image/*,application/pdf" multiple hidden>
+<input type="file" id="file-pagecam" accept="image/*" capture="environment" hidden>
+<input type="file" id="file-page" accept="image/*" multiple hidden>
+
+<script src="js/fontmanifest.js"></script>
+<script src="js/data.js"></script>
+<script src="js/templates.js"></script>
+<script src="js/paginate.js"></script>
+<script src="js/lib/pdf-lib.min.js"></script>
+<script src="js/lib/fontkit.umd.min.js"></script>
+<script src="js/pdf.js"></script>
+<script src="js/files.js"></script>
+<script src="js/letter.js"></script>
+<script src="js/z83.js"></script>
+<script src="js/lib/jszip.min.js"></script>
+<script src="js/docx.js"></script>
+<script src="js/pdfcore.js"></script>
+<script src="js/duties.js"></script>
+<script src="js/checker.js"></script>
+<script src="js/i18n-dict.js"></script>
+<script src="js/i18n.js"></script>
+<script src="js/app.js"></script>
+<script src="js/ui-apply.js"></script>
+<script src="js/ui-more.js"></script>
+<script src="js/word.js"></script>
+<script src="js/ui-pdf.js"></script>
+<script src="js/ui-scan.js"></script>
+<script src="js/ui-sign.js"></script>
+<script src="js/web.js"></script>
+</body>
+</html>
