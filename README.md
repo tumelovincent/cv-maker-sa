@@ -5,4 +5,4 @@ Cover letter, Z83 form and PDF tools included. Works without internet once opene
 
 **Open the app:** https://tumelovincent.github.io/cv-maker-sa/
 
-Designed and developed by **Tumelo Vincent Tau**.
+Designed and developed by **Tumelo Vincent Tau**. © 2026 Tumelo Vincent Tau. All rights reserved.
