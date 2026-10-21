@@ -1,5 +1,5 @@
 /* CV Maker SA - keeps the app on the phone so it opens and works without internet. Made by web/build.sh. */
-var VERSION = '20261020-53d56a6c';
+var VERSION = '20261021-79dac35d';
 var CACHE = 'cvmaker-' + VERSION;
 var FILES = [
 "./",

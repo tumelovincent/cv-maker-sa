@@ -233,18 +233,20 @@
       '<p class="hero-sub">' + T('Make your CV, cover letter and Z83 - and now scan, sign and fix any PDF.') + '</p>' +
       '<button class="btn gold block hero-cta" id="new-cv">' + svg('plus') + T('Create new CV') + '</button>' +
       (sorted.length ? '' : '<button class="hero-link" id="try-sample">' + T('Open a sample CV') + '</button>') +
+      // two CV pages beside the text on wide screens (hidden on phones)
+      '<div class="hero-art" aria-hidden="true"><div class="ha-pg ha2" data-art="navy"></div><div class="ha-pg ha1" data-art="mzansi"></div></div>' +
       '<div class="flagline">' + TP.FLAG.map(function (c) { return '<i style="background:' + c + '"></i>'; }).join('') + '</div></section>';
     if (App.hooks && App.hooks.homeInstall) h += App.hooks.homeInstall();
     if (App.hooks && App.hooks.homeTools) h += App.hooks.homeTools();
     if (sorted.length) {
-      h += '<section class="block"><div class="block-h"><h2>' + T('My CVs') + '</h2><span class="count">' + sorted.length + '</span></div>';
+      h += '<section class="block"><div class="block-h"><h2>' + T('My CVs') + '</h2><span class="count">' + sorted.length + '</span></div><div class="cv-list">';
       sorted.forEach(function (cv) {
         h += '<div class="cv-card" data-id="' + cv.id + '"><div class="mini" data-thumb="' + cv.id + '"></div><div class="meta"><div class="nm2">' + esc(cvTitle(cv)) + '</div>' +
           '<div class="sub">' + esc(T(TP.get(cv.templateId).name)) + '</div><div class="sub">' + T('Edited {date}', { date: fmtWhen(cv.updated) }) + '</div></div>' +
           '<button class="icon-btn" data-quick="' + cv.id + '" aria-label="Download">' + svg('pdf') + '</button>' +
           '<button class="icon-btn" data-more="' + cv.id + '" aria-label="More">' + svg('more') + '</button></div>';
       });
-      h += '</section>';
+      h += '</div></section>';
     }
     if (App.hooks && App.hooks.homeApps) h += App.hooks.homeApps();
     h += '<section class="block"><div class="block-h"><h2>' + T('Templates') + '</h2><button class="see-all" id="see-all">' + T('See all {n}', { n: n }) + '</button></div>' +
@@ -262,6 +264,9 @@
     var cvs = showcaseCV();
     Array.prototype.forEach.call(v.querySelectorAll('[data-show]'), function (el) {
       el.innerHTML = PG.thumb(cvs, el.getAttribute('data-show'), el.clientWidth || 120);
+    });
+    Array.prototype.forEach.call(v.querySelectorAll('[data-art]'), function (el) {
+      if (el.clientWidth) el.innerHTML = PG.thumb(cvs, el.getAttribute('data-art'), el.clientWidth);
     });
     sorted.forEach(function (cv) {
       var el = v.querySelector('[data-thumb="' + cv.id + '"]');
@@ -830,7 +835,9 @@
     var c = S.cur || { templateId: '', photo: '', showPhoto: true, personal: {} };
     var data = hasContent(c) ? c : Object.assign(D.sampleCV(), { photo: c.photo, showPhoto: c.showPhoto });
     if (!c.photo && !hasContent(c)) data.photo = '';
-    var cw = Math.min(document.documentElement.clientWidth, 720), cols = cw >= 560 ? 3 : 2;
+    // phones 2 columns, tablets 3, computers 5 (the gallery is wider there, see "Larger screens" in app.css)
+    var wide = window.matchMedia && matchMedia('(min-width: 1000px)').matches;
+    var cw = Math.min(document.documentElement.clientWidth, wide ? 1132 : 720), cols = wide ? 5 : (cw >= 560 ? 3 : 2);
     var w = Math.max(120, Math.floor((cw - 28 + 14) / cols - 14));
     var h = '<div class="filters">' + FILTERS.map(function (f) { return '<button class="fchip' + (S.filter === f[0] ? ' on' : '') + '" data-f="' + f[0] + '">' + T(f[1]) + '</button>'; }).join('') + '</div>';
     h += '<div class="tgrid">';
@@ -1425,6 +1432,13 @@
     document.body.classList.toggle('typing', !!editing && h < baseH * 0.8);
   }
   window.addEventListener('resize', kbCheck);
+  // turning a tablet or resizing a computer window: redraw the screens whose layout depends on the width
+  var lastW = window.innerWidth, rsTimer;
+  window.addEventListener('resize', function () {
+    if (Math.abs(window.innerWidth - lastW) < 40) return; // the keyboard opening only changes the height
+    lastW = window.innerWidth; clearTimeout(rsTimer);
+    rsTimer = setTimeout(function () { var v = S.stack[S.stack.length - 1]; if (v === 'home') renderHome(); if (v === 'tpl') renderTemplates(); }, 250);
+  });
   window.addEventListener('orientationchange', function () { setTimeout(function () { baseH = window.innerHeight; kbCheck(); }, 400); });
   document.addEventListener('focusin', function () { setTimeout(kbCheck, 350); });
   document.addEventListener('focusout', function () { setTimeout(kbCheck, 100); });
