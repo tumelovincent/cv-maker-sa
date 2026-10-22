@@ -219,9 +219,9 @@
   }
 
   /* ---------- home ---------- */
-  var APP_VERSION = '1.4';
+  var APP_VERSION = '1.5';
   var DEVELOPER = 'Tumelo Vincent Tau';
-  var SHOWCASE = ['classic', 'navy', 'mzansi', 'timeline', 'elegant', 'teal', 'swiss', 'purple'];
+  var SHOWCASE = ['classic', 'aurora', 'mzansi', 'midnight', 'horizon', 'lagoon', 'kalahari', 'roadmap'];
   var sampleForShow = null;
   function showcaseCV() { if (!sampleForShow) sampleForShow = D.sampleCV(); return sampleForShow; }
   function renderHome() {
@@ -830,7 +830,9 @@
   });
 
   /* ---------- templates ---------- */
-  var FILTERS = [['all', 'All'], ['classic', 'Classic SA'], ['modern', 'Modern'], ['photo', 'With photo'], ['ats', 'Simple / job portals']];
+  var FILTERS = [['all', 'All'], ['new', 'New'], ['classic', 'Classic SA'], ['modern', 'Modern'], ['two', 'Two columns'], ['bold', 'Colourful'], ['minimal', 'Minimal'],
+    ['photo', 'With photo'], ['ats', 'Simple / job portals']];
+  var tplObserver = null;
   function renderTemplates() {
     var c = S.cur || { templateId: '', photo: '', showPhoto: true, personal: {} };
     var data = hasContent(c) ? c : Object.assign(D.sampleCV(), { photo: c.photo, showPhoto: c.showPhoto });
@@ -849,15 +851,22 @@
     });
     h += '</div>';
     var v = $('#v-tpl'); v.innerHTML = h;
-    // draw thumbnails a few at a time so the screen stays responsive
     var cards = Array.prototype.slice.call(v.querySelectorAll('[data-th]'));
+    function fill(el) { if (el.getAttribute('data-done')) return; el.setAttribute('data-done', '1'); el.insertAdjacentHTML('beforeend', PG.thumb(data, el.getAttribute('data-th'), w)); }
+    // with 100 designs, only draw the ones that are (nearly) on screen
+    if (window.IntersectionObserver) {
+      if (tplObserver) tplObserver.disconnect();
+      tplObserver = new IntersectionObserver(function (es) {
+        es.forEach(function (e) { if (e.isIntersecting) { tplObserver.unobserve(e.target); fill(e.target); } });
+      }, { rootMargin: '700px 0px' });
+      cards.forEach(function (el) { tplObserver.observe(el); });
+      return;
+    }
+    // older phones: a few at a time so the screen stays responsive
     var i = 0;
     (function step() {
       if (S.stack[S.stack.length - 1] !== 'tpl') return;
-      for (var k = 0; k < 3 && i < cards.length; k++, i++) {
-        var el = cards[i]; el.insertAdjacentHTML('beforeend', PG.thumb(data, el.getAttribute('data-th'), w));
-        el.style.width = '';
-      }
+      for (var k = 0; k < 3 && i < cards.length; k++, i++) fill(cards[i]);
       if (i < cards.length) setTimeout(step, 16);
     })();
   }

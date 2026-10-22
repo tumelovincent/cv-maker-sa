@@ -85,11 +85,17 @@
       c: { accent: '#0E8C8A', accent2: '#334155', ink: '#1E2733', muted: '#5F6B7B', line: '#DCE3EA', tint: '#F1F5F9' } }
   ];
   var BY_ID = {};
-  T.forEach(function (t) {
+  // extra gallery filters for the built-in designs
+  var MORE_TAGS = { sidebar: ['two', 'bold'], split: ['two'], banner: ['bold'], leftcol: ['minimal'], centered: ['minimal'] };
+  function normalise(t) {
     t.page = t.page || { mt: 48, mb: 48 };
+    (MORE_TAGS[t.family] || []).forEach(function (k) { if (t.tags.indexOf(k) < 0) t.tags.push(k); });
     t.c = Object.assign({ accent2: t.c.accent, muted: '#555555', line: '#DDDDDD', tint: '#F4F4F4' }, t.c);
     BY_ID[t.id] = t;
-  });
+  }
+  T.forEach(normalise);
+  // more templates (templates-mod.js) are added after the built-in ones
+  function addTemplates(list) { list.forEach(function (t) { if (BY_ID[t.id]) return; normalise(t); T.push(t); }); }
   function get(id) { return BY_ID[id] || BY_ID.classic; }
 
   /* ---------- helpers ---------- */
@@ -474,6 +480,7 @@
   }
 
   var FAMILIES = { classic: classic, sidebar: sidebar, banner: banner, leftcol: leftcol, centered: centered, timeline: timeline, split: split };
+  function addFamily(name, fn) { FAMILIES[name] = fn; }
 
   function fontVar(k, fallback) { return "'F-" + k + "', " + fallback; }
 
@@ -489,6 +496,7 @@
     var d = (cv && cv.design) || {}, A = d.accent, k = D.textScale(cv || {});
     if (!A && k === 1) return t;
     var e = Object.assign({}, t, { c: Object.assign({}, t.c), k: k });
+    if (A && t.recolor) { e.c = t.recolor(A); return e; }
     if (A) {
       var c = e.c;
       c.accent = A; c.accent2 = A;
@@ -518,6 +526,7 @@
     v.push('--htt:' + (t.headUpper === false ? 'none' : 'uppercase'));
     v.push('--k:' + (t.k || 1));
     v.push('--fs:' + ((t.bodySize || 13) * (t.k || 1)).toFixed(2) + 'px');
+    if (t.vars) Object.keys(t.vars).forEach(function (k) { v.push('--' + k + ':' + t.vars[k]); });
     return v.join(';');
   }
 
@@ -528,13 +537,13 @@
     var m = model(cv);
     var inner = FAMILIES[t.family](cv, t, m, opts);
     var cls = 'cv f-' + t.family + ' t-' + t.id + (t.hs ? ' hs-' + t.hs : '') + (t.side ? ' side-' + t.side : '') +
-      (t.align ? ' al-' + t.align : '') + (t.shade ? ' shade' : '') + (m.photo ? ' has-photo' : '');
+      (t.align ? ' al-' + t.align : '') + (t.shade ? ' shade' : '') + (m.photo ? ' has-photo' : '') + (t.cls ? ' ' + t.cls : '');
     return { cls: cls, style: styleVars(t), html: inner, tpl: t };
   }
 
   /* page decoration drawn on every page (behind content). Coordinates in css px. */
   function decor(t, pageIndex) {
-    if (t.decor) return t.decor(pageIndex);
+    if (t.decor) return t.decor(pageIndex, t);
     var d = [], c = t.c;
     if (t.family === 'classic') d.push({ x: 32, y: 34, w: PW - 64, h: PH - 68, stroke: '#000000', sw: 1 });
     if (t.family === 'sidebar') d.push({ x: t.side === 'right' ? PW - 262 : 0, y: 0, w: 262, h: PH, fill: c.sideBg });
@@ -553,5 +562,8 @@
     FLAG.forEach(function (col, i) { d.push({ x: i * w, y: y, w: w + 0.5, h: h, fill: col }); });
   }
 
-  window.CVTemplates = { displayName: displayName, effective: effective, ACCENTS: ACCENTS, mix: mix, styleVars: styleVars, fontVar: fontVar, todayText: todayText, list: T, get: get, render: render, decor: decor, model: model, fmtID: fmtID, PW: PW, PH: PH, esc: esc, FLAG: FLAG, ICONS: ICONS };
+  window.CVTemplates = { addTemplates: addTemplates, addFamily: addFamily,
+    _x: { it: it, wrapStd: wrapStd, entryItems: entryItems, kvRows: kvRows, chipsItem: chipsItem, refItems: refItems, declItem: declItem, bulletItems: bulletItems,
+      twoColBullets: twoColBullets, icon: icon, photoHTML: photoHTML, initials: initials, contactLine: contactLine, lum: lum, rgbOf: rgbOf, hexOf: hexOf },
+    displayName: displayName, effective: effective, ACCENTS: ACCENTS, mix: mix, styleVars: styleVars, fontVar: fontVar, todayText: todayText, list: T, get: get, render: render, decor: decor, model: model, fmtID: fmtID, PW: PW, PH: PH, esc: esc, FLAG: FLAG, ICONS: ICONS };
 })();

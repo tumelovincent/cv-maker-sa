@@ -1,0 +1,247 @@
+/* Modern templates added in version 1.5 (family "mod"). Same rule as cv.css: only boxes, borders,
+   text, photos and simple svg shapes, because the PDF writer redraws exactly what is laid out here. */
+.f-mod { --px: 52px; display: flow-root; } /* flow-root: top margins stay inside the page from the start (pagination measures them) */
+.f-mod .col { min-width: 0; }
+.f-mod .body { padding: 4px var(--px) 30px; }
+.f-mod .h-n, .f-mod .h-ic, .f-mod .h-p { display: none; }
+.f-mod.dk-edge { --px: 64px; }
+.f-mod.dk-frame { --px: 60px; }
+
+/* ---------- header pieces ---------- */
+.f-mod .hdr .nm { font-size: calc(36px * var(--k, 1)); }
+.f-mod .cts { display: flex; flex-wrap: wrap; margin-top: 12px; font-size: calc(12.5px * var(--k, 1)); color: var(--muted); line-height: 1.4; }
+.f-mod .cts .ci { margin: 5px 20px 0 0; white-space: normal; align-items: flex-start; }
+.f-mod .cts .ci .ic { color: var(--accent); margin-top: 1px; }
+.f-mod .cts.ct-text .ci { margin-right: 0; }
+.f-mod .cts .sep { margin: 5px 10px 0; color: var(--line); }
+.f-mod .cts.ct-circles .ci { align-items: center; }
+.f-mod .ib { width: 22px; height: 22px; border-radius: 50%; background: var(--accent); display: inline-flex; align-items: center; justify-content: center; margin-right: 8px; flex: none; }
+.f-mod .cts .ib .ic, .f-mod .si .ib .ic { width: 12px; height: 12px; color: #FFFFFF; margin: 0; }
+.f-mod .hph { width: 118px; height: 118px; flex: none; }
+.f-mod .mono { display: flex; align-items: center; justify-content: center; width: 96px; height: 96px; border-radius: 50%; background: var(--accent); color: #FFFFFF;
+  font-family: var(--nf); font-weight: 700; font-size: calc(32px * var(--k, 1)); letter-spacing: 1px; flex: none; }
+.f-mod .mono.ps-rounded { border-radius: 16px; }
+.f-mod .mono.ps-square { border-radius: 0; }
+.f-mod .nm-split .nm-a, .f-mod .nm-split .nm-b { display: block; }
+.f-mod .nm-split .nm-a { font-weight: 300; }
+.f-mod .nm-split .nm-b { font-weight: 700; color: var(--accent); }
+
+/* band, diagonal and wave: coloured band across the top of page 1 */
+.f-mod .hdb { background: var(--hdBg); color: var(--hdInk); padding: 40px var(--px) 34px; display: flex; align-items: center; }
+.f-mod .hdb .hph { margin-right: 28px; border: 3px solid var(--hdSub); }
+.f-mod .hdb .hdt { flex: 1; min-width: 0; }
+.f-mod .hdb .nm { color: var(--hdInk); }
+.f-mod .hdb .ttl { color: var(--hdSub); }
+.f-mod .hdb .cts { color: var(--hdInk); }
+.f-mod .hdb .cts .ic { color: var(--hdIc); }
+.f-mod .hdb .sep { color: var(--hdSub); }
+.f-mod .hdb .ib { background: var(--hdSub); }
+.f-mod .hdb .ib .ic { color: var(--hdBg); }
+.f-mod .hd-diag .hdb, .f-mod .hd-wave .hdb { padding-bottom: 12px; }
+.f-mod .hd-cut { display: block; width: 794px; height: 44px; }
+.f-mod .hd-cut path { fill: var(--hdBg); }
+
+/* plain-style headers */
+.f-mod .hdp { display: flex; align-items: center; }
+.f-mod .hdp .hdt { flex: 1; min-width: 0; }
+.f-mod .hdp .hph { order: 2; margin-left: 24px; }
+.f-mod .hd-plain .hdp { margin: 0 var(--px); padding: 50px 0 18px; border-bottom: 2px solid var(--ink); }
+.f-mod .hd-center .hdp { flex-direction: column; text-align: center; padding: 52px var(--px) 14px; }
+.f-mod .hd-center .hdp .hph { order: 0; margin: 0 0 16px; }
+.f-mod .hd-center .cts { justify-content: center; }
+.f-mod .hd-tag .hdp { margin: 46px var(--px) 10px; padding: 4px 0 4px 22px; border-left: 8px solid var(--accent); }
+.f-mod .hd-under .hdp { padding: 50px var(--px) 10px; }
+.f-mod .nm-bar { width: 70px; height: 6px; background: var(--accent); margin-top: 12px; }
+.f-mod .hd-big .hdp { padding: 46px var(--px) 12px; }
+.f-mod .hd-big .nm { font-size: calc(48px * var(--k, 1)); line-height: 1.03; }
+.f-mod .hd-minimal .hdp { flex-direction: column; padding: 54px var(--px) 12px; text-align: center; }
+.f-mod .hd-minimal .hdp .hph { order: 0; margin: 0 0 16px; }
+.f-mod .hd-minimal .hdt { border-top: 1px solid var(--ink); border-bottom: 1px solid var(--ink); padding: 14px 0 12px; width: 100%; }
+.f-mod .hd-minimal .nm { font-size: calc(30px * var(--k, 1)); letter-spacing: 7px; text-transform: uppercase; font-weight: 400; }
+.f-mod .hd-minimal .cts { justify-content: center; }
+.f-mod.dk-circles .hdp .hdt, .f-mod.dk-dots .hdp .hdt { padding-right: 150px; }
+
+/* boxed: a rounded card */
+.f-mod .bx { margin: 36px 40px 6px; background: var(--tint); border-radius: 16px; padding: 28px 30px; display: flex; align-items: center; }
+.f-mod .bx-t { flex: 1; min-width: 0; }
+.f-mod .bx .hph { margin-left: 22px; }
+/* frame: name inside a square outline */
+.f-mod .hd-frame { padding: 48px var(--px) 10px; text-align: center; }
+.f-mod .frm { display: inline-block; border: 2px solid var(--accent); padding: 14px 30px 16px; }
+.f-mod .hd-frame .cts { justify-content: center; }
+/* badge: initials (or the photo) beside the name */
+.f-mod .hd-badge { padding: 46px var(--px) 8px; }
+.f-mod .bdg { display: flex; align-items: center; }
+.f-mod .bdg .hph, .f-mod .bdg .mono { width: 92px; height: 92px; margin-right: 22px; }
+.f-mod .bdg-t { flex: 1; min-width: 0; }
+/* right: contact details stacked on the right */
+.f-mod .rgt { display: flex; align-items: flex-end; margin: 46px var(--px) 4px; padding-bottom: 16px; border-bottom: 4px solid var(--accent); }
+.f-mod .rgt .hph { width: 96px; height: 96px; margin-right: 20px; align-self: center; }
+.f-mod .rgt-a { flex: 1; min-width: 0; padding-right: 16px; }
+.f-mod .rgt-b { flex: none; max-width: 290px; }
+.f-mod .rgt-b .cts { flex-direction: column; align-items: flex-end; margin: 0; text-align: right; }
+.f-mod .rgt-b .ci { margin: 4px 0 0; flex-direction: row-reverse; }
+.f-mod .rgt-b .ci .ic { margin: 1px 0 0 8px; }
+.f-mod .rgt-b .ci .ib { margin: 0 0 0 8px; }
+/* inverse: dark name box with the contact details beside it */
+.f-mod .inv { display: flex; align-items: stretch; margin: 40px var(--px) 6px; }
+.f-mod .inv-a { background: var(--hdBg); padding: 26px 28px; width: 58%; flex: none; }
+.f-mod .inv-a .nm { color: var(--hdInk); font-size: calc(31px * var(--k, 1)); }
+.f-mod .inv-a .ttl { color: var(--hdSub); }
+.f-mod .inv-b { flex: 1; min-width: 0; padding: 4px 0 4px 24px; display: flex; align-items: center; }
+.f-mod .inv-b .cts { flex-direction: column; margin: 0; }
+.f-mod .inv-b .ci { margin: 3px 0; }
+/* split: coloured block with photo or initials, tinted block with the name */
+.f-mod .s2 { display: flex; align-items: stretch; }
+.f-mod .s2a { width: 250px; flex: none; background: var(--hdBg); display: flex; align-items: center; justify-content: center; padding: 30px 0; }
+.f-mod .s2a .hph { width: 136px; height: 136px; border: 4px solid var(--hdSub); }
+.f-mod .s2a .mono { width: 120px; height: 120px; background: transparent; border: 3px solid var(--hdSub); color: var(--hdInk); font-size: calc(40px * var(--k, 1)); }
+.f-mod .s2b { flex: 1; min-width: 0; background: var(--tint); padding: 30px 40px; display: flex; flex-direction: column; justify-content: center; }
+
+/* ---------- section headings ---------- */
+.f-mod .h { margin: 22px 0 10px; }
+.f-mod.hs-pill .h-t, .f-mod.hs-pills .h-t { background: var(--accent); color: #FFFFFF; padding: 4px 14px 3px; border-radius: 20px; }
+.f-mod.hs-pill .h-r { display: block; flex: 1; height: 1.5px; background: var(--line); margin-left: 12px; }
+.f-mod.hs-num .h { color: var(--ink); }
+.f-mod.hs-num .h-n { display: block; font-family: var(--nf); font-size: calc(20px * var(--k, 1)); color: var(--accent); margin-right: 12px; font-weight: 700; letter-spacing: 0; }
+.f-mod.hs-num .h-r { display: block; flex: 1; height: 1px; background: var(--line); margin-left: 14px; }
+.f-mod.hs-under .h { align-items: flex-end; color: var(--ink); }
+.f-mod.hs-under .h-t { border-bottom: 3px solid var(--accent); padding-bottom: 5px; }
+.f-mod.hs-under .h-r { display: block; flex: 1; border-bottom: 1px solid var(--line); }
+.f-mod.hs-box .h-t { border: 1.5px solid var(--accent); padding: 3px 12px; }
+.f-mod.hs-tab .h { align-items: flex-end; }
+.f-mod.hs-tab .h-t { background: var(--accent); color: #FFFFFF; padding: 4px 12px; }
+.f-mod.hs-tab .h-r { display: block; flex: 1; height: 3px; background: var(--accent); }
+.f-mod.hs-spaced .h { letter-spacing: 4px; font-weight: 400; color: var(--muted); font-size: calc(12.5px * var(--k, 1)); }
+.f-mod.hs-spaced .h-mark { display: block; width: 8px; height: 8px; background: var(--accent); margin-right: 12px; flex: none; }
+.f-mod.hs-double .h { border-top: 1px solid var(--line); border-bottom: 1px solid var(--line); padding: 6px 0 5px; }
+.f-mod.hs-over .h { flex-direction: column; align-items: flex-start; color: var(--ink); }
+.f-mod.hs-over .h-mark { display: block; order: -1; width: 36px; height: 4px; background: var(--accent); margin-bottom: 7px; }
+.f-mod.hs-tint .h { background: var(--tint); border-left: 4px solid var(--accent); padding: 6px 12px; }
+.f-mod.hs-dash .h-mark { display: block; width: 26px; height: 2px; background: var(--accent); margin-right: 10px; flex: none; }
+.f-mod.hs-ring .h-mark { display: block; width: 13px; height: 13px; border-radius: 50%; border: 3px solid var(--accent); margin-right: 10px; flex: none; }
+.f-mod.hs-arrow .h { color: var(--ink); }
+.f-mod.hs-arrow .h-ic { display: block; width: 18px; height: 18px; fill: var(--accent); margin-right: 4px; flex: none; }
+.f-mod.hs-ink .h { background: var(--ink); color: #FFFFFF; padding: 5px 12px; }
+.f-mod.hs-period .h { text-transform: none; letter-spacing: 0; font-size: calc(19px * var(--k, 1)); color: var(--ink); font-family: var(--nf); }
+.f-mod.hs-period .h-p { display: block; color: var(--accent); }
+.f-mod.hs-liner .h-r { display: block; flex: 1; height: 1px; background: var(--accent); margin-left: 14px; }
+
+/* ---------- skills, attributes and languages ---------- */
+.f-mod .ch-outline .chip { background: transparent; border: 1px solid var(--accent); color: var(--accent2); }
+.f-mod .ch-solid .chip { background: var(--accent); color: #FFFFFF; border-radius: 4px; }
+.f-mod .ch-square .chip { background: var(--ink); color: #FFFFFF; border-radius: 0; }
+.f-mod .lrow { display: flex; margin-top: 4px; }
+.f-mod .lrow .lc-i { flex: 1; display: flex; align-items: flex-start; font-size: var(--fs); padding-right: 10px; line-height: 1.4; min-width: 0; }
+.f-mod .lrow .lt { flex: 1; min-width: 0; }
+.f-mod .lrow .ck { width: 15px; height: 15px; fill: var(--accent); flex: none; margin: 1px 7px 0 0; }
+.f-mod .sq { display: inline-block; width: 7px; height: 7px; background: var(--accent); margin: 6px 9px 0 0; flex: none; }
+.f-mod .inl .dsep { color: var(--accent); margin: 0 9px; }
+
+/* ---------- cards: every section in a tinted card ---------- */
+.f-mod.lay-cards .h { background: var(--tint); margin: 16px 0 0; padding: 14px 20px 8px; border-radius: 12px 12px 0 0; }
+.f-mod.lay-cards.hs-tint .h { border-left: 0; }
+.f-mod.lay-cards .cdb { background: var(--tint); padding: 0 20px; display: flow-root; }
+.f-mod.lay-cards .cdl { padding-bottom: 16px; border-radius: 0 0 12px 12px; }
+.f-mod.lay-cards .cdi.ent { margin-top: 12px; }
+.f-mod.lay-cards .h + .cdb .cdi.ent { margin-top: 4px; }
+.f-mod.lay-cards .chips .chip { background: #FFFFFF; }
+.f-mod.lay-cards .ch-outline .chip { background: transparent; }
+.f-mod.lay-cards .ch-solid .chip { background: var(--accent); }
+.f-mod.lay-cards .ch-square .chip { background: var(--ink); }
+
+/* ---------- headings in a left column ---------- */
+.f-mod .lr { display: flex; }
+.f-mod .lr.first { margin-top: 18px; }
+.f-mod .lr .lh { width: 150px; flex: none; padding-right: 18px; font-family: var(--hf); font-weight: 700; font-size: calc(11.5px * var(--k, 1)); letter-spacing: 1.5px;
+  text-transform: var(--htt); color: var(--accent); line-height: 1.45; padding-top: 1px; }
+.f-mod .lr .lc { flex: 1; min-width: 0; display: flow-root; }
+.f-mod .lr .lci.ent { margin-top: 12px; }
+.f-mod .lr.first .lci.ent { margin-top: 0; }
+.f-mod .lh-n { display: none; }
+.f-mod.lh-line .lr .lc, .f-mod.lh-right .lr .lc { border-left: 2px solid var(--line); padding-left: 18px; }
+.f-mod.lh-line .lr.last .lc, .f-mod.lh-right .lr.last .lc { padding-bottom: 4px; }
+.f-mod.lh-right .lr .lh { text-align: right; }
+.f-mod.lh-right .lr .lc { border-left-color: var(--accent); }
+.f-mod.lh-tab .lh-t { display: inline-block; background: var(--accent); color: #FFFFFF; padding: 3px 8px; }
+.f-mod.lh-pill .lh-t { display: inline-block; background: var(--tint); color: var(--accent); border-radius: 12px; padding: 2px 10px; }
+.f-mod.lh-num .lh-n { display: block; font-family: var(--nf); font-size: calc(22px * var(--k, 1)); color: var(--accent); letter-spacing: 0; line-height: 1.1; margin-bottom: 3px; }
+.f-mod.lh-num .lh-t { color: var(--ink); }
+
+/* ---------- timeline ---------- */
+.f-mod .tl { display: flex; }
+.f-mod .tl-d { width: 112px; flex: none; text-align: right; padding: 1px 16px 0 0; font-size: calc(12px * var(--k, 1)); color: var(--muted); line-height: 1.4; }
+.f-mod .tl-c { flex: 1; min-width: 0; position: relative; border-left: 2px solid var(--line); padding-left: 20px; }
+.f-mod .tl.tl-end .tl-c { padding-bottom: 14px; }
+.f-mod .tl-dot { position: absolute; left: -8px; top: 3px; width: 14px; height: 14px; border-radius: 50%; background: var(--accent); border: 3px solid #FFFFFF; }
+.f-mod .tl .tl-c > .bul { margin-top: 0; padding-top: 3px; }
+.f-mod .tl-pw { display: none; }
+.f-mod.tl-pill .tl-d { display: none; }
+.f-mod.tl-pill .tl-c { margin-left: 8px; }
+.f-mod.tl-pill .tl-pw { display: block; }
+.f-mod .tlp { display: inline-block; background: var(--tint); color: var(--accent2); border-radius: 10px; padding: 1px 10px; font-size: calc(11.5px * var(--k, 1)); margin-bottom: 4px; }
+.f-mod.tl-ring .tl-dot { background: #FFFFFF; border: 3px solid var(--accent); }
+.f-mod.tl-sq .tl-dot { border-radius: 2px; border: 0; width: 12px; height: 12px; left: -7px; top: 4px; }
+
+/* ---------- side column (side, hside, two) ---------- */
+.f-mod .wrap { display: flex; align-items: flex-start; }
+.f-mod .side { color: var(--sideInk); }
+.f-mod .sh { display: flex; align-items: center; margin: 22px 0 9px; padding-bottom: 6px; border-bottom: 1px solid var(--sideLine); font-family: var(--hf); font-weight: 700;
+  font-size: calc(12.5px * var(--k, 1)); letter-spacing: 2px; text-transform: uppercase; color: var(--sideInk); }
+.f-mod .sh-mark, .f-mod .sh-r { display: none; }
+.f-mod.shs-pill .sh { border-bottom: 0; padding-bottom: 0; }
+.f-mod.shs-pill .sh-t { background: var(--sideAccent); color: var(--sideBg); border-radius: 14px; padding: 3px 12px; }
+.f-mod.shs-under .sh { border-bottom: 0; padding-bottom: 0; }
+.f-mod.shs-under .sh-t { border-bottom: 3px solid var(--sideAccent); padding-bottom: 4px; }
+.f-mod.shs-caps .sh { border-bottom: 0; padding-bottom: 0; color: var(--sideAccent); letter-spacing: 3px; }
+.f-mod.shs-bar .sh { border-bottom: 0; padding-bottom: 0; }
+.f-mod.shs-bar .sh-mark { display: block; width: 4px; height: 15px; background: var(--sideAccent); margin-right: 9px; }
+.f-mod .si { display: flex; align-items: flex-start; font-size: calc(12.5px * var(--k, 1)); line-height: 1.4; margin-top: 8px; }
+.f-mod .si .ic { color: var(--sideAccent); margin: 2px 10px 0 0; }
+.f-mod .si .ib { background: var(--sideAccent); margin: 0 9px 0 0; }
+.f-mod .si .ib .ic { color: var(--sideBg); }
+.f-mod .si .st { flex: 1; min-width: 0; overflow-wrap: anywhere; }
+.f-mod .skv { margin-top: 7px; }
+.f-mod .sk { font-size: calc(10.5px * var(--k, 1)); letter-spacing: 1px; text-transform: uppercase; color: var(--sideMuted); line-height: 1.3; }
+.f-mod .sv { font-size: calc(12.5px * var(--k, 1)); line-height: 1.35; }
+.f-mod .sl { margin-top: 6px; font-size: calc(12.5px * var(--k, 1)); line-height: 1.35; }
+.f-mod .sl .slx { display: block; font-size: calc(11px * var(--k, 1)); color: var(--sideMuted); }
+.f-mod .sb { display: flex; font-size: calc(12.5px * var(--k, 1)); line-height: 1.4; margin-top: 5px; }
+.f-mod .sb .b { width: 14px; flex: none; color: var(--sideAccent); }
+.f-mod .sb .sq { background: var(--sideAccent); margin-top: 5px; }
+.f-mod .schips { display: flex; flex-wrap: wrap; margin-top: -2px; }
+.f-mod .schip { background: var(--sideLine); color: var(--sideInk); border-radius: 10px; padding: 2px 9px; margin: 5px 6px 0 0; font-size: calc(12px * var(--k, 1)); line-height: 1.4; }
+.f-mod .ph { display: flex; justify-content: center; margin-bottom: 6px; }
+.f-mod .side .photo { width: 150px; height: 150px; border: 4px solid var(--sideLine); }
+.f-mod .side .mono { width: 112px; height: 112px; background: transparent; border: 2px solid var(--sideAccent); color: var(--sideInk); font-size: calc(38px * var(--k, 1)); }
+
+/* full-height coloured column */
+.f-mod.side-right.lay-side .wrap { flex-direction: row-reverse; }
+.f-mod.lay-side .side { width: var(--sw); flex: none; padding: 44px 24px 30px; }
+.f-mod.lay-side .main { flex: 1; min-width: 0; padding: 46px 40px 30px 36px; --px: 0px; }
+.f-mod.lay-side.side-right .main { padding: 46px 34px 30px 46px; }
+.f-mod.lay-side .hdp, .f-mod.lay-side .hd-badge, .f-mod.lay-side .hd-frame { padding-top: 0; margin-top: 0; }
+.f-mod.lay-side .hd-plain .hdp { padding-top: 0; }
+.f-mod.lay-side .hd-tag .hdp { margin: 0 0 8px; }
+.f-mod.lay-side .hd-big .nm { font-size: calc(42px * var(--k, 1)); }
+.f-mod.lay-side .hdr .nm { font-size: calc(33px * var(--k, 1)); }
+.f-mod.lay-side.nsplit .hdr .nm { font-size: calc(42px * var(--k, 1)); }
+/* header across the top, then a coloured column */
+.f-mod.lay-hside.side-right .wrap { flex-direction: row-reverse; }
+.f-mod.lay-hside .side { width: var(--sw); flex: none; padding: 20px 24px 30px; }
+.f-mod.lay-hside .main { flex: 1; min-width: 0; padding: 4px 44px 30px 36px; }
+.f-mod.lay-hside.side-right .main { padding: 4px 36px 30px 50px; }
+/* header across the top, then main text and a light column */
+.f-mod.lay-two .wrap { padding: 0 var(--px); }
+.f-mod.lay-two.side-right .wrap { flex-direction: row-reverse; }
+.f-mod.lay-two .main { flex: 1; min-width: 0; padding: 0 28px 30px 0; }
+.f-mod.lay-two.side-left .main { padding: 0 0 30px 28px; }
+.f-mod.lay-two .side { width: var(--sw); flex: none; padding: 8px 0 30px; }
+.f-mod.lay-two .side .sh { color: var(--accent); }
+/* boxed side groups */
+.f-mod.sbox .side .blk { margin-top: 0; }
+.f-mod .sbx { background: var(--sideBg); padding: 6px 16px 0; display: flow-root; }
+.f-mod .sbx.sh { border-bottom: 0; padding-bottom: 6px; margin: 0; }
+.f-mod .sbx-f { border-radius: 10px 10px 0 0; padding-top: 14px; margin-top: 14px !important; }
+.f-mod .sbx-l { border-radius: 0 0 10px 10px; padding-bottom: 14px; }
+.f-mod .sbx-f.sbx-l { border-radius: 10px; }

@@ -579,8 +579,25 @@
     };
   }
 
+  // the newer modern templates (family "mod") are written with the Word layout closest to their design
+  var HS_WORD = { pill: 'fill', pills: 'fill', tab: 'fill', fill: 'fill', ink: 'fill', under: 'rule', liner: 'rule', double: 'rule', rule: 'rule', over: 'short',
+    num: 'rule', period: 'rule', dash: 'bar', bar: 'bar', tint: 'bar', arrow: 'bar', ring: 'dot', dot: 'dot', spaced: 'dot', box: 'dot', short: 'short', lines: 'lines' };
+  function wordTwin(t) {
+    if (t.family !== 'mod') return t;
+    var c = Object.assign({}, t.c), dark = ['band', 'diag', 'wave', 'split2', 'inverse'].indexOf(t.hd) >= 0, fam, x = {};
+    if (t.lay === 'side') fam = 'sidebar';
+    else if (t.lay === 'two') fam = 'split';
+    else if (t.lay === 'lcol') fam = 'leftcol';
+    else if (t.lay === 'tl') fam = 'timeline';
+    else if (t.lay === 'hside' || dark) { fam = 'banner'; c.banner = c.hdBg; c.bannerInk = c.hdInk; c.bannerSub = c.hdSub; }
+    else { fam = 'centered'; x.align = ['center', 'minimal', 'frame'].indexOf(t.hd) >= 0 ? 'center' : 'left'; }
+    if (t.hs === 'ink') c = Object.assign(c, { accent: c.ink });
+    return Object.assign({}, t, { family: fam, c: c, hs: HS_WORD[t.hs] || 'rule', stripe: false, frame: (t.deco || []).indexOf('frame') >= 0, edge: (t.deco || []).indexOf('edge') >= 0 }, x);
+  }
+
   async function makeDocx(cv, tplId, opts) {
-    var t = TP.effective(TP.get(tplId), cv), m = TP.model(cv);
+    var t = wordTwin(TP.effective(TP.get(tplId), cv)), m = TP.model(cv);
+    if (t.noPhoto) m = Object.assign({}, m, { photo: '' });
     SCALE = t.k || 1;
     var ctx = newCtx(m);
     var f = fontSet(t);
@@ -593,7 +610,7 @@
   // cover letter as a Word document, in the CV's fonts and colour
   async function makeLetterDocx(cv) {
     var L = window.CVLetter, Lt = L.get(cv);
-    var base = TP.get(cv.templateId), t = TP.effective(base, cv), m = TP.model(cv);
+    var base = TP.get(cv.templateId), t = wordTwin(TP.effective(base, cv)), m = TP.model(cv);
     SCALE = t.k || 1;
     FRAME = null;
     var ctx = newCtx(m), classic = t.family === 'classic';

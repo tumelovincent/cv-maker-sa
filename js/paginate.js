@@ -124,7 +124,10 @@
 
   function decorHTML(t, i) {
     return window.CVTemplates.decor(t, i).map(function (d) {
+      if (d.path) return '<svg style="position:absolute;left:0;top:0;width:' + PW + 'px;height:' + PH + 'px" viewBox="0 0 ' + PW + ' ' + PH + '"><path d="' + d.path + '" fill="' + d.fill + '"' + (d.op != null ? ' fill-opacity="' + d.op + '"' : '') + '/></svg>';
       var s = 'position:absolute;left:' + d.x + 'px;top:' + d.y + 'px;width:' + d.w + 'px;height:' + d.h + 'px;';
+      if (d.r) s += 'border-radius:' + d.r + 'px;';
+      if (d.op != null) s += 'opacity:' + d.op + ';';
       if (d.fill) s += 'background:' + d.fill + ';';
       if (d.stroke) s += 'border:' + d.sw + 'px solid ' + d.stroke + ';box-sizing:border-box;';
       return '<div style="' + s + '"></div>';

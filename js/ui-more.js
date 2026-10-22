@@ -134,7 +134,7 @@
     h += '<div class="app-sum">' + STATUS.filter(function (s) { return by[s]; }).map(function (s) { return '<span><b>' + by[s] + '</b>' + esc(T(s)) + '</span>'; }).join('') + '</div></section>';
     return h;
   };
-  function statusCls(s) { return 'st-' + STATUS.indexOf(s); }
+  function statusCls(s) { return 'ast-' + STATUS.indexOf(s); }
   function renderApps(el) {
     var list = apps().sort(function (a, b) {
       var da = daysUntil(a.closing), db = daysUntil(b.closing);
@@ -146,7 +146,7 @@
     if (!list.length) h += '<div class="docs-empty">' + T('No applications yet. When you download an application with a cover letter or Z83, it is added here for you.') + '</div>';
     else h += '<div class="app-list">' + list.map(function (a) {
       var ct = closingText(a), n = daysUntil(a.closing), hot = a.status === 'Planning to apply' && n !== null && n >= 0 && n <= 3;
-      return '<button class="app-card" data-app="' + a.id + '"><div class="app-top"><b>' + esc(a.position || T('Untitled job')) + '</b><span class="st ' + statusCls(a.status) + '">' + esc(T(a.status)) + '</span></div>' +
+      return '<button class="app-card" data-app="' + a.id + '"><div class="app-top"><b>' + esc(a.position || T('Untitled job')) + '</b><span class="ast ' + statusCls(a.status) + '">' + esc(T(a.status)) + '</span></div>' +
         (a.company ? '<div class="app-co">' + esc(a.company) + '</div>' : '') +
         '<div class="app-meta">' + (ct ? '<span class="' + (hot ? 'hot' : '') + '">' + esc(ct) + '</span>' : '') + (a.applied ? '<span>' + T('Applied {date}', { date: A.fmtDate(a.applied) }) + '</span>' : '') + '</div></button>';
     }).join('') + '</div>';

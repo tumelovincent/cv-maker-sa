@@ -463,7 +463,7 @@
     render: function (el) {
       if (!SC.pages.length) { el.innerHTML = '<div class="empty-box">' + ic('scan') + '<div>' + T('No pages yet.') + '</div></div>'; return; }
       var h = '<div class="fld"><label for="sc-name">' + T('File name') + '</label><input type="text" id="sc-name" value="' + esc(SC.name) + '" autocomplete="off"></div>' +
-        '<div class="chips">' + FILTERS.map(function (f) { return '<button class="chip' + (SC.filter === f[0] ? ' on' : '') + '" data-flt="' + f[0] + '">' + T(f[1]) + '</button>'; }).join('') + '</div><div class="pgrid">';
+        '<div class="achips">' + FILTERS.map(function (f) { return '<button class="achip' + (SC.filter === f[0] ? ' on' : '') + '" data-flt="' + f[0] + '">' + T(f[1]) + '</button>'; }).join('') + '</div><div class="pgrid">';
       SC.pages.forEach(function (p, i) {
         h += '<div class="pg" data-pi="' + i + '"><div class="a4" data-pv="' + i + '">' + (p.kind === 'id' ? '<span class="badge-id">' + T(p.back ? 'ID front + back' : 'ID front') + '</span>' : '') +
           (p.thumb && p.tver === SC.ver ? '<img src="' + p.thumb + '" alt="">' : '<div class="spin"></div>') + '</div>' +

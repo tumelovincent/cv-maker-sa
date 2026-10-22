@@ -273,7 +273,7 @@
   function askText(value, done) {
     var ans = cvAnswers();
     var sh = A.openSheet('<h3>' + T('Text') + '</h3><div class="inp-wrap"><textarea class="inp" id="ed-txt" rows="2" autocomplete="off">' + esc(value || '') + '</textarea></div>' +
-      (ans.length ? '<div class="sheet-sec">' + T('From my CV') + '</div><div class="inp-wrap"><div class="chips" style="margin:0;padding:0;flex-wrap:wrap">' + ans.map(function (a, i) { return '<button class="chip" data-ans="' + i + '" style="margin-bottom:6px">' + esc(T(a[0])) + '</button>'; }).join('') + '</div></div>' : '') +
+      (ans.length ? '<div class="sheet-sec">' + T('From my CV') + '</div><div class="inp-wrap"><div class="achips" style="margin:0;padding:0;flex-wrap:wrap">' + ans.map(function (a, i) { return '<button class="achip" data-ans="' + i + '" style="margin-bottom:6px">' + esc(T(a[0])) + '</button>'; }).join('') + '</div></div>' : '') +
       '<div class="sheet-foot"><button class="btn ghost" data-tx="no">' + T('Cancel') + '</button><button class="btn" data-tx="ok">' + T('Done') + '</button></div>');
     var ta = $('#ed-txt'); setTimeout(function () { ta.focus(); }, 250);
     sh.onclick = function (e) {

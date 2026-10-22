@@ -791,6 +791,11 @@ window.CVi18nDict = {
 "Umbala",
 "Kleur"
 ],
+"Colourful": [
+"Mebala e mengata",
+"Okunemibala",
+"Kleurvol"
+],
 "Community Leader": [
 "Moetapele wa setjhaba",
 "Umholi womphakathi",
@@ -2071,6 +2076,11 @@ window.CVi18nDict = {
 "Indlela yokuxhumana",
 "Metode van korrespondensie"
 ],
+"Minimal": [
+"E bonolo",
+"Okulula",
+"Minimalisties"
+],
 "Modern": [
 "Sa sejwale-jwale",
 "Esimanje",
@@ -2200,6 +2210,11 @@ window.CVi18nDict = {
 "Moahisani",
 "Umakhelwane",
 "Buurman"
+],
+"New": [
+"E ntjha",
+"Okusha",
+"Nuut"
 ],
 "New PDF: {n} pages, about {size}. Your files stay as they are - a new one is made.": [
 "PDF e ntjha: maqephe a {n}, hoo e ka bang {size}. Difaele tsa hao di dula di le jwalo - ho etswa e ntjha.",
@@ -3615,6 +3630,11 @@ window.CVi18nDict = {
 "E fetola faele ya hao ya Word hore e be PDF…",
 "Kuguqulwa ifayela lakho le-Word libe yi-PDF…",
 "Verander jou Word-lêer in 'n PDF…"
+],
+"Two columns": [
+"Dikholomo tse pedi",
+"Amakholomu amabili",
+"Twee kolomme"
 ],
 "Two or three sentences about you and the work you are looking for": [
 "Dipolelo tse pedi kapa tse tharo ka wena le mosebetsi oo o o batlang",

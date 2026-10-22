@@ -101,20 +101,22 @@
         pages[p].drawRectangle({ x: x * S, y: A4H - (b - p * PH) * S, width: w * S, height: (b - a) * S, color: col.c, opacity: col.a });
       }
     }
+    // r: one radius, or [top-left, top-right, bottom-right, bottom-left]
     function roundPath(w, h, r) {
-      r = Math.min(r, w / 2, h / 2);
-      var k = 0.5523 * r;
-      return 'M' + r + ' 0 L' + (w - r) + ' 0 C' + (w - r + k) + ' 0 ' + w + ' ' + (r - k) + ' ' + w + ' ' + r +
-        ' L' + w + ' ' + (h - r) + ' C' + w + ' ' + (h - r + k) + ' ' + (w - r + k) + ' ' + h + ' ' + (w - r) + ' ' + h +
-        ' L' + r + ' ' + h + ' C' + (r - k) + ' ' + h + ' 0 ' + (h - r + k) + ' 0 ' + (h - r) +
-        ' L0 ' + r + ' C0 ' + (r - k) + ' ' + (r - k) + ' 0 ' + r + ' 0 Z';
+      var q = (Array.isArray(r) ? r : [r, r, r, r]).map(function (v) { return Math.max(0, Math.min(v, w / 2, h / 2)); });
+      var a = q[0], b = q[1], c = q[2], d = q[3], K = 0.5523;
+      return 'M' + a + ' 0 L' + (w - b) + ' 0 C' + (w - b + K * b) + ' 0 ' + w + ' ' + (b - K * b) + ' ' + w + ' ' + b +
+        ' L' + w + ' ' + (h - c) + ' C' + w + ' ' + (h - c + K * c) + ' ' + (w - c + K * c) + ' ' + h + ' ' + (w - c) + ' ' + h +
+        ' L' + d + ' ' + h + ' C' + (d - K * d) + ' ' + h + ' 0 ' + (h - d + K * d) + ' 0 ' + (h - d) +
+        ' L0 ' + a + ' C0 ' + (a - K * a) + ' ' + (a - K * a) + ' 0 ' + a + ' 0 Z';
     }
     function shape(x, y, w, h, r, fill, stroke, sw) {
       var p = pageAt(y + h / 2), ly = y - p * PH;
       var opts = {};
       if (fill) { opts.color = fill.c; opts.opacity = fill.a; }
       if (stroke) { opts.borderColor = stroke.c; opts.borderWidth = sw * S; opts.borderOpacity = stroke.a; }
-      if (r >= Math.min(w, h) / 2 - 0.5 && Math.abs(w - h) < 1) {
+      if (Array.isArray(r)) { if (Math.max.apply(null, r) - Math.min.apply(null, r) < 0.5) r = r[0]; }
+      if (!Array.isArray(r) && r >= Math.min(w, h) / 2 - 0.5 && Math.abs(w - h) < 1) {
         opts.x = (x + w / 2) * S; opts.y = A4H - (ly + h / 2) * S; opts.xScale = (w / 2) * S; opts.yScale = (h / 2) * S;
         pages[p].drawEllipse(opts);
       } else {
@@ -135,6 +137,12 @@
       if (/%/.test(v)) return px(v) / 100 * Math.min(w, h);
       return px(v);
     }
+    // all four corners [top-left, top-right, bottom-right, bottom-left]
+    function radiiOf(cs, w, h) {
+      return ['borderTopLeftRadius', 'borderTopRightRadius', 'borderBottomRightRadius', 'borderBottomLeftRadius'].map(function (k) {
+        var v = cs[k] || '0'; return /%/.test(v) ? px(v) / 100 * Math.min(w, h) : px(v);
+      });
+    }
 
     var images = [];
     var texts = [];
@@ -148,15 +156,15 @@
       var x = rc.left - ox, y = rc.top - oy, w = rc.width, h = rc.height;
       var tag = el.tagName.toLowerCase();
       if (w > 0 && h > 0) {
-        var r = radiusOf(cs, w, h);
+        var r = radiusOf(cs, w, h), rr = radiiOf(cs, w, h), rmax = Math.max.apply(null, rr);
         var bg = parseColor(cs.backgroundColor);
         var bw = [px(cs.borderTopWidth), px(cs.borderRightWidth), px(cs.borderBottomWidth), px(cs.borderLeftWidth)];
         var bs = [cs.borderTopStyle, cs.borderRightStyle, cs.borderBottomStyle, cs.borderLeftStyle];
         var bc = [parseColor(cs.borderTopColor), parseColor(cs.borderRightColor), parseColor(cs.borderBottomColor), parseColor(cs.borderLeftColor)];
         var has = function (i) { return bw[i] > 0 && bs[i] !== 'none' && bs[i] !== 'hidden' && bc[i]; };
-        if (r > 0.5) {
-          if (bg && tag !== 'img') shape(x, y, w, h, r, bg, null, 0);
-          if (has(0) && bw[0] === bw[1] && bw[0] === bw[2] && bw[0] === bw[3] && tag !== 'img') shape(x + bw[0] / 2, y + bw[0] / 2, w - bw[0], h - bw[0], Math.max(0, r - bw[0] / 2), null, bc[0], bw[0]);
+        if (rmax > 0.5) {
+          if (bg && tag !== 'img') shape(x, y, w, h, rr, bg, null, 0);
+          if (has(0) && bw[0] === bw[1] && bw[0] === bw[2] && bw[0] === bw[3] && tag !== 'img') shape(x + bw[0] / 2, y + bw[0] / 2, w - bw[0], h - bw[0], rr.map(function (v) { return Math.max(0, v - bw[0] / 2); }), null, bc[0], bw[0]);
         } else {
           if (bg && tag !== 'img') fillRect(x, y, w, h, bg);
           if (has(0)) fillRect(x, y, w, bw[0], bc[0]);
@@ -185,6 +193,16 @@
     // ---- page decoration first (behind) ----
     for (var pi = 0; pi < pages.length; pi++) {
       window.CVTemplates.decor(result.tpl, pi).forEach(function (d) {
+        var op = d.op != null ? d.op : 1;
+        // shapes: a path in page coordinates, or a box with rounded corners / a circle
+        if (d.path) { var pc = parseColor(hexToRgb(d.fill)); pages[pi].drawSvgPath(d.path, { x: 0, y: A4H, scale: S, color: pc.c, opacity: op }); return; }
+        if (d.r && d.fill) {
+          var rc = parseColor(hexToRgb(d.fill));
+          if (d.r >= Math.min(d.w, d.h) / 2 - 0.5 && Math.abs(d.w - d.h) < 1) pages[pi].drawEllipse({ x: (d.x + d.w / 2) * S, y: A4H - (d.y + d.h / 2) * S, xScale: d.w / 2 * S, yScale: d.h / 2 * S, color: rc.c, opacity: op });
+          else pages[pi].drawSvgPath(roundPath(d.w, d.h, d.r), { x: d.x * S, y: A4H - d.y * S, scale: S, color: rc.c, opacity: op });
+          return;
+        }
+        if (d.fill && op < 1) { var oc = parseColor(hexToRgb(d.fill)); pages[pi].drawRectangle({ x: d.x * S, y: A4H - (d.y + d.h) * S, width: d.w * S, height: d.h * S, color: oc.c, opacity: op }); return; }
         if (d.fill) { var c = parseColor(hexToRgb(d.fill)); pages[pi].drawRectangle({ x: d.x * S, y: A4H - (d.y + d.h) * S, width: d.w * S, height: d.h * S, color: c.c }); }
         if (d.stroke) { var s = parseColor(hexToRgb(d.stroke)), sw = d.sw * S; pages[pi].drawRectangle({ x: d.x * S + sw / 2, y: A4H - (d.y + d.h) * S + sw / 2, width: d.w * S - sw, height: d.h * S - sw, borderColor: s.c, borderWidth: sw }); }
       });

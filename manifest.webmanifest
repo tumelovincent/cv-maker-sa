@@ -1,7 +1,7 @@
 {
   "name": "CV Maker SA",
   "short_name": "CV Maker SA",
-  "description": "Make a professional South African CV on your phone: 20+ templates, cover letter, Z83 form and PDF tools. Works without internet.",
+  "description": "Make a professional South African CV on your phone: 100 templates, cover letter, Z83 form and PDF tools. Works without internet.",
   "id": "./",
   "start_url": "./",
   "scope": "./",

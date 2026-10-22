@@ -426,9 +426,9 @@ body.typing .toast { bottom: 16px; }
 .app-card { display: block; width: 100%; text-align: left; border: 0; background: var(--card); border-radius: 14px; padding: 12px 14px; margin-bottom: 10px; box-shadow: 0 0 0 1px var(--line); }
 .app-top { display: flex; align-items: flex-start; }
 .app-top b { flex: 1; font-size: 16px; margin-right: 8px; }
-.st { flex: none; font-size: 12px; font-weight: 700; border-radius: 10px; padding: 3px 9px; background: #EEF2F0; color: #44514b; }
-.st-0 { background: #FFF3E0; color: #7A4100; } .st-1 { background: #E3F0FF; color: #134A8E; } .st-2 { background: #F1E8FF; color: #5B2A86; }
-.st-3 { background: #E8F5EE; color: #145C3A; } .st-4 { background: #F2F2F2; color: #6B6B6B; }
+.ast { flex: none; font-size: 12px; font-weight: 700; border-radius: 10px; padding: 3px 9px; background: #EEF2F0; color: #44514b; }
+.ast-0 { background: #FFF3E0; color: #7A4100; } .ast-1 { background: #E3F0FF; color: #134A8E; } .ast-2 { background: #F1E8FF; color: #5B2A86; }
+.ast-3 { background: #E8F5EE; color: #145C3A; } .ast-4 { background: #F2F2F2; color: #6B6B6B; }
 .app-co { color: var(--muted); font-size: 14px; margin-top: 2px; }
 .app-meta { display: flex; flex-wrap: wrap; font-size: 13px; color: var(--muted); margin-top: 6px; }
 .app-meta span { margin-right: 14px; }
@@ -645,9 +645,9 @@ body[data-view="pdfview"] main, body[data-view="pdfsign"] main { max-width: none
 .crop4-t small { display: block; font-weight: 400; color: #B5C2BD; font-size: 13px; }
 
 /* scan review */
-.chips { display: flex; overflow-x: auto; margin: 0 -14px 12px; padding: 0 14px 2px; -webkit-overflow-scrolling: touch; }
-.chip { flex: none; border: 1.5px solid var(--line); background: #fff; border-radius: 99px; padding: 7px 13px; font-weight: 700; font-size: 13.5px; color: #34403b; margin-right: 7px; }
-.chip.on { background: var(--green); color: #fff; border-color: var(--green); }
+.achips { display: flex; overflow-x: auto; margin: 0 -14px 12px; padding: 0 14px 2px; -webkit-overflow-scrolling: touch; }
+.achip { flex: none; border: 1.5px solid var(--line); background: #fff; border-radius: 99px; padding: 7px 13px; font-weight: 700; font-size: 13.5px; color: #34403b; margin-right: 7px; }
+.achip.on { background: var(--green); color: #fff; border-color: var(--green); }
 .pgrid { display: flex; flex-wrap: wrap; margin: 0 -6px; }
 .pg { width: calc(50% - 12px); margin: 6px; }
 .pg .a4 { position: relative; width: 100%; padding-top: 141.4%; background: #fff; border-radius: 6px; box-shadow: 0 1px 4px rgba(0,0,0,.14), 0 0 0 1px var(--line); overflow: hidden; }
