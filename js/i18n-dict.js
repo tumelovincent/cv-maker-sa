@@ -71,6 +71,11 @@ window.CVi18nDict = {
 "A. Isikhundla esikhangisiwe",
 "A. Die geadverteerde pos"
 ],
+"ATS-friendly": [
+"E loketse ATS",
+"Ilungele i-ATS",
+"ATS-vriendelik"
+],
 "About": [
 "Mabapi",
 "Mayelana",
@@ -380,6 +385,11 @@ window.CVi18nDict = {
 "Kopo e entswe {date}",
 "Isicelo sifakwe ngo-{date}",
 "Aansoek gedoen op {date}"
+],
+"Applying on a job website?": [
+"O etsa kopo websaeteng ya mesebetsi?",
+"Ufaka isicelo kuwebhusayithi yemisebenzi?",
+"Doen jy aansoek op 'n werkwebwerf?"
 ],
 "April": [
 "Mmesa",
@@ -1811,6 +1821,11 @@ window.CVi18nDict = {
 "Isihloko somsebenzi noma okwenzayo",
 "Postitel of wat jy doen"
 ],
+"Job websites may read this design wrongly. Tap to see the {n} ATS-friendly templates.": [
+"Diwebsaete tsa mesebetsi di ka bala moralo ona hampe. Tobetsa ho bona di-template tse {n} tse loketseng ATS.",
+"Amawebhusayithi emisebenzi angawufunda kabi lo mklamo. Cindezela ukuze ubone ama-template angu-{n} alungele i-ATS.",
+"Werkwebwerwe kan hierdie ontwerp verkeerd lees. Tik om die {n} ATS-vriendelike sjablone te sien."
+],
 "Jobs you applied for and closing dates": [
 "Mesebetsi eo o e kopileng le matsatsi a ho kwala",
 "Imisebenzi ofake izicelo kuyo nezinsuku zokuvala",
@@ -2265,6 +2280,11 @@ window.CVi18nDict = {
 "E tlwaelehileng",
 "Okujwayelekile",
 "Normaal"
+],
+"Not ATS-friendly": [
+"Ha e a loketse ATS",
+"Ayilungele i-ATS",
+"Nie ATS-vriendelik nie"
 ],
 "Not added": [
 "Ha e a kenngwa",
@@ -2951,6 +2971,11 @@ window.CVi18nDict = {
 "Inombolo kamazisi wase-SA",
 "SA ID-nommer"
 ],
+"Safe for online job applications.": [
+"E bolokehile bakeng sa dikopo tsa mesebetsi inthaneteng.",
+"Iphephile ezicelweni zemisebenzi ku-inthanethi.",
+"Veilig vir aanlyn werksaansoeke."
+],
 "Save": [
 "Boloka",
 "Gcina",
@@ -3406,6 +3431,11 @@ window.CVi18nDict = {
 "Izifanekiso",
 "Sjablone"
 ],
+"Templates marked ATS are ATS-friendly: job websites and online application systems read them correctly. Use one of them when you apply online.": [
+"Di-template tse tshwailweng ATS di loketse ATS: diwebsaete tsa mesebetsi le ditsamaiso tsa dikopo tsa inthanete di di bala hantle. Sebedisa e nngwe ya tsona ha o etsa kopo inthaneteng.",
+"Ama-template amakwe ngo-ATS alungele i-ATS: amawebhusayithi emisebenzi nezinhlelo zokufaka izicelo ku-inthanethi ziwafunda kahle. Sebenzisa elilodwa lawo uma ufaka isicelo ku-inthanethi.",
+"Sjablone gemerk ATS is ATS-vriendelik: werkwebwerwe en aanlyn aansoekstelsels lees hulle korrek. Gebruik een daarvan wanneer jy aanlyn aansoek doen."
+],
 "Tertiary & courses": [
 "Thuto e phahameng le dithupelo",
 "Imfundo ephakeme nezifundo",
@@ -3555,6 +3585,11 @@ window.CVi18nDict = {
 "Sena se fetola diskrine tsa app. CV ya hao, lengolo la kopo le Z83 di dula ka Senyesemane, jwalo ka ha bahiri ba lebeletse.",
 "Lokhu kushintsha izikrini ze-app. I-CV yakho, incwadi yesicelo ne-Z83 kuhlala kusesiNgisini, njengoba abaqashi belindele.",
 "Dit verander die app se skerms. Jou CV, dekbrief en Z83 bly in Engels, soos werkgewers verwag."
+],
+"This design is not ATS-friendly. Choose a template marked ATS.": [
+"Moralo ona ha o a loketse ATS. Kgetha template e tshwailweng ATS.",
+"Lo mklamo awulungele i-ATS. Khetha i-template ekwe ngo-ATS.",
+"Hierdie ontwerp is nie ATS-vriendelik nie. Kies 'n sjabloon gemerk ATS."
 ],
 "This document": [
 "Tokomane ena",

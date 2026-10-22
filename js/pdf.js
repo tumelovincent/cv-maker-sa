@@ -271,10 +271,11 @@
         var by = A4H - (ly2 + asc) * S;
         var pgx = pages[p2];
         if (ls > 0.05) {
-          for (var k = 0; k < ln.cs.length; k++) {
-            if (ln.cs[k] === ' ') continue;
-            pgx.drawText(ln.cs[k], { x: ln.xs[k] * S, y: by, size: fs * S, font: pdfFont, color: col.c, opacity: col.a });
-          }
+          // spaced-out text (headings) stays one piece of text, using the PDF's own character spacing,
+          // so job-portal systems (ATS) read "WORK EXPERIENCE" and not "W O R K  E X P E R I E N C E"
+          pgx.pushOperators(L.setCharacterSpacing(ls * S));
+          pgx.drawText(s2, { x: ln.left * S, y: by, size: fs * S, font: pdfFont, color: col.c, opacity: col.a });
+          pgx.pushOperators(L.setCharacterSpacing(0));
         } else {
           pgx.drawText(s2, { x: ln.left * S, y: by, size: fs * S, font: pdfFont, color: col.c, opacity: col.a });
         }

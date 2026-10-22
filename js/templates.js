@@ -537,7 +537,7 @@
     var m = model(cv);
     var inner = FAMILIES[t.family](cv, t, m, opts);
     var cls = 'cv f-' + t.family + ' t-' + t.id + (t.hs ? ' hs-' + t.hs : '') + (t.side ? ' side-' + t.side : '') +
-      (t.align ? ' al-' + t.align : '') + (t.shade ? ' shade' : '') + (m.photo ? ' has-photo' : '') + (t.cls ? ' ' + t.cls : '');
+      (t.align ? ' al-' + t.align : '') + (t.shade ? ' shade' : '') + (m.photo ? ' has-photo' : '') + (t.cls ? ' ' + t.cls : '') + (t.ats ? ' ats-safe' : '');
     return { cls: cls, style: styleVars(t), html: inner, tpl: t };
   }
 

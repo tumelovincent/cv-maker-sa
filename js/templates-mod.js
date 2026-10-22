@@ -368,5 +368,17 @@
     { id: 'momentum', name: 'Momentum', lay: 'tl', tl: 'pill', hd: 'wave', hs: 'tab', sk: 'outline', f: ['raleway', 'raleway', 'lato'], p: { a: '#E11D48', d: '#4C0519', hs2: '#FDA4AF' } }
   ];
   TP.addTemplates(MOD.map(make));
+
+  /* ---------- ATS-friendly: the 20 designs that job-portal systems (ATS) read correctly ----------
+     One column, normal reading order, name/email/phone kept whole, headings without wide letter spacing.
+     Checked by extracting the text of each PDF the way those systems do. */
+  var ATS = ['ats', 'minimal', 'swiss', 'garamond', 'elegant', 'ocean', 'maroon', 'emerald', 'summit', 'meridian',
+    'copper', 'ivory', 'atlas', 'horizon', 'protea', 'baobab', 'metro', 'stone', 'saffron', 'aurora'];
+  TP.list.forEach(function (t) {
+    t.tags = t.tags.filter(function (k) { return k !== 'ats'; });
+    t.ats = ATS.indexOf(t.id) >= 0;
+    if (t.ats) t.tags.push('ats');
+  });
+  TP.ATS = ATS;
   window.CVTemplatesMod = { make: make, palette: palette, list: MOD };
 })();

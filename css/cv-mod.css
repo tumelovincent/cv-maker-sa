@@ -245,3 +245,7 @@
 .f-mod .sbx-f { border-radius: 10px 10px 0 0; padding-top: 14px; margin-top: 14px !important; }
 .f-mod .sbx-l { border-radius: 0 0 10px 10px; padding-bottom: 14px; }
 .f-mod .sbx-f.sbx-l { border-radius: 10px; }
+
+/* ---------- ATS-friendly designs: no wide letter spacing, so job-portal systems read whole words ---------- */
+.cv.ats-safe .nm, .cv.ats-safe .ttl, .cv.ats-safe .h, .cv.ats-safe .h-t, .cv.ats-safe .lh, .cv.ats-safe .sh, .cv.ats-safe .sbh,
+.cv.ats-safe .hdr .nm, .cv.ats-safe .hd-minimal .nm { letter-spacing: 0.6px !important; }

@@ -219,7 +219,7 @@
   }
 
   /* ---------- home ---------- */
-  var APP_VERSION = '1.5';
+  var APP_VERSION = '1.6';
   var DEVELOPER = 'Tumelo Vincent Tau';
   var SHOWCASE = ['classic', 'aurora', 'mzansi', 'midnight', 'horizon', 'lagoon', 'kalahari', 'roadmap'];
   var sampleForShow = null;
@@ -251,7 +251,7 @@
     if (App.hooks && App.hooks.homeApps) h += App.hooks.homeApps();
     h += '<section class="block"><div class="block-h"><h2>' + T('Templates') + '</h2><button class="see-all" id="see-all">' + T('See all {n}', { n: n }) + '</button></div>' +
       '<div class="strip">' + SHOWCASE.map(function (id) {
-        return '<button class="strip-it" data-start="' + id + '"><div class="strip-pg" data-show="' + id + '"></div><span>' + esc(T(TP.get(id).name)) + '</span></button>';
+        return '<button class="strip-it" data-start="' + id + '"><div class="strip-pg" data-show="' + id + '"></div>' + atsBadge(TP.get(id), 'ats-tw') + '<span>' + esc(T(TP.get(id).name)) + '</span></button>';
       }).join('') + '</div></section>';
     h += '<section class="block"><div class="block-h"><h2>' + T('How it works') + '</h2></div><ol class="steps">' +
       '<li><b>' + T('Fill in your details') + '</b><span>' + T('Personal details, school, work experience and references. Your SA ID number fills in your date of birth for you.') + '</span></li>' +
@@ -830,8 +830,10 @@
   });
 
   /* ---------- templates ---------- */
-  var FILTERS = [['all', 'All'], ['new', 'New'], ['classic', 'Classic SA'], ['modern', 'Modern'], ['two', 'Two columns'], ['bold', 'Colourful'], ['minimal', 'Minimal'],
-    ['photo', 'With photo'], ['ats', 'Simple / job portals']];
+  var FILTERS = [['all', 'All'], ['ats', 'ATS-friendly'], ['new', 'New'], ['classic', 'Classic SA'], ['modern', 'Modern'], ['two', 'Two columns'], ['bold', 'Colourful'],
+    ['minimal', 'Minimal'], ['photo', 'With photo']];
+  // small "ATS" label for designs that job-application websites read correctly
+  function atsBadge(t, cls) { return t.ats ? '<span class="ats-b ' + (cls || '') + '">' + svg('check') + 'ATS</span>' : ''; }
   var tplObserver = null;
   function renderTemplates() {
     var c = S.cur || { templateId: '', photo: '', showPhoto: true, personal: {} };
@@ -842,11 +844,12 @@
     var cw = Math.min(document.documentElement.clientWidth, wide ? 1132 : 720), cols = wide ? 5 : (cw >= 560 ? 3 : 2);
     var w = Math.max(120, Math.floor((cw - 28 + 14) / cols - 14));
     var h = '<div class="filters">' + FILTERS.map(function (f) { return '<button class="fchip' + (S.filter === f[0] ? ' on' : '') + '" data-f="' + f[0] + '">' + T(f[1]) + '</button>'; }).join('') + '</div>';
+    h += '<div class="ats-note">' + atsBadge({ ats: true }) + '<span>' + T('Templates marked ATS are ATS-friendly: job websites and online application systems read them correctly. Use one of them when you apply online.') + '</span></div>';
     h += '<div class="tgrid">';
     TP.list.forEach(function (t) {
       if (S.filter !== 'all' && t.tags.indexOf(S.filter) < 0) return;
       var on = c.templateId === t.id;
-      h += '<button class="tcard' + (on ? ' on' : '') + '" data-t="' + t.id + '"><div class="tw" data-th="' + t.id + '" style="height:' + Math.round(w * 1123 / 794) + 'px">' + (on ? '<span class="badge">' + T('Selected') + '</span>' : '') + '</div>' +
+      h += '<button class="tcard' + (on ? ' on' : '') + '" data-t="' + t.id + '"><div class="tw" data-th="' + t.id + '" style="height:' + Math.round(w * 1123 / 794) + 'px">' + (on ? '<span class="badge">' + T('Selected') + '</span>' : '') + atsBadge(t, 'ats-tw') + '</div>' +
         '<div class="tn">' + esc(t.name) + '</div><div class="tt">' + esc(T(t.tags.indexOf('classic') >= 0 ? 'Classic' : (t.tags.indexOf('photo') >= 0 ? 'Modern · photo' : 'Modern'))) + '</div></button>';
     });
     h += '</div>';
@@ -1122,7 +1125,10 @@
     }).join('') + '</div>';
     if (tab === 'cv') {
       h += '<div class="pv-info"><div class="tname">' + esc(T(t.name)) + '</div><button class="btn soft small" data-pv="design">' + svg('palette') + T('Design') + '</button>' +
-        '<button class="btn soft small" data-pv="tpl">' + T('Template') + '</button></div><div id="pv-check"></div>';
+        '<button class="btn soft small" data-pv="tpl">' + T('Template') + '</button></div><div id="pv-check"></div>' +
+        (t.ats ? '<div class="pv-warn good pv-ats">' + svg('check') + '<span><b>' + T('ATS-friendly') + '</b><small>' + T('Safe for online job applications.') + '</small></span></div>' :
+          '<button class="pv-warn pv-ats" data-pv="ats">' + svg('info') + '<span><b>' + T('Not ATS-friendly') + '</b><small>' +
+          T('Job websites may read this design wrongly. Tap to see the {n} ATS-friendly templates.', { n: TP.ATS.length }) + '</small></span></button>');
     } else if (tab === 'letter') {
       if (!hasLetter(c)) {
         v.innerHTML = h + emptyCard('letter'); return;
@@ -1199,6 +1205,7 @@
     var b = e.target.closest('[data-pv]'); if (!b) return;
     var k = b.getAttribute('data-pv');
     if (k === 'tpl') go('tpl');
+    if (k === 'ats') { S.filter = 'ats'; go('tpl'); }
     if (k === 'docs') go('docs');
     if (k === 'design' || k === 'letter' || k === 'z83') go(k);
   });
@@ -1238,6 +1245,8 @@
         return '<label class="pack-row"><input type="checkbox" data-part="' + p[0] + '"' + (sel[p[0]] ? ' checked' : '') + '><span class="pack-n">' + (i + 1) + '</span><span><b>' + T(p[1]) + '</b>' + (sub ? '<small>' + esc(sub) + '</small>' : '') + '</span></label>';
       }).join('') + '</div>';
     }
+    if (!TP.get(c.templateId).ats) h += '<button class="pv-warn sheet-warn" data-x="go-ats">' + svg('info') + '<span><b>' + T('Applying on a job website?') + '</b><small>' +
+      T('This design is not ATS-friendly. Choose a template marked ATS.') + '</small></span></button>';
     h += '<div class="btns"><button class="btn" data-x="save">' + svg('pdf') + T('Save PDF') + '</button><button class="btn soft" data-x="share">' + svg('share') + T('Share') + '</button></div>';
     if (parts.length > 1) h += '<button class="sheet-item" data-x="split">' + svg('attach') + '<span>' + T('Share as separate files') + '<small>' + T('One PDF for each part you ticked') + '</small></span></button>';
     h += '<button class="sheet-item" data-x="print">' + svg('print') + '<span>' + T('Print') + '</span></button>';
@@ -1261,6 +1270,7 @@
       var x = b.getAttribute('data-x');
       if (x === 'check') { closeSheet(); if (App.hooks.checkSheet) App.hooks.checkSheet(c); return; }
       closeSheet();
+      if (x === 'go-ats') { S.filter = 'ats'; go('tpl'); return; }
       if (x.indexOf('go-') === 0) { go(x.slice(3)); return; }
       var track = $('#pk-track') ? $('#pk-track').checked : false;
       exportPack(x, packSel(c), job && !c.trackOff);
