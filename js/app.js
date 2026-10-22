@@ -189,6 +189,7 @@
         '<button class="sheet-item" data-m="pin">' + svg('lock') + '<span>' + T('PIN lock') + '<small>' + T(App.hooks.pinOn && App.hooks.pinOn() ? 'On' : 'Off') + '</small></span></button>' +
         '<button class="sheet-item" data-m="lang">' + svg('globe') + '<span>' + T('Language') + '<small>' + esc(window.CVi18n ? window.CVi18n.name() : 'English') + '</small></span></button>' +
         '<button class="sheet-item" data-m="sample">' + svg('sample') + '<span>' + T('Create a sample CV') + '<small>' + T('See how a finished CV looks') + '</small></span></button>' +
+        '<button class="sheet-item" data-m="feedback">' + svg('feedback') + '<span>' + T('Send feedback') + '<small>' + T('Tell us what to fix or add') + '</small></span></button>' +
         '<button class="sheet-item" data-m="about">' + svg('info') + '<span>' + T('About') + '</span></button>');
       sh.onclick = function (e) {
         var b = e.target.closest('[data-m]'); if (!b) return; closeSheet();
@@ -197,6 +198,7 @@
         if (m === 'restore') $('#file-restore').click();
         if (m === 'sample') { var c = D.sampleCV(); S.cur = c; S.list.unshift(c); saveNow(); S.stack = ['home', 'edit']; render(); }
         if (m === 'about') about();
+        if (m === 'feedback' && App.hooks.feedback) App.hooks.feedback();
         if (m === 'apps') go('apps');
         if (m === 'pin' && App.hooks.pinMenu) App.hooks.pinMenu();
         if (m === 'lang' && window.CVi18n) window.CVi18n.picker();
@@ -213,13 +215,19 @@
       '<p>' + T('Make South African CVs, cover letters and Z83 forms on your phone and save them as PDF or Word. {n} templates, including the traditional Classic SA layout.', { n: TP.list.length }) + '</p>' +
       '<div class="about-dev"><span>' + T('Designed and developed by') + '</span><b>' + DEVELOPER + '</b></div>' +
       '<p>' + T('Your CVs are saved only on this phone. Use "Back up all CVs" in the menu to keep a copy.') + '</p>' +
-      '<div class="credit-copy">© ' + new Date().getFullYear() + ' ' + DEVELOPER + '. ' + T('All rights reserved.') + '</div></div>' +
-      '<div class="sheet-foot"><button type="button" class="btn ghost" data-a="close">' + T('Close') + '</button></div>');
-    $('#sheet').onclick = function (e) { if (e.target.closest('[data-a="close"]')) closeSheet(); };
+      '<div class="credit-copy">© ' + new Date().getFullYear() + ' ' + DEVELOPER + '. ' + T('All rights reserved.') + '</div>' +
+      (App.hooks.privacy ? '<button type="button" class="about-pp" data-a="privacy">' + T('Privacy policy') + '</button>' : '') + '</div>' +
+      '<div class="sheet-foot">' + (App.hooks.feedback ? '<button type="button" class="btn soft" data-a="fb">' + T('Send feedback') + '</button>' : '') +
+      '<button type="button" class="btn ghost" data-a="close">' + T('Close') + '</button></div>');
+    $('#sheet').onclick = function (e) {
+      if (e.target.closest('[data-a="close"]')) closeSheet();
+      if (e.target.closest('[data-a="fb"]')) { closeSheet(); App.hooks.feedback(); }
+      if (e.target.closest('[data-a="privacy"]')) { closeSheet(); App.hooks.privacy(); }
+    };
   }
 
   /* ---------- home ---------- */
-  var APP_VERSION = '1.7';
+  var APP_VERSION = '1.8';
   var DEVELOPER = 'Tumelo Vincent Tau';
   var SHOWCASE = ['classic', 'aurora', 'mzansi', 'midnight', 'horizon', 'lagoon', 'kalahari', 'roadmap'];
   var sampleForShow = null;
@@ -237,6 +245,7 @@
       '<div class="hero-art" aria-hidden="true"><div class="ha-pg ha2" data-art="navy"></div><div class="ha-pg ha1" data-art="mzansi"></div></div>' +
       '<div class="flagline">' + TP.FLAG.map(function (c) { return '<i style="background:' + c + '"></i>'; }).join('') + '</div></section>';
     if (App.hooks && App.hooks.homeInstall) h += App.hooks.homeInstall();
+    if (App.hooks && App.hooks.homeFeedback) h += App.hooks.homeFeedback();
     if (App.hooks && App.hooks.homeTools) h += App.hooks.homeTools();
     if (sorted.length) {
       h += '<section class="block"><div class="block-h"><h2>' + T('My CVs') + '</h2><span class="count">' + sorted.length + '</span></div><div class="cv-list">';
@@ -1343,6 +1352,7 @@
   }
   function deliver(bytes, name, mime, mode) { deliverMany([{ bytes: bytes, name: name, mime: mime }], mode); }
   function deliverMany(files, mode) {
+    if (App.hooks && App.hooks.delivered) App.hooks.delivered(mode);
     if (NATIVE && NATIVE.begin) {
       files.forEach(sendNative);
       if (mode === 'share') NATIVE.share(JSON.stringify(files.map(function (f) { return f.name; })));
@@ -1439,7 +1449,7 @@
     saveSoon: saveSoon, deliverMany: deliverMany, fileBase: fileBase, b64: b64, PICK: PICK, VIEWS: VIEWS, ACTIONS: EXTRA_ACTIONS, cvTitle: cvTitle,
     renderHome: renderHome, docsOf: docsOf, fmtDate: fmtDateT, setLastSize: function (n) { lastSize = n; }, fileInUse: fileInUse, dropFiles: dropFiles,
     pickDocType: pickDocType, refreshSection: function (id) { refreshSection(id); }, hooks: {}, fmtWhen: fmtWhen, viewEl: viewEl, renderDocs: function () { renderDocs(); },
-    MONTHS: MONTHS
+    MONTHS: MONTHS, VERSION: APP_VERSION
   };
 
   // hide the bottom buttons while the on-screen keyboard is open (the screen gets shorter)

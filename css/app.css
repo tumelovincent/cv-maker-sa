@@ -774,3 +774,29 @@ svg.ico { fill: none !important; stroke: currentColor; }
 .ats-note { display: flex; align-items: flex-start; background: #E8F5EE; color: #145C3A; border-radius: 12px; padding: 10px 12px; margin: 0 2px 14px; font-size: 13px; line-height: 1.4; box-shadow: 0 0 0 1px #BFE3CF; }
 .ats-note .ats-b { margin: 1px 10px 0 0; }
 .pv-ats { margin-top: -4px; }
+
+/* ---------- send feedback ---------- */
+.fb { text-align: center; padding: 6px 18px 4px; }
+.fb-ic { width: 56px; height: 56px; border-radius: 16px; margin: 4px auto 10px; background: var(--green-l); display: flex; align-items: center; justify-content: center; }
+.fb-ic svg { width: 28px; height: 28px; fill: var(--green-d); }
+.fb h3 { margin: 0 0 6px; font-family: "F-montserrat", sans-serif; }
+.fb p { margin: 0 0 14px; color: var(--muted); font-size: 14px; line-height: 1.45; }
+.fb .btn.block { text-decoration: none; }
+.fb-or { margin: 16px 0 6px; font-size: 13px; color: var(--muted); }
+.fb-addr { display: flex; align-items: center; justify-content: center; flex-wrap: wrap; gap: 8px; padding: 10px 12px; border: 1px solid var(--line); border-radius: 12px; font-weight: 600; word-break: break-all; }
+.fb-addr .btn svg { width: 16px; height: 16px; }
+.fb .fb-note { margin: 14px 0 4px; font-size: 12.5px; }
+.fb-card .fb-card-ic { background: var(--green-l); display: flex; align-items: center; justify-content: center; }
+.fb-card .fb-card-ic svg { width: 26px; height: 26px; fill: var(--green-d); }
+
+/* ---------- privacy policy (in the app) ---------- */
+.about-pp { display: inline-block; margin: 10px 0 2px; background: none; border: 0; padding: 6px 8px; color: var(--green); font: inherit; font-size: 14px; font-weight: 600; text-decoration: underline; cursor: pointer; }
+.policy { padding: 4px 20px 6px; font-size: 14.5px; line-height: 1.55; }
+.policy h3 { margin: 4px 0 2px; font-family: "F-montserrat", sans-serif; }
+.policy h2 { font-family: "F-montserrat", sans-serif; font-size: 16px; margin: 20px 0 6px; color: var(--green-d); }
+.policy p { margin: 6px 0; }
+.policy ul { padding-left: 20px; margin: 6px 0; }
+.policy li { margin: 3px 0; }
+.policy a { color: var(--green); word-break: break-word; }
+.policy .muted { color: var(--muted); font-size: 13px; }
+.policy .sum { background: var(--green-l); border-radius: 12px; padding: 12px 14px; margin-top: 12px; }

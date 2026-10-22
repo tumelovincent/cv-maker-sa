@@ -876,6 +876,11 @@ window.CVi18nDict = {
 "Ikhophi engenayo iphasiwedi isilungile",
 "Kopie sonder die wagwoord is gereed"
 ],
+"Could not open the privacy policy": [
+"Leano la lekunutu le sitwe ho buleha",
+"Ayikwazanga ukuvula inqubomgomo yobumfihlo",
+"Kon nie die privaatheidsbeleid oopmaak nie"
+],
 "Could not prepare the file": [
 "Faele ha e a ka ya lokiswa",
 "Ifayela alikwazanga ukulungiswa",
@@ -1075,6 +1080,11 @@ window.CVi18nDict = {
 "E entswe le ho ntshetswa pele ke",
 "Yakhiwe futhi yathuthukiswa ngu",
 "Ontwerp en ontwikkel deur"
+],
+"Did anything not work? What happened?": [
+"Na ho na le ntho e sa kang ya sebetsa? Ho etsahetse eng?",
+"Ingabe kukhona okungazange kusebenze? Kwenzekeni?",
+"Het iets nie gewerk nie? Wat het gebeur?"
 ],
 "Diploma certificate": [
 "Setifikeiti sa diploma",
@@ -1285,6 +1295,11 @@ window.CVi18nDict = {
 "Aterese ya imeile",
 "Ikheli le-imeyili",
 "E-posadres"
+],
+"Email address copied": [
+"Aterese ya imeile e kopilwe",
+"Ikheli le-imeyili likopishiwe",
+"E-posadres gekopieer"
 ],
 "Employer": [
 "Mohiri",
@@ -1616,6 +1631,11 @@ window.CVi18nDict = {
 "Isimo sempilo",
 "Gesondheidstatus"
 ],
+"Hi Tumelo,": [
+"Dumela Tumelo,",
+"Sawubona Tumelo,",
+"Hallo Tumelo,"
+],
 "Hidden": [
 "E patilwe",
 "Kufihliwe",
@@ -1650,6 +1670,11 @@ window.CVi18nDict = {
 "Puo ya lapeng",
 "Ulimi lwasekhaya",
 "Huistaal"
+],
+"How did it go?": [
+"Ho tsamaile jwang?",
+"Kuhambe kanjani?",
+"Hoe het dit gegaan?"
 ],
 "How it works": [
 "Kamoo e sebetsang kateng",
@@ -2451,6 +2476,11 @@ window.CVi18nDict = {
 "Okwengeziwe ongakufaka",
 "Opsionele ekstras"
 ],
+"Or send an email to:": [
+"Kapa romela imeile ho:",
+"Noma thumela i-imeyili ku:",
+"Of stuur 'n e-pos na:"
+],
 "Orange": [
 "Lamunu",
 "Okuwolintshi",
@@ -2666,6 +2696,11 @@ window.CVi18nDict = {
 "Sicela ukhethe ifayela le-Word (.docx).",
 "Kies asseblief 'n Word-lêer (.docx)."
 ],
+"Please do not send your ID number or other private details.": [
+"Ka kopo o se ke wa romela nomoro ya hao ya ID kapa dintlha tse ding tsa lekunutu.",
+"Sicela ungathumeli inombolo yakho kamazisi noma eminye imininingwane eyimfihlo.",
+"Moet asseblief nie jou ID-nommer of ander privaat besonderhede stuur nie."
+],
 "Police clearance certificate": [
 "Setifikeiti sa tlhahlobo ya sepolesa",
 "Isitifiketi samaphoyisa sokungabi necala",
@@ -2740,6 +2775,11 @@ window.CVi18nDict = {
 "Ho hatisa ha ho fumanehe founong ena",
 "Ukuphrinta akutholakali kule foni",
 "Druk is nie op hierdie foon beskikbaar nie"
+],
+"Privacy policy": [
+"Leano la lekunutu",
+"Inqubomgomo yobumfihlo",
+"Privaatheidsbeleid"
 ],
 "Private sector": [
 "Lekala la poraefete",
@@ -3096,6 +3136,11 @@ window.CVi18nDict = {
 "Kukhethiwe",
 "Gekies"
 ],
+"Send feedback": [
+"Romela maikutlo",
+"Thumela impendulo",
+"Stuur terugvoer"
+],
 "September": [
 "Lwetse",
 "Septhemba",
@@ -3415,6 +3460,21 @@ window.CVi18nDict = {
 "Mohala",
 "Ucingo",
 "Telefoon"
+],
+"Tell Tumelo what was hard, what did not work or what you would like added. Your email app opens with a few short questions.": [
+"Bolella Tumelo se neng se le thata, se sa kang sa sebetsa kapa seo o ka ratang se ekeletswa. App ya hao ya imeile e tla buleha le dipotso tse mmalwa tse kgutshwane.",
+"Tshela uTumelo obekunzima, okungazange kusebenze noma ongathanda kwengezwe. I-app yakho ye-imeyili izovuleka inemibuzo embalwa emifushane.",
+"Sê vir Tumelo wat moeilik was, wat nie gewerk het nie of wat jy bygevoeg wil hê. Jou e-posapp maak oop met 'n paar kort vrae."
+],
+"Tell us what to fix or add": [
+"Re bolelle seo re lokelang ho se lokisa kapa ho se eketsa",
+"Sitshele okufanele sikulungise noma sikwengeze",
+"Sê vir ons wat om reg te maak of by te voeg"
+],
+"Tell us what was hard or what to add. It helps make CV Maker SA better for everyone.": [
+"Re bolelle se neng se le thata kapa seo re lokelang ho se eketsa. Ho thusa ho etsa hore CV Maker SA e be betere bakeng sa bohle.",
+"Sitshele obekunzima noma okufanele sikwengeze. Kusiza ukwenza i-CV Maker SA ibe ngcono kubo bonke.",
+"Sê vir ons wat moeilik was of wat om by te voeg. Dit help om CV Maker SA beter te maak vir almal."
 ],
 "Template": [
 "Sebopeho",
@@ -3771,10 +3831,25 @@ window.CVi18nDict = {
 "Ikhansela lewadi",
 "Wyksraadslid"
 ],
+"Was anything hard or confusing?": [
+"Na ho na le ntho e neng e le thata kapa e ferekanya?",
+"Ingabe kukhona obekunzima noma okudidayo?",
+"Was iets moeilik of verwarrend?"
+],
+"What did you make with the app? (CV, cover letter, Z83...)": [
+"O entse eng ka app? (CV, lengolo la kopo, Z83...)",
+"Wenzeni nge-app? (i-CV, incwadi yesicelo, i-Z83...)",
+"Wat het jy met die app gemaak? (CV, dekbrief, Z83...)"
+],
 "What is this document?": [
 "Tokomane ena ke eng?",
 "Iyini le dokhumenti?",
 "Wat is hierdie dokument?"
+],
+"What should we add or change?": [
+"Re lokela ho eketsa kapa ho fetola eng?",
+"Yini okufanele siyengeze noma siyishintshe?",
+"Wat moet ons byvoeg of verander?"
 ],
 "What you added to the PDF will be lost.": [
 "Seo o se kentseng ho PDF se tla lahleha.",
@@ -3856,6 +3931,11 @@ window.CVi18nDict = {
 "Ulwazi lomsebenzi",
 "Werkservaring"
 ],
+"Would you tell a friend about CV Maker SA? (Yes / Maybe / No)": [
+"Na o ka bolella motswalle ka CV Maker SA? (E / Mohlomong / Tjhe)",
+"Ungatshela umngane nge-CV Maker SA? (Yebo / Mhlawumbe / Cha)",
+"Sal jy 'n vriend van CV Maker SA vertel? (Ja / Miskien / Nee)"
+],
 "Write \"Available on request\" when no references are listed": [
 "Ngola \"Available on request\" ha ho se ditshupiso tse thathamisitsweng",
 "Bhala \"Available on request\" uma bengekho abakuncomayo ababhaliwe",
@@ -3865,6 +3945,11 @@ window.CVi18nDict = {
 "Ngola hape",
 "Bhala kabusha",
 "Skryf weer"
+],
+"Write an email": [
+"Ngola imeile",
+"Bhala i-imeyili",
+"Skryf 'n e-pos"
 ],
 "Write cover letter": [
 "Ngola lengolo la kopo",
