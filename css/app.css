@@ -800,3 +800,23 @@ svg.ico { fill: none !important; stroke: currentColor; }
 .policy a { color: var(--green); word-break: break-word; }
 .policy .muted { color: var(--muted); font-size: 13px; }
 .policy .sum { background: var(--green-l); border-radius: 12px; padding: 12px 14px; margin-top: 12px; }
+
+/* ---------- sponsor card (small, labelled, never on a CV) ---------- */
+.sp-card { margin: 18px 0 0; padding: 12px 14px 14px; background: #fff; border: 1px solid var(--line); border-radius: 16px; }
+.sp-tag { display: flex; align-items: center; gap: 8px; font-size: 12px; color: var(--muted); margin-bottom: 10px; }
+.sp-tag span { font-weight: 700; text-transform: uppercase; letter-spacing: .4px; font-size: 10.5px; color: #7A6A2E; background: #FBF3DD; border-radius: 6px; padding: 2px 6px; }
+.sp-body { display: flex; align-items: flex-start; }
+.sp-logo { width: 44px; height: 44px; border-radius: 12px; flex: none; margin-right: 12px; object-fit: cover; }
+.sp-ini { display: flex; align-items: center; justify-content: center; color: #fff; font-weight: 700; font-size: 16px; letter-spacing: .5px; }
+.sp-t { flex: 1; min-width: 0; }
+.sp-t b { display: block; font-size: 15px; }
+.sp-t span { display: block; color: var(--ink); font-size: 14px; line-height: 1.4; margin-top: 2px; }
+.sp-t small { display: block; color: var(--muted); font-size: 12.5px; margin-top: 3px; }
+.sp-card .sp-cta { margin: 12px 0 0 56px; text-decoration: none; display: inline-flex; }
+.sp-slim { display: flex; align-items: center; margin: 18px auto 6px; max-width: 620px; padding: 10px 12px; background: #fff; border: 1px solid var(--line); border-radius: 14px; }
+.sp-slim .sp-logo { width: 36px; height: 36px; border-radius: 10px; margin-right: 10px; font-size: 13px; }
+.sp-slim .sp-t b { font-size: 14px; }
+.sp-slim .sp-t span { font-size: 13px; color: var(--muted); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.sp-slim .sp-lbl { display: inline-block; margin: 0 0 1px; font-size: 10px; font-weight: 700; text-transform: uppercase; letter-spacing: .4px; color: #7A6A2E; }
+.sp-slim .sp-go { flex: none; margin-left: 10px; color: var(--green); font-weight: 700; font-size: 14px; text-decoration: none; padding: 8px 4px; }
+@media (min-width: 900px) { .sp-card { max-width: 620px; } }

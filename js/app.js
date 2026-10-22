@@ -227,7 +227,7 @@
   }
 
   /* ---------- home ---------- */
-  var APP_VERSION = '1.8';
+  var APP_VERSION = '1.9';
   var DEVELOPER = 'Tumelo Vincent Tau';
   var SHOWCASE = ['classic', 'aurora', 'mzansi', 'midnight', 'horizon', 'lagoon', 'kalahari', 'roadmap'];
   var sampleForShow = null;
@@ -258,6 +258,7 @@
       h += '</div></section>';
     }
     if (App.hooks && App.hooks.homeApps) h += App.hooks.homeApps();
+    if (App.hooks && App.hooks.homeSponsor) h += App.hooks.homeSponsor();
     h += '<section class="block"><div class="block-h"><h2>' + T('Templates') + '</h2><button class="see-all" id="see-all">' + T('See all {n}', { n: n }) + '</button></div>' +
       '<div class="strip">' + SHOWCASE.map(function (id) {
         return '<button class="strip-it" data-start="' + id + '"><div class="strip-pg" data-show="' + id + '"></div>' + atsBadge(TP.get(id), 'ats-tw') + '<span>' + esc(T(TP.get(id).name)) + '</span></button>';
@@ -1147,7 +1148,8 @@
       if (!hasZ83(c)) { v.innerHTML = h + emptyCard('z83'); return; }
       h += '<div class="pv-info"><div class="tname">' + esc(T('Z83 form')) + '</div><button class="btn soft small" data-pv="z83">' + svg('edit') + T('Edit Z83') + '</button></div><div id="pv-z83miss"></div>';
     }
-    h += '<div class="pages" id="pages"><div class="busy-card" style="box-shadow:none;background:none"><div class="spin"></div>' + T('Preparing preview…') + '</div></div><div id="pv-docs"></div>';
+    h += '<div class="pages" id="pages"><div class="busy-card" style="box-shadow:none;background:none"><div class="spin"></div>' + T('Preparing preview…') + '</div></div><div id="pv-docs"></div>' +
+      (App.hooks && App.hooks.pvSponsor ? '<div id="pv-sponsor">' + App.hooks.pvSponsor() + '</div>' : '');
     v.innerHTML = h;
     var seq = ++layoutSeq;
     var job = tab === 'cv' ? PG.layout(c, c.templateId) : PG.layoutDoc(tab === 'letter' ? window.CVLetter.render(c) : window.CVZ83.render(c));

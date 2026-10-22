@@ -846,6 +846,11 @@ window.CVi18nDict = {
 "Nciphisa usayizi we-PDF",
 "Verklein PDF"
 ],
+"Contact": [
+"Ikopanye",
+"Xhumana",
+"Kontak"
+],
 "Contact details": [
 "Dintlha tsa ho ikopanya",
 "Imininingwane yokuxhumana",
@@ -1630,6 +1635,11 @@ window.CVi18nDict = {
 "Boemo ba bophelo",
 "Isimo sempilo",
 "Gesondheidstatus"
+],
+"Helps keep CV Maker SA free": [
+"E thusa hore CV Maker SA e dule e le mahala",
+"Isiza ukuthi i-CV Maker SA ihlale imahhala",
+"Help om CV Maker SA gratis te hou"
 ],
 "Hi Tumelo,": [
 "Dumela Tumelo,",
@@ -3300,6 +3310,11 @@ window.CVi18nDict = {
 "Arola PDF",
 "Hlukanisa i-PDF",
 "Verdeel PDF"
+],
+"Sponsored": [
+"Papatso",
+"Isikhangiso",
+"Geborg"
 ],
 "Start month": [
 "Kgwedi ya ho qala",
