@@ -330,8 +330,12 @@
     var p = cv.personal || {}, c = cv.contact || {}, s = cv.school || {};
     var h = '';
     function head(title) { return '<div class="blk kwn c-h"><span class="u">' + esc(title) + '</span></div>'; }
+    // "Label ........ : value": the dot leader joins each label to its value, so job-portal systems (ATS)
+    // read "Date of Birth ... : 14 May 1998" on one line instead of a column of labels and a column of values
+    var LEAD = new Array(90).join('.');
     function row(label, value, gap) {
-      return '<div class="blk c-row' + (gap ? ' c-gap' : '') + '"><div class="c-l">' + esc(label) + '</div><div class="c-v">: ' + esc(value) + '</div></div>';
+      var l = label ? '<span class="c-lt">' + esc(label) + '</span><span class="lead" aria-hidden="true">' + LEAD + '</span>' : '';
+      return '<div class="blk c-row' + (gap ? ' c-gap' : '') + '"><div class="c-l">' + l + '</div><div class="c-v">: ' + esc(value) + '</div></div>';
     }
     function rows(label, value, gap) {
       var ls = Array.isArray(value) ? value : D.lines(value);

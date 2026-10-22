@@ -219,7 +219,7 @@
   }
 
   /* ---------- home ---------- */
-  var APP_VERSION = '1.6';
+  var APP_VERSION = '1.7';
   var DEVELOPER = 'Tumelo Vincent Tau';
   var SHOWCASE = ['classic', 'aurora', 'mzansi', 'midnight', 'horizon', 'lagoon', 'kalahari', 'roadmap'];
   var sampleForShow = null;

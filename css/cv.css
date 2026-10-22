@@ -78,7 +78,9 @@
 .f-classic .c-title + .c-h { margin-top: 0; }
 .f-classic .c-row { display: flex; }
 .f-classic .c-row.c-gap { margin-top: calc(17.6px * var(--k, 1)); }
-.f-classic .c-l { width: 287px; flex: none; padding-left: 8px; padding-right: 8px; }
+.f-classic .c-l { width: 287px; flex: none; padding-left: 8px; padding-right: 3px; display: flex; }
+.f-classic .c-lt { flex: none; white-space: nowrap; }
+.f-classic .lead { flex: 1 1 0; min-width: 0; overflow: hidden; white-space: nowrap; padding-left: 4px; color: #8a8a8a; direction: rtl; text-align: right; }
 .f-classic .c-v { flex: 1; padding-left: 8px; text-indent: -8px; }
 .f-classic .c-p { padding: 0 8px; }
 .f-classic .c-sig { display: flex; align-items: flex-end; margin-top: 30px; padding: 0 8px; }

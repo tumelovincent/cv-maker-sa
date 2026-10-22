@@ -147,8 +147,9 @@
     var images = [];
     var texts = [];
 
-    function walk(el) {
+    function walk(el, blk) {
       if (el === probeHost) return;
+      if (el.classList && el.classList.contains('blk')) blk = el;
       var cs = getComputedStyle(el);
       if (cs.display === 'none' || cs.visibility === 'hidden') return;
       if (el.classList && el.classList.contains('pg-spacer')) return;
@@ -184,9 +185,12 @@
           return;
         }
       }
+      // leader (dots or spaces between a label and its value): drawn as real characters up to the box's right edge,
+      // so the label and the value read as one line in job-portal systems (ATS)
+      var lead = el.classList && el.classList.contains('lead') ? { l: rc.left - ox, r: rc.right - ox } : null;
       for (var c = el.firstChild; c; c = c.nextSibling) {
-        if (c.nodeType === 3) texts.push({ node: c, cs: cs });
-        else if (c.nodeType === 1) walk(c);
+        if (c.nodeType === 3) texts.push({ node: c, cs: cs, clip: lead, blk: blk || null });
+        else if (c.nodeType === 1) walk(c, blk);
       }
     }
 
@@ -227,10 +231,10 @@
     }
 
     // ---- text ----
-    var range = document.createRange();
+    var range = document.createRange(), pieces = [];
     for (var ti = 0; ti < texts.length; ti++) {
-      var t = texts[ti], node = t.node, cs = t.cs, str = node.nodeValue;
-      if (!/\S/.test(str)) continue;
+      var t = texts[ti], node = t.node, cs = t.cs, str = node.nodeValue, clip = t.clip;
+      if (clip == null && !/\S/.test(str)) continue;
       var col = parseColor(cs.color);
       if (!col) continue;
       var fs = px(cs.fontSize), fwRaw = parseInt(cs.fontWeight, 10) || 400;
@@ -251,6 +255,14 @@
         var piece = str.substr(i2, len);
         i2 += len - 1;
         if (!rect) continue;
+        if (clip != null) { // leader: every character kept (spaces too), none past the box edge
+          var top0 = rect.top - oy, left0 = rect.left - ox;
+          if (left0 < clip.l - 0.5 || rect.right - ox > clip.r + 0.5 || rect.width < 0.01) continue;
+          if (!cur) { cur = { top: top0, left: left0, right: left0, s: '', xs: [], cs: [], keep: true }; lines.push(cur); }
+          var g0 = piece === '\u00a0' ? ' ' : piece; cur.s += g0; cur.xs.push(left0); cur.cs.push(g0);
+          cur.left = Math.min(cur.left, left0); cur.right = Math.max(cur.right, rect.right - ox);
+          continue;
+        }
         var ws = /\s/.test(piece);
         if (ws && rect.width < 0.01) continue;
         var top = rect.top - oy, left = rect.left - ox;
@@ -265,26 +277,83 @@
       }
       for (var li = 0; li < lines.length; li++) {
         var ln = lines[li];
-        var s2 = ln.s.replace(/\s+$/, '');
+        var s2 = ln.keep ? ln.s : ln.s.replace(/\s+$/, '');
         if (!s2) continue;
         var p2 = pageAt(ln.top + fs / 2), ly2 = ln.top - p2 * PH;
-        var by = A4H - (ly2 + asc) * S;
-        var pgx = pages[p2];
-        if (ls > 0.05) {
-          // spaced-out text (headings) stays one piece of text, using the PDF's own character spacing,
-          // so job-portal systems (ATS) read "WORK EXPERIENCE" and not "W O R K  E X P E R I E N C E"
-          pgx.pushOperators(L.setCharacterSpacing(ls * S));
-          pgx.drawText(s2, { x: ln.left * S, y: by, size: fs * S, font: pdfFont, color: col.c, opacity: col.a });
-          pgx.pushOperators(L.setCharacterSpacing(0));
-        } else {
-          pgx.drawText(s2, { x: ln.left * S, y: by, size: fs * S, font: pdfFont, color: col.c, opacity: col.a });
-        }
-        if (underline) {
-          var uy = ly2 + asc + Math.max(1, fs * 0.11);
-          fillRect(ln.left, p2 * PH + uy, ln.right - ln.left, Math.max(0.8, fs * 0.055), col);
-        }
+        pieces.push({ s: s2, p: p2, top: ly2, left: ln.left, right: ln.right, by: A4H - (ly2 + asc) * S, asc: asc, fs: fs, ls: ls,
+          font: pdfFont, col: col, underline: underline, blk: t.blk, lead: clip != null });
       }
     }
+
+    // ATS-friendly templates: a wide empty gap inside one row (label ... value, job title ... dates) is filled with
+    // ordinary spaces. They are invisible, but systems that rebuild lines from the page (ATS layout readers) then read
+    // the row as one line instead of moving the right-hand part somewhere else.
+    var fill = {};
+    if (result.tpl && result.tpl.ats) {
+      var rows = [];
+      pieces.forEach(function (pc, i) {
+        if (!pc.blk) return;
+        var g = null;
+        for (var k = 0; k < rows.length && !g; k++) {
+          var r0 = rows[k][0];
+          if (r0.p !== pc.p || r0.blk !== pc.blk) continue;
+          var ov = Math.min(r0.top + r0.fs, pc.top + pc.fs) - Math.max(r0.top, pc.top);
+          if (ov > 0.5 * Math.min(r0.fs, pc.fs) && Math.max(r0.fs, pc.fs) / Math.min(r0.fs, pc.fs) < 1.4) g = rows[k];
+        }
+        pc.i = i;
+        if (g) g.push(pc); else rows.push([pc]);
+      });
+      var edge = new Map(); // left edge of each block's content
+      function blkLeft(b) {
+        if (!edge.has(b)) { var bc = getComputedStyle(b); edge.set(b, b.getBoundingClientRect().left - ox + px(bc.paddingLeft) + px(bc.borderLeftWidth)); }
+        return edge.get(b);
+      }
+      rows.forEach(function (row) {
+        row.sort(function (a, b) { return a.left - b.left; });
+        // a centred line (headings) starts from the block's left edge too, so it is read before the lines under it
+        var f0 = row[0], lead0 = f0.left - blkLeft(f0.blk);
+        if (lead0 > 2 * f0.fs && !f0.lead) {
+          var adv0 = f0.font.widthOfTextAtSize(' ', f0.fs);
+          if (adv0 > 0) { var n0 = Math.max(1, Math.round(lead0 / adv0)); f0.pre = { x: f0.left - lead0, n: n0, tc: (lead0 - n0 * adv0) / n0 }; }
+        }
+        if (row.length < 2) return;
+        for (var k = 0; k + 1 < row.length; k++) {
+          var a = row[k], b = row[k + 1], gap = b.left - a.right;
+          if (gap < 0.6 * a.fs) continue;
+          var adv = a.font.widthOfTextAtSize(' ', a.fs);
+          if (!(adv > 0)) continue;
+          var n = Math.max(1, Math.round(gap / adv));
+          (fill[a.i] = fill[a.i] || []).push({ x: a.right, n: n, tc: (gap - n * adv) / n });
+        }
+      });
+    }
+
+    pieces.forEach(function (pc, i) {
+      var pgx = pages[pc.p];
+      if (pc.pre) {
+        pgx.pushOperators(L.setCharacterSpacing(pc.pre.tc * S));
+        pgx.drawText(new Array(pc.pre.n + 1).join(' '), { x: pc.pre.x * S, y: pc.by, size: pc.fs * S, font: pc.font, color: pc.col.c, opacity: pc.col.a });
+        pgx.pushOperators(L.setCharacterSpacing(0));
+      }
+      if (pc.ls > 0.05) {
+        // spaced-out text (headings) stays one piece of text, using the PDF's own character spacing,
+        // so job-portal systems (ATS) read "WORK EXPERIENCE" and not "W O R K  E X P E R I E N C E"
+        pgx.pushOperators(L.setCharacterSpacing(pc.ls * S));
+        pgx.drawText(pc.s, { x: pc.left * S, y: pc.by, size: pc.fs * S, font: pc.font, color: pc.col.c, opacity: pc.col.a });
+        pgx.pushOperators(L.setCharacterSpacing(0));
+      } else {
+        pgx.drawText(pc.s, { x: pc.left * S, y: pc.by, size: pc.fs * S, font: pc.font, color: pc.col.c, opacity: pc.col.a });
+      }
+      (fill[i] || []).forEach(function (f) {
+        pgx.pushOperators(L.setCharacterSpacing(f.tc * S));
+        pgx.drawText(new Array(f.n + 1).join(' '), { x: f.x * S, y: pc.by, size: pc.fs * S, font: pc.font, color: pc.col.c, opacity: pc.col.a });
+        pgx.pushOperators(L.setCharacterSpacing(0));
+      });
+      if (pc.underline) {
+        var uy = pc.top + pc.asc + Math.max(1, pc.fs * 0.11);
+        fillRect(pc.left, pc.p * PH + uy, pc.right - pc.left, Math.max(0.8, pc.fs * 0.055), pc.col);
+      }
+    });
     probeHost.remove();
     return doc.save();
   }

@@ -47,7 +47,7 @@
       p += '<w:pBdr>' + ['top', 'left', 'bottom', 'right'].map(function (s) { return o.bdr[s] ? bdr(s, o.bdr[s]) : ''; }).join('') + '</w:pBdr>';
     }
     if (o.shd) p += '<w:shd w:val="clear" w:color="auto" w:fill="' + hex(o.shd) + '"/>';
-    if (o.tabs) p += '<w:tabs>' + o.tabs.map(function (t) { return '<w:tab w:val="' + (t.val || 'left') + '" w:pos="' + t.pos + '"/>'; }).join('') + '</w:tabs>';
+    if (o.tabs) p += '<w:tabs>' + o.tabs.map(function (t) { return '<w:tab w:val="' + (t.val || 'left') + '"' + (t.leader ? ' w:leader="' + t.leader + '"' : '') + ' w:pos="' + t.pos + '"/>'; }).join('') + '</w:tabs>';
     var sp = o.sp || {};
     if (sp.before != null || sp.after != null || sp.line != null) {
       p += '<w:spacing w:before="' + (sp.before || 0) + '" w:after="' + (sp.after || 0) + '"' +
@@ -281,7 +281,8 @@
   function classic(cv, t, ctx) {
     var p = cv.personal, c = cv.contact, s = cv.school;
     var BA = 'Book Antiqua', out = '';
-    var row = { tabs: [{ val: 'left', pos: 4305 }], ind: { left: 4425, hanging: 4305 } };
+    // labelled rows get a dot leader up to the colon (same as the PDF), so systems read the label with its value
+    var row = { tabs: [{ val: 'left', pos: 4305 }], lead: [{ val: 'left', pos: 4305, leader: 'dot' }], ind: { left: 4425, hanging: 4305 } };
     var AC = t.c.accent || '#000000', LN = SZ(264);
     function head(title, first) {
       return P(R(title, { b: true, u: true, font: BA, color: AC, sz: SZ(22) }), { keepNext: true, jc: 'center', shd: t.shade ? t.c.shade : null,
@@ -291,8 +292,9 @@
     function rows(label, value, gap, keep) {
       var ls = Array.isArray(value) ? value : D.lines(value);
       return ls.map(function (v, i) {
-        return P([R(i ? '' : label, { font: BA, sz: SZ(22) }), R('\t: ' + v, { font: BA, sz: SZ(22) })],
-          { keepNext: keep, tabs: row.tabs, ind: row.ind, sp: { before: gap && !i ? LN : 0, after: 0, line: LN, rule: 'exact' } });
+        var lab = !i && label;
+        return P([R(i ? '' : label, { font: BA, sz: SZ(22) }), R('\t', { font: BA, sz: SZ(22), color: lab ? '#8A8A8A' : null }), R(': ' + v, { font: BA, sz: SZ(22) })],
+          { keepNext: keep, tabs: lab ? row.lead : row.tabs, ind: row.ind, sp: { before: gap && !i ? LN : 0, after: 0, line: LN, rule: 'exact' } });
       }).join('');
     }
     // rows of one group (one job, one reference...) are kept together on a page when they are short

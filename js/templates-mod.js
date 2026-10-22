@@ -372,7 +372,7 @@
   /* ---------- ATS-friendly: the 20 designs that job-portal systems (ATS) read correctly ----------
      One column, normal reading order, name/email/phone kept whole, headings without wide letter spacing.
      Checked by extracting the text of each PDF the way those systems do. */
-  var ATS = ['ats', 'minimal', 'swiss', 'garamond', 'elegant', 'ocean', 'maroon', 'emerald', 'summit', 'meridian',
+  var ATS = ['classic', 'classic-shade', 'ats', 'minimal', 'swiss', 'garamond', 'elegant', 'ocean', 'maroon', 'emerald', 'summit', 'meridian',
     'copper', 'ivory', 'atlas', 'horizon', 'protea', 'baobab', 'metro', 'stone', 'saffron', 'aurora'];
   TP.list.forEach(function (t) {
     t.tags = t.tags.filter(function (k) { return k !== 'ats'; });
