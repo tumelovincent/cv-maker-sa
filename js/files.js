@@ -387,4 +387,5 @@
     movePage: movePage, partsOf: partsOf, fileIds: fileIds, sync: sync, refreshThumb: refreshThumb, bundle: bundle, letter: letter, label: label,
     fmtSize: fmtSize, estimate: estimate, bytesURL: bytesURL, exportImage: exportImage, ready: db
   };
+  if (window.CVLibs) window.CVLibs.wrap(window.CVFiles, ['importFile', 'bundle'], 'pdf');
 })();

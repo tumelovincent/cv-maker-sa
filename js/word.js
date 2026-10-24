@@ -97,7 +97,9 @@
       extra.textContent = '#word-stage .wp-nomark::before{content:none!important}#word-stage .wp-mk{display:inline-block;min-width:18pt;text-indent:0;white-space:pre}#word-stage .dx{hyphens:manual!important}';
       document.head.appendChild(extra);
     }
-    return window.CVPdfTools.loadScript('js/lib/docx-preview.min.js').then(function () {
+    return (window.CVLibs ? window.CVLibs.need('zip') : Promise.resolve()).then(function () {
+      return window.CVPdfTools.loadScript('js/lib/docx-preview.min.js');
+    }).then(function () {
       return window.docx.renderAsync(new Blob([bytes]), src, styleHost, {
         className: 'dx', inWrapper: false, ignoreWidth: false, ignoreHeight: false, ignoreFonts: true, breakPages: true,
         ignoreLastRenderedPageBreak: true, useBase64URL: true, renderHeaders: true, renderFooters: true, renderFootnotes: true, renderEndnotes: true, experimental: false

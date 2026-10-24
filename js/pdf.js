@@ -366,4 +366,5 @@
   }
 
   window.CVPdf = { make: makePdf, fontBase: 'fonts/' };
+  if (window.CVLibs) window.CVLibs.wrap(window.CVPdf, ['make'], 'pdf');
 })();

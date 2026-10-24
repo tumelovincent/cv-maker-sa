@@ -99,7 +99,7 @@ body.at-home main { padding-top: 0; }
 .credit-by { margin-top: 10px; }
 .credit-by b { color: var(--ink); font-size: 15px; }
 .credit-note { margin-top: 10px; }
-.credit-copy { margin-top: 4px; font-size: 12px; color: #7C8883; }
+.credit-copy { margin-top: 4px; font-size: 12px; color: var(--muted); }
 
 /* ---------- about sheet ---------- */
 .about { text-align: center; padding: 6px 4px 6px; }
@@ -786,6 +786,11 @@ svg.ico { fill: none !important; stroke: currentColor; }
 .fb-addr { display: flex; align-items: center; justify-content: center; flex-wrap: wrap; gap: 8px; padding: 10px 12px; border: 1px solid var(--line); border-radius: 12px; font-weight: 600; word-break: break-all; }
 .fb-addr .btn svg { width: 16px; height: 16px; }
 .fb .fb-note { margin: 14px 0 4px; font-size: 12.5px; }
+/* tell a friend (website) */
+.tf-msg { text-align: left; background: var(--green-l); color: var(--ink); border-radius: 12px 12px 12px 4px; padding: 10px 12px; margin: 0 0 14px; font-size: 14px; line-height: 1.45; word-break: break-word; }
+.tf-row { display: flex; gap: 8px; margin-top: 10px; }
+.tf-row .btn { flex: 1; justify-content: center; }
+.tf-row .btn svg { width: 16px; height: 16px; }
 .fb-card .fb-card-ic { background: var(--green-l); display: flex; align-items: center; justify-content: center; }
 .fb-card .fb-card-ic svg { width: 26px; height: 26px; fill: var(--green-d); }
 

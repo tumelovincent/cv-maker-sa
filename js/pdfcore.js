@@ -4,7 +4,8 @@
    Everything happens on the phone - files are never uploaded. */
 (function () {
   'use strict';
-  var L = window.PDFLib;
+  // the PDF library may arrive after this file (website), so look it up each time it is used
+  var L = window.PDFLib || new Proxy({}, { get: function (t, k) { return window.PDFLib[k]; } });
   var A4 = [595.28, 841.89];
   function tr(s, vars) { var A = window.App; if (A && A.T) return A.T(s, vars); Object.keys(vars || {}).forEach(function (k) { s = s.split('{' + k + '}').join(vars[k]); }); return s; }
   function err(msg, code) { var e = new Error(msg); if (code) e.code = code; return e; }
@@ -563,4 +564,6 @@
     compress: compress, unlock: unlock, watermark: watermark, protect: protect, addMarks: addMarks, toPhotos: toPhotos,
     md5: md5, rc4: rc4, A4: A4
   };
+  if (window.CVLibs) window.CVLibs.wrap(window.CVPdfTools, ['pageCount', 'imagesToPdf', 'merge', 'organise', 'extract', 'compress', 'unlock',
+    'watermark', 'protect', 'addMarks', 'toPhotos'], 'pdf');
 })();

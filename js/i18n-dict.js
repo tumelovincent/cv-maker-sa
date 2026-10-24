@@ -876,6 +876,11 @@ window.CVi18nDict = {
 "Kopisha",
 "Kopieer"
 ],
+"Copy link": [
+"Kopisa lehokelo",
+"Kopisha isixhumanisi",
+"Kopieer skakel"
+],
 "Copy made": [
 "Kopi e entswe",
 "Ikhophi yenziwe",
@@ -1641,6 +1646,11 @@ window.CVi18nDict = {
 "Isimo sempilo",
 "Gesondheidstatus"
 ],
+"Help a friend find work": [
+"Thusa motswalle ho fumana mosebetsi",
+"Siza umngane athole umsebenzi",
+"Help 'n vriend om werk te kry"
+],
 "Help with your application": [
 "Thuso ka kopo ya hao",
 "Usizo ngesicelo sakho",
@@ -1906,6 +1916,11 @@ window.CVi18nDict = {
 "Landelela imisebenzi ofaka izicelo kuyo, nezinsuku zokuvala nezikhumbuzo.",
 "Hou tred met die werke waarvoor jy aansoek doen, met sluitingsdatums en herinneringe."
 ],
+"Know someone looking for work? Send them CV Maker SA. It is free and works on any phone.": [
+"O tseba motho ya batlang mosebetsi? Mo romele CV Maker SA. Ke mahala mme e sebetsa fonong efe kapa efe.",
+"Ukhona umuntu omaziyo ofuna umsebenzi? Mthumelele i-CV Maker SA. Imahhala futhi isebenza kunoma iyiphi ifoni.",
+"Ken jy iemand wat werk soek? Stuur vir hulle CV Maker SA. Dit is gratis en werk op enige foon."
+],
 "Label each document (Annexure A, B…)": [
 "Ngola lebitso tokomaneng ka nngwe (Annexure A, B…)",
 "Faka ilebula kudokhumenti ngayinye (Annexure A, B…)",
@@ -1960,6 +1975,11 @@ window.CVi18nDict = {
 "E bobebe",
 "Okulula",
 "Lig"
+],
+"Link copied": [
+"Lehokelo le kopilwe",
+"Isixhumanisi sikopishiwe",
+"Skakel gekopieer"
 ],
 "LinkedIn or website": [
 "LinkedIn kapa websaete",
@@ -2035,6 +2055,11 @@ window.CVi18nDict = {
 "Etsa CV ya hao, lengolo la kopo le Z83 - mme jwale o ka skena, wa saena le ho lokisa PDF efe kapa efe.",
 "Yenza i-CV yakho, incwadi yesicelo ne-Z83 - futhi manje ungaskena, usayine futhi ulungise noma iyiphi i-PDF.",
 "Maak jou CV, dekbrief en Z83 - en skandeer, onderteken en verander nou enige PDF."
+],
+"Make your CV, cover letter and Z83 for free on your phone with CV Maker SA:": [
+"Etsa CV ya hao, lengolo la kopo le Z83 mahala fonong ya hao ka CV Maker SA:",
+"Yenza i-CV yakho, incwadi yesicelo ne-Z83 mahhala efonini yakho nge-CV Maker SA:",
+"Maak jou CV, dekbrief en Z83 gratis op jou foon met CV Maker SA:"
 ],
 "Making a copy without the password…": [
 "E etsa kopi e se nang phasewete…",
@@ -2160,6 +2185,11 @@ window.CVi18nDict = {
 "Tse ding",
 "Okunye",
 "Meer"
+],
+"More apps": [
+"Di-app tse ding",
+"Amanye ama-app",
+"Ander apps"
 ],
 "More skills for my jobs": [
 "Bokgoni bo bong bakeng sa mesebetsi ya ka",
@@ -2625,6 +2655,11 @@ window.CVi18nDict = {
 "Serapa sa {n}",
 "Isigaba {n}",
 "Paragraaf {n}"
+],
+"Part of CV Maker SA did not load. Check your internet connection and try again.": [
+"Karolo e nngwe ya CV Maker SA ha e a bulega. Hlahloba inthanete ya hao mme o leke hape.",
+"Ingxenye ye-CV Maker SA ayivulekanga. Hlola i-inthanethi yakho bese uzama futhi.",
+"'n Deel van CV Maker SA het nie gelaai nie. Kyk na jou internetverbinding en probeer weer."
 ],
 "Passport number (non-South Africans only)": [
 "Nomoro ya phasepoto (bao e seng ba Afrika Borwa feela)",
@@ -3156,6 +3191,11 @@ window.CVi18nDict = {
 "Kukhethiwe",
 "Gekies"
 ],
+"Send CV Maker SA to someone looking for work": [
+"Romela CV Maker SA ho motho ya batlang mosebetsi",
+"Thumela i-CV Maker SA kumuntu ofuna umsebenzi",
+"Stuur CV Maker SA vir iemand wat werk soek"
+],
 "Send feedback": [
 "Romela maikutlo",
 "Thumela impendulo",
@@ -3490,6 +3530,11 @@ window.CVi18nDict = {
 "Bolella Tumelo se neng se le thata, se sa kang sa sebetsa kapa seo o ka ratang se ekeletswa. App ya hao ya imeile e tla buleha le dipotso tse mmalwa tse kgutshwane.",
 "Tshela uTumelo obekunzima, okungazange kusebenze noma ongathanda kwengezwe. I-app yakho ye-imeyili izovuleka inemibuzo embalwa emifushane.",
 "Sê vir Tumelo wat moeilik was, wat nie gewerk het nie of wat jy bygevoeg wil hê. Jou e-posapp maak oop met 'n paar kort vrae."
+],
+"Tell a friend": [
+"Bolella motswalle",
+"Tshela umngane",
+"Vertel 'n vriend"
 ],
 "Tell us what to fix or add": [
 "Re bolelle seo re lokelang ho se lokisa kapa ho se eketsa",

@@ -1,6 +1,7 @@
 /* The sponsor card: one small, clearly labelled card from window.CV_SPONSORS (js/sponsors.js).
    Shown on the front page (after "My CVs") and under the CV preview, never while typing a CV, never in a file.
-   Nothing is counted or sent: tapping the button only opens the sponsor's own link (WhatsApp, phone, email, website). */
+   Showing a card sends nothing. In the app, tapping the button only opens the sponsor's own link (WhatsApp, phone, email, website);
+   on the website the tap goes through a short page first so the visitor counter can count it (js/web.js, web/go.template.html). */
 (function () {
   'use strict';
   var A = window.App, esc = A.esc, T = A.T;
@@ -31,7 +32,7 @@
   }
   function link(s, cls) {
     var ext = /^https?:/i.test(s.action);
-    return '<a class="' + cls + '" href="' + esc(s.action) + '"' + (ext ? ' target="_blank" rel="noopener"' : '') + '>' + esc(s.cta || T('Contact')) + '</a>';
+    return '<a class="' + cls + '" href="' + esc(s.action) + '" data-sp="' + esc(s.id || '') + '"' + (ext ? ' target="_blank" rel="noopener"' : '') + '>' + esc(s.cta || T('Contact')) + '</a>';
   }
   function tag() { return '<div class="sp-tag"><span>' + T('Sponsored') + '</span>' + T('Helps keep CV Maker SA free') + '</div>'; }
 

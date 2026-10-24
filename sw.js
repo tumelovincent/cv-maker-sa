@@ -1,5 +1,5 @@
 /* CV Maker SA - keeps the app on the phone so it opens and works without internet. Made by web/build.sh. */
-var VERSION = '20261024-f7122433';
+var VERSION = '20261024-9824033d';
 var CACHE = 'cvmaker-' + VERSION;
 var FILES = [
 "./",
@@ -65,6 +65,7 @@ var FILES = [
 "js/i18n-dict.js",
 "js/i18n.js",
 "js/letter.js",
+"js/libs.js",
 "js/paginate.js",
 "js/pdf.js",
 "js/pdfcore.js",
@@ -88,7 +89,14 @@ var FILES = [
 "js/lib/pdfjs.worker.min.js"
 ];
 self.addEventListener('install', function (e) {
-  e.waitUntil(caches.open(CACHE).then(function (c) { return c.addAll(FILES.map(function (f) { return new Request(f, { cache: 'reload' }); })); }));
+  // first visit: the page has just downloaded many of these files, so take them from the browser's own cache
+  // instead of using the person's data twice. Updates: always fetch fresh copies.
+  e.waitUntil(caches.keys().then(function (keys) {
+    var update = keys.some(function (k) { return k.indexOf('cvmaker-') === 0; });
+    return caches.open(CACHE).then(function (c) {
+      return c.addAll(FILES.map(function (f) { return new Request(f, { cache: update ? 'reload' : 'default' }); }));
+    });
+  }));
 });
 self.addEventListener('activate', function (e) {
   e.waitUntil(caches.keys().then(function (keys) {

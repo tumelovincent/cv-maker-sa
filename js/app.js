@@ -189,6 +189,7 @@
         '<button class="sheet-item" data-m="pin">' + svg('lock') + '<span>' + T('PIN lock') + '<small>' + T(App.hooks.pinOn && App.hooks.pinOn() ? 'On' : 'Off') + '</small></span></button>' +
         '<button class="sheet-item" data-m="lang">' + svg('globe') + '<span>' + T('Language') + '<small>' + esc(window.CVi18n ? window.CVi18n.name() : 'English') + '</small></span></button>' +
         '<button class="sheet-item" data-m="sample">' + svg('sample') + '<span>' + T('Create a sample CV') + '<small>' + T('See how a finished CV looks') + '</small></span></button>' +
+        (App.hooks.tellFriend ? '<button class="sheet-item" data-m="friend">' + svg('share') + '<span>' + T('Tell a friend') + '<small>' + T('Send CV Maker SA to someone looking for work') + '</small></span></button>' : '') +
         '<button class="sheet-item" data-m="feedback">' + svg('feedback') + '<span>' + T('Send feedback') + '<small>' + T('Tell us what to fix or add') + '</small></span></button>' +
         '<button class="sheet-item" data-m="about">' + svg('info') + '<span>' + T('About') + '</span></button>');
       sh.onclick = function (e) {
@@ -199,6 +200,7 @@
         if (m === 'sample') { var c = D.sampleCV(); S.cur = c; S.list.unshift(c); saveNow(); S.stack = ['home', 'edit']; render(); }
         if (m === 'about') about();
         if (m === 'feedback' && App.hooks.feedback) App.hooks.feedback();
+        if (m === 'friend' && App.hooks.tellFriend) App.hooks.tellFriend();
         if (m === 'apps') go('apps');
         if (m === 'pin' && App.hooks.pinMenu) App.hooks.pinMenu();
         if (m === 'lang' && window.CVi18n) window.CVi18n.picker();
@@ -236,7 +238,7 @@
     var n = TP.list.length;
     var sorted = S.list.slice().sort(function (a, b) { return b.updated - a.updated; });
     var h = '<section class="hero">' +
-      (window.CVi18n ? '<div class="hero-top"><button class="hero-lang" id="hero-lang" aria-label="' + esc(T('Language')) + '">' + svg('globe') + '<span>' + esc(window.CVi18n.name()) + '</span></button></div>' : '') +
+      (window.CVi18n ? '<div class="hero-top"><button class="hero-lang" id="hero-lang" aria-label="' + esc(T('Language') + ': ' + window.CVi18n.name()) + '">' + svg('globe') + '<span>' + esc(window.CVi18n.name()) + '</span></button></div>' : '') +
       '<h1>' + T('Your CV, ready for South African employers') + '</h1>' +
       '<p class="hero-sub">' + T('Make your CV, cover letter and Z83 - and now scan, sign and fix any PDF.') + '</p>' +
       '<button class="btn gold block hero-cta" id="new-cv">' + svg('plus') + T('Create new CV') + '</button>' +
@@ -246,6 +248,7 @@
       '<div class="flagline">' + TP.FLAG.map(function (c) { return '<i style="background:' + c + '"></i>'; }).join('') + '</div></section>';
     if (App.hooks && App.hooks.homeInstall) h += App.hooks.homeInstall();
     if (App.hooks && App.hooks.homeFeedback) h += App.hooks.homeFeedback();
+    if (App.hooks && App.hooks.homeShare) h += App.hooks.homeShare();
     if (App.hooks && App.hooks.homeTools) h += App.hooks.homeTools();
     if (sorted.length) {
       h += '<section class="block"><div class="block-h"><h2>' + T('My CVs') + '</h2><span class="count">' + sorted.length + '</span></div><div class="cv-list">';
@@ -261,7 +264,7 @@
     if (App.hooks && App.hooks.homeSponsor) h += App.hooks.homeSponsor();
     h += '<section class="block"><div class="block-h"><h2>' + T('Templates') + '</h2><button class="see-all" id="see-all">' + T('See all {n}', { n: n }) + '</button></div>' +
       '<div class="strip">' + SHOWCASE.map(function (id) {
-        return '<button class="strip-it" data-start="' + id + '"><div class="strip-pg" data-show="' + id + '"></div>' + atsBadge(TP.get(id), 'ats-tw') + '<span>' + esc(T(TP.get(id).name)) + '</span></button>';
+        return '<button class="strip-it" data-start="' + id + '"><div class="strip-pg" data-show="' + id + '" aria-hidden="true"></div>' + atsBadge(TP.get(id), 'ats-tw') + '<span>' + esc(T(TP.get(id).name)) + '</span></button>';
       }).join('') + '</div></section>';
     if (App.hooks && App.hooks.homeGuides) h += App.hooks.homeGuides();
     h += '<section class="block"><div class="block-h"><h2>' + T('How it works') + '</h2></div><ol class="steps">' +
@@ -273,9 +276,19 @@
     var v = $('#v-home'); v.innerHTML = h;
     // real page previews
     var cvs = showcaseCV();
-    Array.prototype.forEach.call(v.querySelectorAll('[data-show]'), function (el) {
-      el.innerHTML = PG.thumb(cvs, el.getAttribute('data-show'), el.clientWidth || 120);
-    });
+    // the template pictures are below the first screen on a phone: draw them when the row comes near the screen
+    var drawShows = function () {
+      Array.prototype.forEach.call(v.querySelectorAll('[data-show]'), function (el) {
+        if (!el.firstChild) el.innerHTML = PG.thumb(cvs, el.getAttribute('data-show'), el.clientWidth || 120);
+      });
+    };
+    var strip = v.querySelector('.strip');
+    if (strip && window.IntersectionObserver) {
+      var io = new IntersectionObserver(function (list) {
+        if (list.some(function (en) { return en.isIntersecting; })) { io.disconnect(); drawShows(); }
+      }, { rootMargin: '120px 0px' });
+      io.observe(strip);
+    } else drawShows();
     Array.prototype.forEach.call(v.querySelectorAll('[data-art]'), function (el) {
       if (el.clientWidth) el.innerHTML = PG.thumb(cvs, el.getAttribute('data-art'), el.clientWidth);
     });

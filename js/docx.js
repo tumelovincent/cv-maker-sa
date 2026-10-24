@@ -701,4 +701,5 @@
   }
 
   window.CVDocx = { make: makeDocx, letter: makeLetterDocx };
+  if (window.CVLibs) window.CVLibs.wrap(window.CVDocx, ['make', 'letter'], 'zip');
 })();
