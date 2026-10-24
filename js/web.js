@@ -123,13 +123,50 @@
       if (k === 'copy') copy(message()).then(function (ok) { if (ok) shared(); A.toast(ok ? T('Link copied') : siteLink()); });
     };
   };
+  /* ---------- backup reminder ----------
+     On a website the CVs live only in the browser: clearing its data removes them, and Safari on iPhone can remove a
+     website's data after about a week without a visit (not when it is on the Home Screen). So once a CV is worth keeping
+     (after a download, or two days of work), the front page suggests saving a backup file - again two weeks after the
+     last backup if the CVs changed since. */
+  var BACK = 'cvmaker.backup.last', BSNOOZE = 'cvmaker.backup.snooze', FIRST = 'cvmaker.first.cv';
+  var justBackedUp = false;
+  function today() { return new Date().toISOString().slice(0, 10); }
+  function backupDue() {
+    if (!S.list.length) return false;
+    if (!get(FIRST)) set(FIRST, String(Date.now()));
+    var last = +get(BACK) || 0;
+    var edited = S.list.reduce(function (m, c) { return Math.max(m, c.updated || 0); }, 0);
+    if (last >= edited) return false;                          // nothing new since the last backup
+    if (last && Date.now() - last < 14 * 864e5) return false; // backed up in the last two weeks
+    var snooze = get(BSNOOZE); if (snooze && snooze > today()) return false;
+    return +get(MADE) > 0 || Date.now() - (+get(FIRST) || Date.now()) > 2 * 864e5;
+  }
+  A.hooks.backedUp = function () { set(BACK, String(Date.now())); justBackedUp = true; setTimeout(refreshHome, 0); };
+  A.hooks.homeBackup = function () {
+    if (!backupDue()) return '';
+    return '<section class="install-card fb-card bk-card"><div class="ins-ic fb-card-ic">' + A.svg('backup') + '</div><div class="ins-t"><b>' + T('Keep a safe copy of your CVs') + '</b><span>' +
+      T('Your CVs are saved only in this browser. If its data is cleared, they are gone. Save a backup file on your phone - you can load it again with "Restore from backup".') +
+      (IOS && !standalone() ? ' ' + T('On iPhone, also add CV Maker SA to your Home Screen so Safari keeps your CVs.') : '') + '</span><div class="ins-b">' +
+      '<button class="btn small" data-bk="go">' + T('Back up now') + '</button><button class="btn small ins-no" data-bk="no">' + T('Not now') + '</button></div></div></section>';
+  };
+  document.addEventListener('click', function (e) {
+    var b = e.target.closest && e.target.closest('[data-bk]'); if (!b) return;
+    if (b.getAttribute('data-bk') === 'go') { A.backup(); return; }
+    set(BSNOOZE, new Date(Date.now() + 7 * 864e5).toISOString().slice(0, 10)); refreshHome(); // ask again in a week
+  });
+  // one card at a time: keeping the CVs safe comes before "How did it go?" and "Tell a friend"
+  var prevFeedbackCard = A.hooks.homeFeedback;
+  if (prevFeedbackCard) A.hooks.homeFeedback = function () { return backupDue() ? '' : prevFeedbackCard(); };
+
   // after a CV has been saved or shared (and the "How did it go?" card is finished), the front page suggests sharing once
   var prevDelivered = A.hooks.delivered;
   A.hooks.delivered = function (mode) {
+    if (justBackedUp) { justBackedUp = false; return; } // a backup file is not a CV download
     if (prevDelivered) prevDelivered(mode);
     if (mode !== 'print') set(MADE, String((+get(MADE) || 0) + 1));
   };
   A.hooks.homeShare = function () {
+    if (backupDue()) return '';
     var st = get(SHARE);
     if (!(+get(MADE) > 0) || st === 'done' || (st && st > new Date().toISOString().slice(0, 10))) return '';
     if (A.hooks.homeFeedback && A.hooks.homeFeedback()) return ''; // one card at a time

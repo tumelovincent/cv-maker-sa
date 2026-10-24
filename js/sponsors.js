@@ -30,9 +30,9 @@ window.CV_SPONSORS = [
   {
     id: 'advertise',
     name: 'Advertise here',
-    line: 'Show your business to people looking for work. Your name, one line and your contact, on this card.',
-    cta: 'Ask about prices',
-    action: 'mailto:tumelovincent558@gmail.com?subject=' + encodeURIComponent('Advertising on CV Maker SA'),
+    line: 'Reach people looking for work with a card like this. WhatsApp 068 404 2600 for prices.',
+    cta: 'WhatsApp for prices',
+    action: 'https://wa.me/27684042600?text=' + encodeURIComponent('Hi Tumelo, I would like to advertise my business on CV Maker SA. What are the prices?'),
     ini: '+',
     color: '#C98A00'
   }

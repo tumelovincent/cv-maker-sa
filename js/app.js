@@ -247,6 +247,7 @@
       '<div class="hero-art" aria-hidden="true"><div class="ha-pg ha2" data-art="navy"></div><div class="ha-pg ha1" data-art="mzansi"></div></div>' +
       '<div class="flagline">' + TP.FLAG.map(function (c) { return '<i style="background:' + c + '"></i>'; }).join('') + '</div></section>';
     if (App.hooks && App.hooks.homeInstall) h += App.hooks.homeInstall();
+    if (App.hooks && App.hooks.homeBackup) h += App.hooks.homeBackup();
     if (App.hooks && App.hooks.homeFeedback) h += App.hooks.homeFeedback();
     if (App.hooks && App.hooks.homeShare) h += App.hooks.homeShare();
     if (App.hooks && App.hooks.homeTools) h += App.hooks.homeTools();
@@ -1416,6 +1417,7 @@
       var json = JSON.stringify({ app: 'cv-maker-sa', version: 2, exported: d.toISOString(), cvs: S.list, files: files });
       var bytes = new TextEncoder().encode(json);
       lastSize = bytes.length; done();
+      if (App.hooks.backedUp) App.hooks.backedUp(); // the website's backup reminder
       deliver(bytes, 'CV Maker backup ' + stamp + '.json', 'application/json', 'save');
     }, function (err) { done(); toast(T('Backup failed: ') + err.message); });
   }
@@ -1465,7 +1467,7 @@
     saveSoon: saveSoon, deliverMany: deliverMany, fileBase: fileBase, b64: b64, PICK: PICK, VIEWS: VIEWS, ACTIONS: EXTRA_ACTIONS, cvTitle: cvTitle,
     renderHome: renderHome, docsOf: docsOf, fmtDate: fmtDateT, setLastSize: function (n) { lastSize = n; }, fileInUse: fileInUse, dropFiles: dropFiles,
     pickDocType: pickDocType, refreshSection: function (id) { refreshSection(id); }, hooks: {}, fmtWhen: fmtWhen, viewEl: viewEl, renderDocs: function () { renderDocs(); },
-    MONTHS: MONTHS, VERSION: APP_VERSION
+    MONTHS: MONTHS, VERSION: APP_VERSION, backup: function () { backup(); }
   };
 
   // hide the bottom buttons while the on-screen keyboard is open (the screen gets shorter)

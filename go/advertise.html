@@ -41,7 +41,7 @@
   var a = s.action;
   document.getElementById('h').textContent = /^https:\/\/(wa\.me|api\.whatsapp\.com)\//i.test(a) ? 'Opening WhatsApp…' :
     /^mailto:/i.test(a) ? 'Opening your email app…' : /^tel:/i.test(a) ? 'Opening your phone…' : 'Opening ' + s.name + '…';
-  document.getElementById('who').textContent = s.name + ' · sponsor of CV Maker SA';
+  document.getElementById('who').textContent = s.id === 'advertise' ? 'Advertising on CV Maker SA' : s.name + ' · sponsor of CV Maker SA';
   document.title = s.name + ' | CV Maker SA';
   go.href = s.action; go.textContent = s.cta || 'Continue';
   var done = false;

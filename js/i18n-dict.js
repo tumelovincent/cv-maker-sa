@@ -476,6 +476,11 @@ window.CVi18nDict = {
 "Londoloza wonke ama-CV",
 "Rugsteun alle CV's"
 ],
+"Back up now": [
+"Boloka kopi hona jwale",
+"Londoloza manje",
+"Rugsteun nou"
+],
 "Backup failed:": [
 "Kopi ya polokelo e hlolehile:",
 "Ukulondoloza kuhlulekile:",
@@ -1911,6 +1916,11 @@ window.CVi18nDict = {
 "Juni",
 "Junie"
 ],
+"Keep a safe copy of your CVs": [
+"Boloka kopi e sireletsehileng ya di-CV tsa hao",
+"Gcina ikhophi ephephile yama-CV akho",
+"Hou 'n veilige kopie van jou CV's"
+],
 "Keep track of the jobs you apply for, with closing dates and reminders.": [
 "Latedisa mesebetsi eo o e kopang, le matsatsi a ho kwala le dikgopotso.",
 "Landelela imisebenzi ofaka izicelo kuyo, nezinsuku zokuvala nezikhumbuzo.",
@@ -2440,6 +2450,11 @@ window.CVi18nDict = {
 "E butswe",
 "Kuvuliwe",
 "Aan"
+],
+"On iPhone, also add CV Maker SA to your Home Screen so Safari keeps your CVs.": [
+"Ho iPhone, kenya CV Maker SA skrineng sa lehae hore Safari e boloke di-CV tsa hao.",
+"Ku-iPhone, faka ne-CV Maker SA esikrinini sasekhaya ukuze i-Safari igcine ama-CV akho.",
+"Op 'n iPhone, voeg CV Maker SA ook by jou tuisskerm sodat Safari jou CV's hou."
 ],
 "On iPhone: tap the Share button, then \"Add to Home Screen\".": [
 "Ho iPhone: tobetsa konopo ya Share, ebe o tobetsa \"Add to Home Screen\".",
@@ -4125,6 +4140,11 @@ window.CVi18nDict = {
 "CV ya hao, e loketse bahiri ba Afrika Borwa",
 "I-CV yakho, ilungele abaqashi baseNingizimu Afrika",
 "Jou CV, gereed vir Suid-Afrikaanse werkgewers"
+],
+"Your CVs are saved only in this browser. If its data is cleared, they are gone. Save a backup file on your phone - you can load it again with \"Restore from backup\".": [
+"Di-CV tsa hao di bolokilwe ho browser ena feela. Haeba data ya yona e hlakolwa, di a lahleha. Boloka faele ya kopi fonong ya hao - o ka e bula hape ka \"Kgutlisa ho tswa koping ya polokelo\".",
+"Ama-CV akho agcinwe kule browser kuphela. Uma idatha yayo isulwa, ayalahleka. Gcina ifayela lokulondoloza efonini yakho - ungaphinde ulivule ngokuthi \"Buyisa kusukela kokulondoloziwe\".",
+"Jou CV's word net in hierdie blaaier gestoor. As sy data uitgevee word, is hulle weg. Stoor 'n rugsteunlêer op jou foon - jy kan dit weer oopmaak met \"Sit terug uit rugsteun\"."
 ],
 "Your CVs are saved only on this phone.": [
 "Di-CV tsa hao di bolokwa founong ena feela.",
