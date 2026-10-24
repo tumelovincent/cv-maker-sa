@@ -51,6 +51,13 @@
   function refreshHome() { if (S.stack[S.stack.length - 1] === 'home') A.renderHome(); }
   window.addEventListener('beforeinstallprompt', function (e) { e.preventDefault(); prompt = e; refreshHome(); });
   window.addEventListener('appinstalled', function () { prompt = null; A.toast(T('CV Maker SA was added to your home screen')); refreshHome(); });
+  // links to the guide pages on the website (the guides are web pages, so only on the website)
+  A.hooks.homeGuides = function () {
+    var G = [['how-to-fill-in-z83-form', 'How to fill in the Z83 form'], ['cv-with-no-experience', 'A CV with no work experience'],
+      ['south-african-cv-format', 'The South African CV format'], ['ats-friendly-cv', 'How to make your CV ATS-friendly']];
+    return '<section class="block"><div class="block-h"><h2>' + T('Help with your application') + '</h2><a class="see-all" href="guides/">' + T('All guides') + '</a></div>' +
+      '<div class="guide-list">' + G.map(function (g) { return '<a class="guide-it" href="guides/' + g[0] + '.html">' + A.esc(g[1]) + '</a>'; }).join('') + '</div></section>';
+  };
   A.hooks.homeInstall = function () {
     if (standalone() || dismissed() || (!prompt && !IOS)) return '';
     return '<section class="install-card"><img src="img/icons/icon-192.png" alt="" class="ins-ic"><div class="ins-t"><b>' + T('Install CV Maker SA') + '</b><span>' +

@@ -263,6 +263,7 @@
       '<div class="strip">' + SHOWCASE.map(function (id) {
         return '<button class="strip-it" data-start="' + id + '"><div class="strip-pg" data-show="' + id + '"></div>' + atsBadge(TP.get(id), 'ats-tw') + '<span>' + esc(T(TP.get(id).name)) + '</span></button>';
       }).join('') + '</div></section>';
+    if (App.hooks && App.hooks.homeGuides) h += App.hooks.homeGuides();
     h += '<section class="block"><div class="block-h"><h2>' + T('How it works') + '</h2></div><ol class="steps">' +
       '<li><b>' + T('Fill in your details') + '</b><span>' + T('Personal details, school, work experience and references. Your SA ID number fills in your date of birth for you.') + '</span></li>' +
       '<li><b>' + T('Choose a template') + '</b><span>' + T('Classic SA for traditional employers, or a modern design. You can switch at any time.') + '</span></li>' +

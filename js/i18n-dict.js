@@ -341,6 +341,11 @@ window.CVi18nDict = {
 "Konke",
 "Alles"
 ],
+"All guides": [
+"Ditataiso tsohle",
+"Yonke imihlahlandlela",
+"Alle gidse"
+],
 "All rights reserved.": [
 "Ditokelo tsohle di sireleditswe.",
 "Wonke amalungelo agodliwe.",
@@ -1635,6 +1640,11 @@ window.CVi18nDict = {
 "Boemo ba bophelo",
 "Isimo sempilo",
 "Gesondheidstatus"
+],
+"Help with your application": [
+"Thuso ka kopo ya hao",
+"Usizo ngesicelo sakho",
+"Hulp met jou aansoek"
 ],
 "Helps keep CV Maker SA free": [
 "E thusa hore CV Maker SA e dule e le mahala",

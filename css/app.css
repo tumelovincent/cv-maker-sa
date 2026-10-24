@@ -820,3 +820,10 @@ svg.ico { fill: none !important; stroke: currentColor; }
 .sp-slim .sp-lbl { display: inline-block; margin: 0 0 1px; font-size: 10px; font-weight: 700; text-transform: uppercase; letter-spacing: .4px; color: #7A6A2E; }
 .sp-slim .sp-go { flex: none; margin-left: 10px; color: var(--green); font-weight: 700; font-size: 14px; text-decoration: none; padding: 8px 4px; }
 @media (min-width: 900px) { .sp-card { max-width: 620px; } }
+
+/* ---------- guide links (website) ---------- */
+.guide-list { display: grid; grid-template-columns: 1fr; gap: 8px; }
+.guide-it { display: block; background: #fff; border: 1px solid var(--line); border-radius: 12px; padding: 12px 14px; color: var(--ink); text-decoration: none; font-weight: 600; font-size: 15px; }
+.guide-it::after { content: "›"; float: right; color: var(--green); font-weight: 700; }
+a.see-all { text-decoration: none; }
+@media (min-width: 700px) { .guide-list { grid-template-columns: 1fr 1fr; } }

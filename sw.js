@@ -1,5 +1,5 @@
 /* CV Maker SA - keeps the app on the phone so it opens and works without internet. Made by web/build.sh. */
-var VERSION = '20261024-4c29969a';
+var VERSION = '20261024-d5ac3324';
 var CACHE = 'cvmaker-' + VERSION;
 var FILES = [
 "./",
@@ -102,13 +102,21 @@ self.addEventListener('fetch', function (e) {
   var url = new URL(req.url);
   if (url.origin !== self.location.origin) return;
   if (req.mode === 'navigate') {
-    // the app is one page: always answer with it (fresh from the internet when possible, otherwise the saved copy)
-    var home = new URL('./', self.registration.scope).href;
-    e.respondWith(caches.open(CACHE).then(function (c) {
-      return c.match(home).then(function (saved) {
-        if (saved) return saved;
-        return fetch(req);
-      });
+    var scope = new URL(self.registration.scope), home = new URL('./', scope).href;
+    var isApp = url.pathname === scope.pathname || url.pathname === scope.pathname + 'index.html';
+    if (isApp) {
+      // the app is one page: answer with the saved copy (works without internet)
+      e.respondWith(caches.open(CACHE).then(function (c) {
+        return c.match(home).then(function (saved) {
+          if (saved) return saved;
+          return fetch(req);
+        });
+      }));
+      return;
+    }
+    // other pages (privacy policy, guides): from the internet, or a saved copy when offline
+    e.respondWith(fetch(req).catch(function () {
+      return caches.match(req, { ignoreSearch: true }).then(function (hit) { return hit || caches.match(home); });
     }));
     return;
   }
