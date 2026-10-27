@@ -135,12 +135,15 @@ body.at-home main { padding-top: 0; }
 .fld .hint.good { color: #18794e; }
 .row2 { display: flex; margin: 0 -5px; }
 .row2 > .cell { flex: 1 1 0; min-width: 0; padding: 0 5px; }
+/* small phones (up to 380 wide, e.g. 320 and 360): one field per row, so answers and labels are not squeezed */
+@media (max-width: 380px) { .row2 { display: block; margin: 0; } .row2 > .cell { padding: 0; } }
 .chk { display: flex; align-items: center; margin-top: 14px; font-size: 15px; }
 .chk input { width: 22px; height: 22px; accent-color: var(--green); margin: 0 10px 0 0; flex: none; }
 
 /* picker field (looks like an input, opens a bottom sheet) */
 .pick { display: flex; align-items: center; width: 100%; min-height: 46px; padding: 10px 10px 10px 12px; border: 1.5px solid var(--line); border-radius: 10px; background: #fff; text-align: left; font-size: 16px; color: var(--ink); }
-.pick .pv { flex: 1; min-width: 0; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+/* the chosen answer wraps onto a second line instead of being cut off (e.g. "English, isiZulu, Afrikaans") */
+.pick .pv { flex: 1; min-width: 0; overflow: hidden; display: -webkit-box; -webkit-box-orient: vertical; -webkit-line-clamp: 2; line-height: 1.3; overflow-wrap: anywhere; }
 .pick.empty .pv { color: #8C9792; }
 .pick .pk-ch { width: 22px; height: 22px; fill: var(--muted); flex: none; margin-left: 4px; }
 .pick:active { border-color: var(--green); background: #F7FBF9; }

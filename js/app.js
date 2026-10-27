@@ -250,7 +250,6 @@
     if (App.hooks && App.hooks.homeBackup) h += App.hooks.homeBackup();
     if (App.hooks && App.hooks.homeFeedback) h += App.hooks.homeFeedback();
     if (App.hooks && App.hooks.homeShare) h += App.hooks.homeShare();
-    if (App.hooks && App.hooks.homeTools) h += App.hooks.homeTools();
     if (sorted.length) {
       h += '<section class="block"><div class="block-h"><h2>' + T('My CVs') + '</h2><span class="count">' + sorted.length + '</span></div><div class="cv-list">';
       sorted.forEach(function (cv) {
@@ -261,6 +260,8 @@
       });
       h += '</div></section>';
     }
+    // returning users see their own CVs first, then the PDF tools
+    if (App.hooks && App.hooks.homeTools) h += App.hooks.homeTools();
     if (App.hooks && App.hooks.homeApps) h += App.hooks.homeApps();
     if (App.hooks && App.hooks.homeSponsor) h += App.hooks.homeSponsor();
     h += '<section class="block"><div class="block-h"><h2>' + T('Templates') + '</h2><button class="see-all" id="see-all">' + T('See all {n}', { n: n }) + '</button></div>' +
