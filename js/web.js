@@ -185,10 +185,10 @@
      then it opens the sponsor's link. Without internet the link opens directly, as in the app. */
   document.addEventListener('click', function (e) {
     var a = e.target.closest && e.target.closest('a[data-sp]'); if (!a) return;
-    var id = a.getAttribute('data-sp');
+    var id = a.getAttribute('data-sp'), kind = a.getAttribute('data-kind');
     if (!id || !navigator.onLine || !document.querySelector('meta[name="cvm-offline"]')) return;
     e.preventDefault();
-    window.open('go/' + encodeURIComponent(id) + '.html', '_blank', 'noopener');
+    window.open('go/' + encodeURIComponent(id) + (kind ? '-' + kind : '') + '.html', '_blank', 'noopener');
   });
 
   /* ---------- keep the saved CVs (ask the browser not to clear them when space runs low) ---------- */
@@ -215,6 +215,11 @@
   function poke(e) { if (e && e.target && e.target.closest && e.target.closest('#upd')) return; touched = true; go(); }
   ['pointerdown', 'keydown'].forEach(function (ev) { document.addEventListener(ev, poke, { capture: true, passive: true }); });
   setTimeout(poke, 10000);
+
+  A.hooks.refresh = function () {
+    var upd = document.querySelector('#upd button');
+    if (upd) upd.click(); else location.reload();
+  };
 
   /* ---------- works without internet: service worker, with a gentle "update ready" note ---------- */
   // only the built website has sw.js (web/build.sh adds the marker); the plain www folder and the APK do not

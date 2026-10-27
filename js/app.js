@@ -119,6 +119,12 @@
   window.appBack = function () { return back(); };
   $('#btn-back').addEventListener('click', back);
   $('#btn-menu').addEventListener('click', menu);
+  // tapping "CV Maker SA" at the top of the front page refreshes it (everything is saved first)
+  $('#bar-title').addEventListener('click', function (e) {
+    if (!e.target.closest('#brand')) return;
+    saveNow();
+    if (App.hooks.refresh) App.hooks.refresh(); else location.reload();
+  });
 
   // screens added by other files (cover letter, Z83, tracker, design…) register here
   var VIEWS = {};
@@ -137,7 +143,7 @@
     $('#bar-extra').innerHTML = VIEWS[v] && VIEWS[v].bar ? VIEWS[v].bar() : '';
     $('#btn-menu').hidden = !!(VIEWS[v] && VIEWS[v].noMenu);
     if (v === 'home') {
-      $('#bar-title').innerHTML = '<span class="brand"><img src="img/logo.png" alt="" class="brand-ic"><span class="brand-t"><b>CV Maker SA</b><small>' + T('by {name}', { name: DEVELOPER }) + '</small></span></span>';
+      $('#bar-title').innerHTML = '<button type="button" class="brand" id="brand"><img src="img/logo.png" alt="" class="brand-ic"><span class="brand-t"><b>CV Maker SA</b><small>' + T('by {name}', { name: DEVELOPER }) + '</small></span></button>';
     } else {
       $('#bar-title').textContent = VIEWS[v] ? VIEWS[v].title() : T({ edit: S.cur ? cvTitle(S.cur) : 'Edit CV', tpl: 'Choose a template', prev: 'Preview', docs: 'Supporting documents' }[v]);
     }

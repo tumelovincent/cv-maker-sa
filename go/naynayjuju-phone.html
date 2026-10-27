@@ -1,0 +1,68 @@
+<!doctype html>
+<html lang="en-ZA">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="robots" content="noindex, nofollow">
+<meta name="theme-color" content="#0B5D4B">
+<title>Opening… | CV Maker SA</title>
+<link rel="icon" type="image/png" sizes="32x32" href="../img/icons/favicon-32.png">
+<link rel="stylesheet" href="../css/fonts.css">
+<style>
+  body { margin: 0; min-height: 100vh; display: flex; align-items: center; justify-content: center; background: #F3F5F4; color: #1C2421;
+         font-family: "F-dmsans", system-ui, sans-serif; text-align: center; padding: 24px; box-sizing: border-box; }
+  .box { background: #fff; border: 1px solid #D8E0DC; border-radius: 18px; padding: 28px 22px; max-width: 360px; width: 100%; }
+  .spin { width: 34px; height: 34px; margin: 0 auto 14px; border: 4px solid #E3F1EC; border-top-color: #0B5D4B; border-radius: 50%; animation: s 0.9s linear infinite; }
+  @keyframes s { to { transform: rotate(360deg); } }
+  h1 { font-size: 19px; margin: 0 0 6px; }
+  p { margin: 0 0 18px; color: #4A5550; font-size: 15px; }
+  .go { display: block; background: #0B5D4B; color: #fff; text-decoration: none; font-weight: 700; padding: 13px; border-radius: 12px; }
+  .back { display: inline-block; margin-top: 14px; color: #0B5D4B; font-weight: 700; font-size: 15px; background: none; border: 0; font-family: inherit; cursor: pointer; }
+</style>
+</head>
+<body>
+<main class="box">
+  <div class="spin" id="spin"></div>
+  <h1 id="h">Opening…</h1>
+  <p id="who">Sponsor of CV Maker SA</p>
+  <a class="go" id="go" href="../">Continue</a>
+  <button class="back" id="back" type="button">Back to CV Maker SA</button>
+</main>
+<script src="../js/sponsors.js"></script>
+<script>
+/* A tap on a sponsor's button in CV Maker SA opens this page first, so the visitor counter can count the tap
+   (no cookies, nothing about the person). Then it opens the sponsor's own link. */
+(function () {
+  // the page name is the sponsor, and which button was tapped: naynayjuju-whatsapp.html (or just naynayjuju.html)
+  var id = decodeURIComponent(location.pathname.split('/').pop().replace(/\.html$/, '')), kind = '';
+  var m = /^(.+)-(whatsapp|email|phone|web)$/.exec(id); if (m) { id = m[1]; kind = m[2]; }
+  function kindOf(u) { return /^https:\/\/(wa\.me|api\.whatsapp\.com)\//i.test(u) ? 'whatsapp' : /^mailto:/i.test(u) ? 'email' : /^tel:/i.test(u) ? 'phone' : 'web'; }
+  var s = (window.CV_SPONSORS || []).filter(function (x) { return x && x.id === id; })[0];
+  if (s) {
+    var acts = (Array.isArray(s.actions) ? s.actions : [{ cta: s.cta, action: s.action }]).filter(function (x) { return x && x.action; });
+    var pickd = acts.filter(function (x) { return kindOf(x.action) === kind; })[0] || acts[0];
+    s = pickd ? { id: s.id, name: s.name, cta: pickd.cta, action: pickd.action } : null;
+  }
+  var go = document.getElementById('go'), back = document.getElementById('back');
+  back.onclick = function () { window.close(); setTimeout(function () { location.href = '../'; }, 250); };
+  if (!s || !/^(https?:|mailto:|tel:)/i.test(s.action || '')) { document.getElementById('h').textContent = 'This sponsor is no longer listed'; document.getElementById('spin').hidden = true; go.textContent = 'Open CV Maker SA'; return; }
+  var a = s.action;
+  document.getElementById('h').textContent = /^https:\/\/(wa\.me|api\.whatsapp\.com)\//i.test(a) ? 'Opening WhatsApp…' :
+    /^mailto:/i.test(a) ? 'Opening your email app…' : /^tel:/i.test(a) ? 'Opening your phone…' : 'Opening ' + s.name + '…';
+  document.getElementById('who').textContent = s.id === 'advertise' ? 'Advertising on CV Maker SA' : s.name + ' · sponsor of CV Maker SA';
+  document.title = s.name + ' | CV Maker SA';
+  go.href = s.action; go.textContent = s.cta || 'Continue';
+  var done = false;
+  function open() {
+    if (done) return; done = true;
+    document.getElementById('spin').hidden = true;
+    if (/^https?:/i.test(s.action)) location.replace(s.action); else location.href = s.action;
+  }
+  // give the counter a moment to count the visit, then open the link
+  window.addEventListener('load', function () { setTimeout(open, 900); });
+  setTimeout(open, 3000);
+})();
+</script>
+<!-- Cloudflare Web Analytics --><script type='module' src='https://static.cloudflareinsights.com/beacon.min.js' data-cf-beacon='{"token": "22205f563ae0413989c41877e1dda7ee"}'></script><!-- End Cloudflare Web Analytics -->
+</body>
+</html>

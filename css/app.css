@@ -19,6 +19,8 @@ body.at-home .bar { box-shadow: none; }
 .bar-btn svg { width: 24px; height: 24px; fill: #fff; }
 .bar-btn:active { background: rgba(255,255,255,.15); }
 .brand { display: flex; align-items: center; }
+button.brand { background: none; border: 0; padding: 0; margin: 0; color: inherit; font: inherit; text-align: left; cursor: pointer; min-width: 0; max-width: 100%; -webkit-tap-highlight-color: transparent; }
+button.brand:active { opacity: .75; }
 .brand-ic { width: 34px; height: 34px; border-radius: 9px; margin-right: 10px; box-shadow: 0 0 0 1.5px rgba(255,255,255,.35); flex: none; }
 .brand-t { display: flex; flex-direction: column; line-height: 1.15; min-width: 0; }
 .brand-t b { font-family: "F-montserrat", sans-serif; font-weight: 700; font-size: 17px; letter-spacing: .2px; }
@@ -820,13 +822,26 @@ svg.ico { fill: none !important; stroke: currentColor; }
 .sp-t b { display: block; font-size: 15px; }
 .sp-t span { display: block; color: var(--ink); font-size: 14px; line-height: 1.4; margin-top: 2px; }
 .sp-t small { display: block; color: var(--muted); font-size: 12.5px; margin-top: 3px; }
-.sp-card .sp-cta { margin: 12px 0 0 56px; text-decoration: none; display: inline-flex; }
-.sp-slim { display: flex; align-items: center; margin: 18px auto 6px; max-width: 620px; padding: 10px 12px; background: #fff; border: 1px solid var(--line); border-radius: 14px; }
+.sp-btns { display: flex; flex-wrap: wrap; gap: 8px; margin: 12px 0 0 56px; }
+.sp-card .sp-cta { text-decoration: none; display: inline-flex; align-items: center; gap: 6px; }
+.sp-cta svg, .sp-go svg, .btn.small.sp-cta svg { width: 16px; height: 16px; fill: currentColor; flex: none; margin: 0; }
+/* sponsor cards take turns in one place: all sit in the same grid cell, so the space fits the tallest and nothing jumps */
+.sp-rot { display: grid; }
+.sp-rot > .sp-it { grid-area: 1 / 1; min-width: 0; opacity: 0; visibility: hidden; transition: opacity .45s ease, visibility 0s linear .45s; }
+.sp-rot > .sp-it.on { opacity: 1; visibility: visible; transition: opacity .45s ease; }
+.sp-dots { margin-left: auto; display: inline-flex; gap: 5px; }
+.sp-dots i { width: 6px; height: 6px; border-radius: 50%; background: var(--line); }
+.sp-dots i.on { background: var(--green); }
+@media (prefers-reduced-motion: reduce) { .sp-rot > .sp-it { transition: none; } }
+@media (max-width: 380px) { .sp-btns { margin-left: 0; } }
+.sp-slim { display: block; margin: 18px auto 6px; max-width: 620px; padding: 10px 12px; background: #fff; border: 1px solid var(--line); border-radius: 14px; }
 .sp-slim .sp-logo { width: 36px; height: 36px; border-radius: 10px; margin-right: 10px; font-size: 13px; }
 .sp-slim .sp-t b { font-size: 14px; }
 .sp-slim .sp-t span { font-size: 13px; color: var(--muted); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
 .sp-slim .sp-lbl { display: inline-block; margin: 0 0 1px; font-size: 10px; font-weight: 700; text-transform: uppercase; letter-spacing: .4px; color: #7A6A2E; }
-.sp-slim .sp-go { flex: none; margin-left: 10px; color: var(--green); font-weight: 700; font-size: 14px; text-decoration: none; padding: 8px 4px; }
+.sp-slim-in { display: flex; align-items: center; }
+.sp-gos { flex: none; display: flex; flex-direction: column; align-items: flex-start; gap: 2px; margin-left: 10px; }
+.sp-slim .sp-go { display: inline-flex; align-items: center; gap: 5px; color: var(--green); font-weight: 700; font-size: 14px; text-decoration: none; padding: 6px 2px; }
 @media (min-width: 900px) { .sp-card { max-width: 620px; } }
 
 /* ---------- guide links (website) ---------- */
