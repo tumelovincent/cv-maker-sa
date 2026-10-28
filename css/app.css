@@ -741,7 +741,10 @@ svg.ico { fill: none !important; stroke: currentColor; }
 }
 @media (min-width: 1000px) {
   .bar { padding-left: max(4px, calc(50% - 600px)); padding-right: max(4px, calc(50% - 600px)); }
-  body[data-view="home"] main, body[data-view="tpl"] main { max-width: 1180px; padding-left: 24px; padding-right: 24px; }
+  /* front page and template gallery use the whole screen, with a margin that grows a little on big screens */
+  body[data-view="home"], body[data-view="tpl"] { --side: clamp(24px, 3.2vw, 64px); }
+  body[data-view="home"] main, body[data-view="tpl"] main { max-width: none; padding-left: var(--side); padding-right: var(--side); }
+  body[data-view="home"] .bar, body[data-view="tpl"] .bar { padding-left: calc(var(--side) - 10px); padding-right: calc(var(--side) - 12px); }
 
   /* front page: full-width green band with the text on the left and two CV pages on the right */
   .hero { display: grid; grid-template-columns: minmax(0, 1fr) 440px; column-gap: 56px; align-items: start;
