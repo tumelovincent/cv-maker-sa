@@ -842,7 +842,12 @@ svg.ico { fill: none !important; stroke: currentColor; }
 .sp-slim-in { display: flex; align-items: center; }
 .sp-gos { flex: none; display: flex; flex-direction: column; align-items: flex-start; gap: 2px; margin-left: 10px; }
 .sp-slim .sp-go { display: inline-flex; align-items: center; gap: 5px; color: var(--green); font-weight: 700; font-size: 14px; text-decoration: none; padding: 6px 2px; }
-@media (min-width: 900px) { .sp-card { max-width: 620px; } }
+/* wider screens: the sponsor card spans the page like the other sections, details on the left, buttons on the right */
+@media (min-width: 700px) {
+  .sp-card .sp-it { display: flex; align-items: center; gap: 24px; }
+  .sp-card .sp-it .sp-body { flex: 1; min-width: 0; }
+  .sp-card .sp-it .sp-btns { margin: 0; flex: none; flex-wrap: nowrap; }
+}
 
 /* ---------- guide links (website) ---------- */
 .guide-list { display: grid; grid-template-columns: 1fr; gap: 8px; }
