@@ -747,19 +747,20 @@ svg.ico { fill: none !important; stroke: currentColor; }
   body[data-view="home"] .bar, body[data-view="tpl"] .bar { padding-left: calc(var(--side) - 10px); padding-right: calc(var(--side) - 12px); }
 
   /* front page: full-width green band with the text on the left and two CV pages on the right */
-  .hero { display: grid; grid-template-columns: minmax(0, 1fr) 440px; column-gap: 56px; align-items: start;
-    padding-top: 26px; padding-bottom: 64px; overflow: visible; }
+  /* text and CV pictures side by side in the middle (not at opposite edges), and not too tall */
+  .hero { display: grid; grid-template-columns: minmax(0, 660px) 400px; justify-content: center; column-gap: clamp(40px, 6vw, 110px);
+    align-items: center; padding-top: 12px; padding-bottom: 40px; overflow: visible; }
   .hero > * { grid-column: 1; }
   .hero > .flagline { grid-column: auto; grid-row: auto; }
-  .hero-top { grid-column: 1 / -1; margin: 0 0 6px; }
-  .hero h1 { font-size: 46px; line-height: 1.1; margin: 26px 0 16px; max-width: 13em; }
+  .hero-top { grid-column: 1 / -1; margin: 0; }
+  .hero h1 { font-size: 46px; line-height: 1.1; margin: 0 0 14px; max-width: 13em; }
   .hero-sub { font-size: 18px; max-width: 28em; }
-  .hero .hero-cta { max-width: 440px; margin-top: 30px; }
+  .hero .hero-cta { max-width: 440px; margin-top: 24px; }
   .hero-link { margin: 12px 0 0; width: 440px; max-width: 100%; text-align: center; }
-  .hero-art { display: block; grid-column: 2; grid-row: 2 / span 4; position: relative; height: 400px; margin-top: 4px; }
-  .hero-art .ha-pg { position: absolute; width: 250px; height: 354px; background: #fff; border-radius: 6px; overflow: hidden; box-shadow: 0 24px 50px rgba(0,0,0,.35); }
-  .hero-art .ha2 { left: 10px; top: 10px; transform: rotate(-5deg); }
-  .hero-art .ha1 { right: 0; top: 40px; transform: rotate(6deg); }
+  .hero-art { display: block; grid-column: 2; grid-row: 2 / span 4; position: relative; height: 320px; margin-top: 0; }
+  .hero-art .ha-pg { position: absolute; width: 214px; height: 303px; background: #fff; border-radius: 6px; overflow: hidden; box-shadow: 0 24px 50px rgba(0,0,0,.35); }
+  .hero-art .ha2 { left: 14px; top: 6px; transform: rotate(-5deg); }
+  .hero-art .ha1 { right: 4px; top: 22px; transform: rotate(6deg); }
 
   .install-card { margin-top: 24px; }
   /* PDF tools in one row, templates as a grid, saved CVs side by side, the four steps in a row */
@@ -869,3 +870,40 @@ svg.ico { fill: none !important; stroke: currentColor; }
 .guide-it::after { content: "›"; float: right; color: var(--green); font-weight: 700; }
 a.see-all { text-decoration: none; }
 @media (min-width: 700px) { .guide-list { grid-template-columns: 1fr 1fr; } }
+
+/* big computer screens: the front page gets bigger text and controls, and more (smaller) tiles per row */
+@media (min-width: 1400px) {
+  body[data-view="home"] .brand-ic { width: 38px; height: 38px; }
+  body[data-view="home"] .brand-t b { font-size: 19px; }
+  body[data-view="home"] .brand-t small { font-size: 13px; }
+  body[data-view="home"] .hero { grid-template-columns: minmax(0, 740px) 400px; }
+  body[data-view="home"] .hero h1 { font-size: 54px; max-width: 14em; }
+  body[data-view="home"] .hero-sub { font-size: 20px; }
+  body[data-view="home"] .hero .btn.gold { font-size: 18px; min-height: 58px; }
+  body[data-view="home"] .hero-link { font-size: 17px; }
+  body[data-view="home"] .block { margin-top: 34px; }
+  body[data-view="home"] .block-h h2 { font-size: 23px; }
+  body[data-view="home"] .see-all { font-size: 16px; }
+  body[data-view="home"] .install-card { padding: 18px 20px; }
+  body[data-view="home"] .install-card .ins-ic { width: 56px; height: 56px; margin-right: 16px; }
+  body[data-view="home"] .install-card .ins-t b { font-size: 19px; }
+  body[data-view="home"] .install-card .ins-t span { font-size: 16px; }
+  body[data-view="home"] .install-card .btn.small, body[data-view="home"] .sp-card .btn.small { min-height: 44px; font-size: 16px; padding: 0 18px; }
+  body[data-view="home"] .tg.four .tool { width: calc(8.333% - 8px); padding: 16px 4px 14px; }
+  body[data-view="home"] .tg.four .tool .ic { width: 52px; height: 52px; border-radius: 15px; margin-bottom: 9px; }
+  body[data-view="home"] .tg.four .tool .ic svg { width: 26px; height: 26px; }
+  body[data-view="home"] .tg.four .tool b { font-size: 14.5px; }
+  body[data-view="home"] .sp-card { padding: 16px 20px 18px; }
+  body[data-view="home"] .sp-tag { font-size: 13.5px; }
+  body[data-view="home"] .sp-card .sp-logo { width: 54px; height: 54px; font-size: 19px; margin-right: 16px; }
+  body[data-view="home"] .sp-card .sp-t b { font-size: 18px; }
+  body[data-view="home"] .sp-card .sp-t span { font-size: 16px; }
+  body[data-view="home"] .sp-card .sp-t small { font-size: 14px; }
+  body[data-view="home"] .strip-it { width: calc(8.333% - 16px); }
+  body[data-view="home"] .strip-it span { font-size: 15px; }
+  body[data-view="home"] .guide-it { font-size: 17px; padding: 16px 18px; }
+  body[data-view="home"] .steps b { font-size: 18px; }
+  body[data-view="home"] .steps span { font-size: 16px; }
+  body[data-view="home"] .cv-card .nm2 { font-size: 18px; }
+  body[data-view="home"] .credit { font-size: 14.5px; }
+}

@@ -238,6 +238,7 @@
   var APP_VERSION = '1.9';
   var DEVELOPER = 'Tumelo Vincent Tau';
   var SHOWCASE = ['classic', 'aurora', 'mzansi', 'midnight', 'horizon', 'lagoon', 'kalahari', 'roadmap'];
+  var SHOWCASE_WIDE = ['navy', 'ats', 'protea', 'timeline']; // 4 more on big screens, so the row has 12 smaller pictures
   var sampleForShow = null;
   function showcaseCV() { if (!sampleForShow) sampleForShow = D.sampleCV(); return sampleForShow; }
   function renderHome() {
@@ -271,7 +272,7 @@
     if (App.hooks && App.hooks.homeApps) h += App.hooks.homeApps();
     if (App.hooks && App.hooks.homeSponsor) h += App.hooks.homeSponsor();
     h += '<section class="block"><div class="block-h"><h2>' + T('Templates') + '</h2><button class="see-all" id="see-all">' + T('See all {n}', { n: n }) + '</button></div>' +
-      '<div class="strip">' + SHOWCASE.map(function (id) {
+      '<div class="strip">' + (window.innerWidth >= 1400 ? SHOWCASE.concat(SHOWCASE_WIDE) : SHOWCASE).map(function (id) {
         return '<button class="strip-it" data-start="' + id + '"><div class="strip-pg" data-show="' + id + '" aria-hidden="true"></div>' + atsBadge(TP.get(id), 'ats-tw') + '<span>' + esc(T(TP.get(id).name)) + '</span></button>';
       }).join('') + '</div></section>';
     if (App.hooks && App.hooks.homeGuides) h += App.hooks.homeGuides();

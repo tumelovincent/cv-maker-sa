@@ -315,7 +315,8 @@
   }
   A.hooks.homeTools = function () {
     return '<section class="block" style="margin-top:20px"><div class="block-h"><h2>' + T('PDF tools') + '<span class="new-pill">' + T('NEW') + '</span></h2><button class="see-all" data-tool="more">' + T('See all {n}', { n: 12 }) + '</button></div>' +
-      '<div class="tg four">' + ['scan', 'photos', 'open', 'sign', 'merge', 'compress', 'protect', 'more'].map(function (k) { return tile(k, true); }).join('') + '</div></section>';
+      '<div class="tg four">' + (window.innerWidth >= 1400 ? ['scan', 'photos', 'word', 'open', 'sign', 'tophotos', 'merge', 'split', 'organise', 'compress', 'protect', 'lock']
+        : ['scan', 'photos', 'open', 'sign', 'merge', 'compress', 'protect', 'more']).map(function (k) { return tile(k, true); }).join('') + '</div></section>';
   };
   document.addEventListener('click', function (e) {
     var b = e.target.closest('[data-tool]'); if (!b || !$('#sheet').hidden && b.closest('#sheet')) return;
