@@ -728,6 +728,17 @@ svg.ico { fill: none !important; stroke: currentColor; }
   body { overflow-x: hidden; }
   .hero { margin-left: calc(50% - 50vw); margin-right: calc(50% - 50vw); padding-left: calc(50vw - 50% + 6px); padding-right: calc(50vw - 50% + 6px); }
 }
+/* tablets and phones in "Desktop site" mode (about 760 to 999 wide): use the whole screen like the phone layout,
+   instead of a narrow column in the middle */
+@media (min-width: 760px) and (max-width: 999px) {
+  main { max-width: none; padding-left: 16px; padding-right: 16px; }
+  .actions { padding-left: 7px; padding-right: 7px; }
+  .cv-list { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); grid-gap: 12px; }
+  .cv-list .cv-card { margin-bottom: 0; }
+  .steps { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  .steps li:nth-child(2n) { border-left: 1px solid #EEF2F0; }
+  .steps li:nth-child(2) { border-top: 0; }
+}
 @media (min-width: 1000px) {
   .bar { padding-left: max(4px, calc(50% - 600px)); padding-right: max(4px, calc(50% - 600px)); }
   body[data-view="home"] main, body[data-view="tpl"] main { max-width: 1180px; padding-left: 24px; padding-right: 24px; }
