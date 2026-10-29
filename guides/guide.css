@@ -54,3 +54,30 @@ li { margin: 5px 0; }
   .g-table td:first-child { font-size: 16px; color: var(--green-d); padding-top: 10px; }
   .g-table td:not(:first-child)::before { content: attr(data-label); display: block; font-size: 12px; font-weight: 700; text-transform: uppercase; letter-spacing: .4px; color: var(--muted); }
 }
+/* "Start here" boxes on the guides list */
+.g-feat { display: grid; grid-template-columns: 1fr; gap: 10px; margin: 18px 0 8px; }
+.g-feat a { display: block; background: var(--green); color: #fff; border-radius: 14px; padding: 16px 18px; text-decoration: none; }
+.g-feat a b { display: block; font-family: "F-montserrat", sans-serif; font-size: 18px; }
+.g-feat a span { display: block; font-size: 15px; opacity: .9; margin-top: 3px; }
+@media (min-width: 640px) { .g-feat { grid-template-columns: 1fr 1fr; } }
+/* the CV examples list: two columns on wider screens */
+@media (min-width: 640px) { .g-list.g-jobs { display: grid; grid-template-columns: 1fr 1fr; gap: 0 12px; } }
+.g-letter p { margin: 8px 0; }
+/* wide pages (templates gallery) */
+.g-wrap.g-wide, .wide .g-top .g-wrap, .wide .g-foot .g-wrap { max-width: 1180px; }
+.tp-filters { display: flex; gap: 8px; overflow-x: auto; padding: 4px 0 12px; margin: 8px 0 4px; scrollbar-width: none; }
+.tp-chip { flex: none; border: 1px solid var(--line); background: #fff; color: var(--ink); border-radius: 999px; padding: 8px 14px; font: inherit;
+  font-size: 14.5px; font-weight: 600; cursor: pointer; }
+.tp-chip small { color: var(--muted); font-weight: 400; }
+.tp-chip.on { background: var(--green); border-color: var(--green); color: #fff; }
+.tp-chip.on small { color: #CFE6DE; }
+.tp-grid { list-style: none; padding: 0; margin: 6px 0 10px; display: grid; grid-template-columns: repeat(auto-fill, minmax(150px, 1fr)); gap: 16px 14px; }
+.tp-card[hidden] { display: none; }
+.tp-card a { display: block; text-decoration: none; color: var(--ink); }
+.tp-pic { position: relative; display: block; border-radius: 8px; overflow: hidden; background: #fff; box-shadow: 0 0 0 1px var(--line), 0 4px 14px rgba(0,0,0,.06); }
+.tp-pic img { display: block; width: 100%; height: auto; }
+.tp-ats { position: absolute; left: 6px; top: 6px; background: #1E7A4C; color: #fff; font-size: 11.5px; font-weight: 700; border-radius: 6px; padding: 2px 6px; }
+.tp-n { display: block; font-weight: 700; font-size: 15px; margin-top: 8px; }
+.tp-use { display: inline-block; margin-top: 4px; color: var(--green); font-weight: 700; font-size: 14px; }
+.tp-card a:hover .tp-pic { box-shadow: 0 0 0 2px var(--green), 0 6px 18px rgba(0,0,0,.1); }
+@media (min-width: 900px) { .tp-grid { grid-template-columns: repeat(auto-fill, minmax(180px, 1fr)); gap: 22px 18px; } }

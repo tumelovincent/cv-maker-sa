@@ -92,7 +92,7 @@
     var full = MONTHS[d.getMonth()], tr = T(full);
     return d.getDate() + ' ' + (tr === full ? full.slice(0, 3) : tr) + ' ' + d.getFullYear();
   }
-  function cvTitle(cv) { return D.fullName(cv) || T('Untitled CV'); }
+  function cvTitle(cv) { var h = cv && cv.personal && cv.personal.headline; return D.fullName(cv) || (h ? T('{job} CV', { job: h }) : T('Untitled CV')); }
   function hasContent(cv) { return !!(cv && cv.personal && (cv.personal.firstNames || cv.personal.surname)); }
 
   /* ---------- navigation ---------- */

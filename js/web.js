@@ -53,11 +53,11 @@
   window.addEventListener('appinstalled', function () { prompt = null; A.toast(T('CV Maker SA was added to your home screen')); refreshHome(); });
   // links to the guide pages on the website (the guides are web pages, so only on the website)
   A.hooks.homeGuides = function () {
-    var G = [['how-to-fill-in-z83-form', 'How to fill in the Z83 form'], ['cv-with-no-experience', 'A CV with no work experience'],
+    var G = [['../cv-examples/', 'CV examples for 29 jobs'], ['how-to-fill-in-z83-form', 'How to fill in the Z83 form'], ['cv-with-no-experience', 'A CV with no work experience'],
       ['how-to-apply-for-learnerships', 'How to apply for learnerships'], ['how-to-write-a-cover-letter', 'How to write a cover letter'],
-      ['job-interview-tips', 'Job interview tips'], ['south-african-cv-format', 'The South African CV format']];
+      ['job-interview-tips', 'Job interview tips'], ['after-matric', 'Matric results: what next?'], ['z83-form-download', 'Z83 form download']];
     return '<section class="block"><div class="block-h"><h2>' + T('Help with your application') + '</h2><a class="see-all" href="guides/">' + T('All guides') + '</a></div>' +
-      '<div class="guide-list">' + G.map(function (g) { return '<a class="guide-it" href="guides/' + g[0] + '.html">' + A.esc(g[1]) + '</a>'; }).join('') + '</div></section>';
+      '<div class="guide-list">' + G.map(function (g) { return '<a class="guide-it" href="' + (g[0].indexOf('../') === 0 ? g[0].slice(3) : 'guides/' + g[0] + '.html') + '">' + A.esc(g[1]) + '</a>'; }).join('') + '</div></section>';
   };
   A.hooks.homeInstall = function () {
     if (standalone() || dismissed() || (!prompt && !IOS)) return '';
@@ -179,6 +179,50 @@
     if (b.getAttribute('data-tfc') === 'go') { A.hooks.tellFriend(); return; }
     set(SHARE, new Date(Date.now() + 30 * 864e5).toISOString().slice(0, 10)); refreshHome(); // ask again in a month
   });
+
+  /* ---------- links from the website's pages that open the app ready to go ----------
+     ?job=cashier       a new CV for that job (its code, as on the CV example pages): job title and usual skills filled in
+     ?template=aurora   use that design, for a new CV or for one already saved
+     ?start=z83         a new Z83 form
+     The link is then cleaned up, so refreshing the page does not start another CV. */
+  (function () {
+    var q; try { q = new URLSearchParams(location.search); } catch (e) { return; }
+    var job = (q.get('job') || '').slice(0, 60), tpl = q.get('template') || '', start = q.get('start') || '';
+    if (!job && !tpl && !start) return;
+    try { history.replaceState({ cvm: 0 }, '', location.pathname); } catch (e) { }
+    var D = window.CVData, TP = window.CVTemplates;
+    function fresh(templateId) {
+      var c = D.blankCV(); if (templateId) c.templateId = templateId;
+      S.list.unshift(c); S.cur = c; S.open = { personal: true }; return c;
+    }
+    function show(stack) { A.saveNow(); S.stack = stack; A.render(); window.scrollTo(0, 0); }
+    if (job) {
+      // the job's code (e.g. bookkeeper-accounts-clerk) picks it exactly; any other text is matched by name
+      var CD = window.CVDuties, slug = function (t) { return t.toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/^-|-$/g, ''); };
+      var j = CD && (CD.JOBS.filter(function (x) { return slug(x.t) === slug(job); })[0] || CD.match(job)), c = fresh();
+      c.personal.headline = j ? j.t.split(' / ')[0] : job;
+      if (j) c.skills = j.s.join('\n');
+      show(['home', 'edit']);
+      A.toast(T('Your {job} CV is started. Fill in your details.', { job: c.personal.headline }), 5000);
+      return;
+    }
+    if (start === 'z83') { fresh(); show(['home', 'edit', 'z83']); return; }
+    var t = tpl && TP && TP.list.filter(function (x) { return x.id === tpl; })[0];
+    if (!t) return;
+    if (!S.list.length) { fresh(t.id); show(['home', 'edit']); A.toast(T('{name} is your design. Fill in your details.', { name: t.name }), 5000); return; }
+    // CVs already saved: ask which one gets the design
+    var sh = A.openSheet('<div class="sheet-sec">' + T('Use {name} for:', { name: A.esc(t.name) }) + '</div>' +
+      S.list.map(function (c) { return '<button class="sheet-item" data-usetpl="' + c.id + '">' + A.svg('file') + '<span>' + A.esc(A.cvTitle(c)) + '</span></button>'; }).join('') +
+      '<button class="sheet-item" data-usetpl="new">' + A.svg('plus') + '<span>' + T('A new CV') + '</span></button>');
+    sh.onclick = function (e) {
+      var b = e.target.closest('[data-usetpl]'); if (!b) return;
+      A.closeSheet();
+      var id = b.getAttribute('data-usetpl');
+      if (id === 'new') { fresh(t.id); show(['home', 'edit']); return; }
+      var c = S.list.filter(function (x) { return x.id === id; })[0]; if (!c) return;
+      c.templateId = t.id; c.updated = Date.now(); S.cur = c; show(['home', 'edit', 'prev']);
+    };
+  })();
 
   /* ---------- sponsor taps are counted on the website ----------
      The built website has a small page go/<id>.html for each sponsor (web/finish.py): the visitor counter counts it,

@@ -56,6 +56,11 @@ window.CVi18nDict = {
 "Imigqa embalwa ngawe (akuphoqelekile)",
 "'n Paar reëls oor jou (opsioneel)"
 ],
+"A new CV": [
+"CV e ntjha",
+"I-CV entsha",
+"'n Nuwe CV"
+],
 "A new version of CV Maker SA is ready.": [
 "Mofuta o motjha wa CV Maker SA o se o loketse.",
 "Inguqulo entsha ye-CV Maker SA isilungile.",
@@ -3891,6 +3896,11 @@ window.CVi18nDict = {
 "Sebenzisa izinhlamvu, izinombolo nezimpawu ezilula kuphela.",
 "Gebruik net letters, syfers en eenvoudige tekens."
 ],
+"Use {name} for:": [
+"Sebedisa {name} bakeng sa:",
+"Sebenzisa i-{name} ku:",
+"Gebruik {name} vir:"
+],
 "Used on your declaration, cover letter and Z83": [
 "E sebediswa phatlalatsong ya hao, lengolong la kopo le ho Z83",
 "Isetshenziswa esimemezelweni sakho, encwadini yesicelo nase-Z83",
@@ -4231,6 +4241,11 @@ window.CVi18nDict = {
 "I-PDF yakho encane isilungile",
 "Jou kleiner PDF is gereed"
 ],
+"Your {job} CV is started. Fill in your details.": [
+"CV ya hao ya {job} e qadile. Tlatsa dintlha tsa hao.",
+"I-CV yakho ye-{job} iqalile. Gcwalisa imininingwane yakho.",
+"Jou {job}-CV is begin. Vul jou besonderhede in."
+],
 "Z83 for government jobs": [
 "Z83 bakeng sa mesebetsi ya mmuso",
 "I-Z83 yemisebenzi kahulumeni",
@@ -4361,6 +4376,11 @@ window.CVi18nDict = {
 "lo msebenzi",
 "hierdie werk"
 ],
+"{job} CV": [
+"CV ya {job}",
+"I-CV ye-{job}",
+"{job}-CV"
+],
 "{name} chosen. Now fill in your details.": [
 "{name} e kgethilwe. Jwale tlatsa dintlha tsa hao.",
 "Ukhethe {name}. Manje gcwalisa imininingwane yakho.",
@@ -4390,6 +4410,11 @@ window.CVi18nDict = {
 "{name} hase PDF kapa foto",
 "{name} akusiyo i-PDF noma isithombe",
 "{name} is nie 'n PDF of foto nie"
+],
+"{name} is your design. Fill in your details.": [
+"{name} ke moralo wa hao. Tlatsa dintlha tsa hao.",
+"I-{name} iwumklamo wakho. Gcwalisa imininingwane yakho.",
+"{name} is jou ontwerp. Vul jou besonderhede in."
 ],
 "{name} selected": [
 "{name} e kgethilwe",
