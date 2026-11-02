@@ -235,7 +235,7 @@
   }
 
   /* ---------- home ---------- */
-  var APP_VERSION = '1.9';
+  var APP_VERSION = '2.0';
   var DEVELOPER = 'Tumelo Vincent Tau';
   var SHOWCASE = ['classic', 'aurora', 'mzansi', 'midnight', 'horizon', 'lagoon', 'kalahari', 'roadmap'];
   var SHOWCASE_WIDE = ['navy', 'ats', 'protea', 'timeline']; // 4 more on big screens, so the row has 12 smaller pictures
