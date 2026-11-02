@@ -7,6 +7,10 @@
 
   /* ---------- outlined icons for the PDF tools ---------- */
   var IC = {
+    redact: 'M4 6h16v5H4z M4 14h9 M4 18h12 M16 14h4', pnum: 'M6.5 3H14l5 5v11.5a1.5 1.5 0 0 1-1.5 1.5h-11A1.5 1.5 0 0 1 5 19.5v-15A1.5 1.5 0 0 1 6.5 3z M9.5 17h5 M12 15v4',
+    addpage: 'M7.5 3H14l5 5v11.5a1.5 1.5 0 0 1-1.5 1.5h-10A1.5 1.5 0 0 1 6 19.5v-15A1.5 1.5 0 0 1 7.5 3z M12.5 11v6 M9.5 14h6',
+    ocr: 'M4 8V5.5A1.5 1.5 0 0 1 5.5 4H8 M16 4h2.5A1.5 1.5 0 0 1 20 5.5V8 M20 16v2.5a1.5 1.5 0 0 1-1.5 1.5H16 M8 20H5.5A1.5 1.5 0 0 1 4 18.5V16 M8 9h8 M12 9v7',
+    toword: 'M7.5 3H14l5 5v11.5a1.5 1.5 0 0 1-1.5 1.5h-10A1.5 1.5 0 0 1 6 19.5v-15A1.5 1.5 0 0 1 7.5 3z M14 3v5h5 M8.5 12l1.2 5 1.8-4 1.8 4 1.2-5',
     plus: 'M12 5v14 M5 12h14', back: 'M19 12H5 M11 5l-7 7 7 7', close: 'M6 6l12 12 M18 6L6 18', search: 'M10.5 4a6.5 6.5 0 1 0 0 13 6.5 6.5 0 0 0 0-13z M20 20l-4.8-4.8',
     scan: 'M4 8V5.5A1.5 1.5 0 0 1 5.5 4H8 M16 4h2.5A1.5 1.5 0 0 1 20 5.5V8 M20 16v2.5a1.5 1.5 0 0 1-1.5 1.5H16 M8 20H5.5A1.5 1.5 0 0 1 4 18.5V16 M7 12h10',
     photos: 'M4 6.5A2.5 2.5 0 0 1 6.5 4h11A2.5 2.5 0 0 1 20 6.5v11a2.5 2.5 0 0 1-2.5 2.5h-11A2.5 2.5 0 0 1 4 17.5z M4 16l4.5-4.5 4 4 2.5-2.5L20 18 M15.5 8.5h.01',
@@ -88,10 +92,33 @@
     remove: function (id) {
       var f = Files.get(id); if (!f) return Promise.resolve();
       Files.save(Files.list().filter(function (x) { return x.id !== id; }));
+      if (f.edit) { F.store.del(f.edit.base).catch(function () {}); F.store.del(f.edit.data).catch(function () {}); }
       return F.store.del(f.fileId).catch(function () {});
+    },
+    // a file saved again after "Change what you added": same name, new contents
+    replace: function (meta, bytes, pages) {
+      return F.store.put(meta.fileId, bytes).then(function () {
+        var out = null;
+        Files.update(meta.id, function (f) { f.size = bytes.length; f.pages = pages || f.pages; f.opened = Date.now(); f.created = Date.now(); out = f; });
+        return out || meta;
+      });
+    },
+    // what the editor needs to change the added things later: the PDF before the changes, and the list of changes
+    setEdit: function (meta, base, data) {
+      var e = { base: 'pfe-' + meta.id + '-b', data: 'pfe-' + meta.id + '-d' }, json = new TextEncoder().encode(JSON.stringify(data));
+      return F.store.put(e.base, base).then(function () { return F.store.put(e.data, json); }).then(function () {
+        Files.update(meta.id, function (f) { f.edit = e; }); meta.edit = e; return meta;
+      });
+    },
+    editData: function (meta) {
+      var e = meta.edit;
+      return Promise.all([F.store.get(e.base), F.store.get(e.data)]).then(function (r) {
+        if (!r[0] || !r[1]) throw new Error('gone');
+        return { base: r[0], data: JSON.parse(new TextDecoder().decode(r[1])) };
+      });
     }
   };
-  A.hooks.fileInUse = function (k) { return Files.list().some(function (f) { return f.fileId === k; }); };
+  A.hooks.fileInUse = function (k) { return Files.list().some(function (f) { return f.fileId === k || (f.edit && (f.edit.base === k || f.edit.data === k)); }); };
   function recent(n) { return Files.list().slice().sort(function (a, b) { return (b.opened || b.created) - (a.opened || a.created); }).slice(0, n); }
   function fileRow(f, attrs, extra) {
     return '<button class="frow" ' + attrs + '><div class="pdfb">PDF</div><div class="fmeta"><b>' + esc(f.name) + '</b><span>' +
@@ -273,6 +300,7 @@
     open: ['eye', 'c-blue', 'Open PDF', 'Read any PDF', 'Open PDF'],
     sign: ['fill', 'c-blue', 'Fill & sign', 'Type on forms, sign, tick', 'Fill & sign'],
     tophotos: ['topics', 'c-blue', 'PDF to photos', 'Pages as JPG for WhatsApp', 'PDF to photos'],
+    toword: ['toword', 'c-blue', 'PDF to Word', 'Editable Word file', 'PDF to Word'],
     merge: ['merge', 'c-purple', 'Merge', 'Join PDFs into one', 'Merge'],
     split: ['scissors', 'c-purple', 'Split', 'Take out pages', 'Split'],
     organise: ['grid', 'c-purple', 'Organise', 'Move, rotate, delete', 'Organise'],
@@ -284,7 +312,7 @@
   // the big "Edit PDF" card, first in the PDF tools
   function feature() {
     return '<button class="tool-feat" data-tool="edit"><span class="tf-ic">' + ic('pdfedit') + '</span><span class="tf-t"><b>' + T('Edit PDF') + '<em>' + T('FREE') + '</em></b><span>' +
-      T('Change the text in any PDF, add text, pictures, highlights and your signature. No watermark, and your file stays on your phone.') + '</span></span>' + ic('right', 'tf-go') + '</button>';
+      T('Change the text in any PDF, fill in forms, add text, pictures and your signature, black out private details. No watermark, and your file stays on your phone.') + '</span></span>' + ic('right', 'tf-go') + '</button>';
   }
   function tile(k, small) {
     var t = TOOLS[k];
@@ -298,7 +326,7 @@
     if (k === 'word') { wordFlow(); return; }
     if (k === 'merge') { M.items = []; A.go('merge'); return; }
     if (k === 'protect') { P.src = null; A.go('protect'); return; }
-    var titles = { edit: 'Edit PDF', open: 'Open PDF', sign: 'Fill & sign', tophotos: 'PDF to photos', split: 'Split', organise: 'Organise pages', compress: 'Compress', lock: 'Password' };
+    var titles = { edit: 'Edit PDF', open: 'Open PDF', sign: 'Fill & sign', tophotos: 'PDF to photos', toword: 'PDF to Word', split: 'Split', organise: 'Organise pages', compress: 'Compress', lock: 'Password' };
     choose({ title: T(titles[k]), photos: k === 'sign' || k === 'edit' }).then(function (l) {
       var src = l[0];
       if (k === 'sign' && src.kind === 'image') { photoToPdf(src).then(function (s2) { if (A.PDF.startSign) A.PDF.startSign(s2); }); return; }
@@ -308,10 +336,35 @@
       if (k === 'sign') { if (A.PDF.startSign) A.PDF.startSign(src); return; }
       if (k === 'edit') { if (A.PDF.startEdit) A.PDF.startEdit(src); return; }
       if (k === 'tophotos') { photosSheet(src); return; }
+      if (k === 'toword') { toWord(src); return; }
       if (k === 'split' || k === 'organise') { startPages(src, k); return; }
       if (k === 'compress') { C.src = src; C.res = null; A.go('compress'); return; }
       if (k === 'lock') { K.src = src; A.go('lock'); return; }
     });
+  }
+  // PDF to Word: an editable .docx made on the phone
+  var DOCX_MIME = 'application/vnd.openxmlformats-officedocument.wordprocessingml.document';
+  function toWord(src) {
+    busy(T('Making a Word file…'));
+    var name = stem(src.name) + '.docx';
+    bytesOf(src).then(function (bytes) {
+      return openDoc(bytes, src.name, src.pw).then(function (r) {
+        return window.CVPdfWord.convert(r.doc, bytes, stem(src.name), function (f) { busy(T('Making a Word file…') + ' ' + Math.round(f * 100) + '%'); })
+          .then(function (out) { r.doc.destroy(); return out; }, function (e) { r.doc.destroy(); throw e; });
+      });
+    }).then(function (out) {
+      A.done();
+      var h = '<div class="res-h"><span class="ok">' + ic('check') + '</span><b>' + T('Your Word file is ready') + '</b></div>' +
+        '<div class="frow" style="pointer-events:none"><div class="pdfb" style="background:#1B5EBE">W</div><div class="fmeta"><b>' + esc(name) + '</b><span>' + fmtSize(out.length) + '</span></div></div>' +
+        '<div class="btns two"><button class="btn gold" data-w="save">' + ic('save') + ' ' + T('Save to phone') + '</button><button class="btn soft" data-w="share">' + ic('share') + ' ' + T('Share') + '</button></div>' +
+        '<div class="res-note">' + T('Check it before you send it: tables and special layouts may need tidying in Word. Scanned pages come in as pictures.') + '</div>';
+      var sh = A.openSheet(h);
+      sh.querySelectorAll('.btns .ico').forEach(function (x) { x.style.marginRight = '6px'; });
+      sh.onclick = function (e) {
+        var b = e.target.closest('[data-w]'); if (!b) return;
+        A.setLastSize(out.length); A.deliverMany([{ bytes: out, name: name, mime: DOCX_MIME }], b.getAttribute('data-w'));
+      };
+    }).catch(function (e) { if (e && e.message !== 'cancel') failMsg(e); });
   }
   function photoToPdf(src) {
     busy(T('Opening…'));
@@ -325,9 +378,9 @@
     Files.add(src.bytes, src.name).then(function (meta) { A.done(); openFile(meta); }, failMsg);
   }
   A.hooks.homeTools = function () {
-    return '<section class="block" style="margin-top:20px"><div class="block-h"><h2>' + T('PDF tools') + '<span class="new-pill">' + T('NEW') + '</span></h2><button class="see-all" data-tool="more">' + T('See all {n}', { n: 13 }) + '</button></div>' +
-      feature() + '<div class="tg four">' + (window.innerWidth >= 1400 ? ['scan', 'photos', 'word', 'open', 'sign', 'tophotos', 'merge', 'split', 'organise', 'compress', 'protect', 'lock']
-        : ['scan', 'photos', 'open', 'sign', 'merge', 'compress', 'protect', 'more']).map(function (k) { return tile(k, true); }).join('') + '</div></section>';
+    return '<section class="block" style="margin-top:20px"><div class="block-h"><h2>' + T('PDF tools') + '<span class="new-pill">' + T('NEW') + '</span></h2><button class="see-all" data-tool="more">' + T('See all {n}', { n: 14 }) + '</button></div>' +
+      feature() + '<div class="tg four">' + (window.innerWidth >= 1400 ? ['scan', 'photos', 'word', 'toword', 'open', 'sign', 'tophotos', 'merge', 'split', 'organise', 'compress', 'protect', 'lock']
+        : ['scan', 'photos', 'toword', 'sign', 'merge', 'compress', 'protect', 'more']).map(function (k) { return tile(k, true); }).join('') + '</div></section>';
   };
   document.addEventListener('click', function (e) {
     var b = e.target.closest('[data-tool]'); if (!b || !$('#sheet').hidden && b.closest('#sheet')) return;
@@ -348,7 +401,7 @@
     actions: function () { return ''; },
     render: function (el) {
       var h = feature() + '<div class="grp">' + T('Make a PDF') + '</div><div class="tg">' + tile('scan') + tile('photos') + tile('word') + '</div>' +
-        '<div class="grp">' + T('View & edit') + '</div><div class="tg">' + tile('open') + tile('sign') + tile('tophotos') + '</div>' +
+        '<div class="grp">' + T('View & edit') + '</div><div class="tg">' + tile('open') + tile('sign') + tile('tophotos') + tile('toword') + '</div>' +
         '<div class="grp">' + T('Pages') + '</div><div class="tg">' + tile('merge') + tile('split') + tile('organise') + '</div>' +
         '<div class="grp">' + T('Size & safety') + '</div><div class="tg">' + tile('compress') + tile('protect') + tile('lock') + '</div>';
       var rec = recent(3);

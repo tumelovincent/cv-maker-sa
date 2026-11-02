@@ -41,6 +41,11 @@ window.CVi18nDict = {
 "I-PDF evela ku-Downloads, WhatsApp noma Drive",
 "'n PDF uit Downloads, WhatsApp of Drive"
 ],
+"A PDF you chose is locked with a password. Remove the password first, then try again.": [
+"PDF eo o e kgethileng e notletswe ka phasewete. Tlosa phasewete pele, ebe o leka hape.",
+"I-PDF oyikhethile ikhiywe ngephasiwedi. Susa iphasiwedi kuqala, bese uzama futhi.",
+"'n PDF wat jy gekies het, is met 'n wagwoord gesluit. Haal eers die wagwoord af en probeer dan weer."
+],
 "A PIN stops other people who use your phone from opening your CVs and ID documents.": [
 "PIN e thibela batho ba bang ba sebedisang founo ya hao ho bula di-CV le ditokomane tsa hao tsa ID.",
 "I-PIN ivimba abanye abantu abasebenzisa ifoni yakho ukuthi bavule ama-CV akho namadokhumenti kamazisi.",
@@ -241,6 +246,16 @@ window.CVi18nDict = {
 "Engeza ikhasi (isithombe)",
 "Voeg bladsy by (foto)"
 ],
+"Add pages": [
+"Kenya maqephe",
+"Engeza amakhasi",
+"Voeg bladsye by"
+],
+"Add pages from a PDF or photos": [
+"Kenya maqephe ho tswa ho PDF kapa ditshwantsho",
+"Engeza amakhasi avela ku-PDF noma ezithombeni",
+"Voeg bladsye uit 'n PDF of foto's by"
+],
 "Add qualification": [
 "Eketsa lengolo la thuto",
 "Engeza iziqu",
@@ -325,6 +340,11 @@ window.CVi18nDict = {
 "E kenya tokomane…",
 "Kufakwa idokhumenti…",
 "Voeg dokument by…"
+],
+"Adding pages…": [
+"Ho kenngwa maqephe…",
+"Kungezwa amakhasi…",
+"Voeg bladsye by…"
 ],
 "Adding page…": [
 "E kenya leqephe…",
@@ -536,6 +556,21 @@ window.CVi18nDict = {
 "Okumnyama nokumhlophe",
 "Swart en wit"
 ],
+"Black-out": [
+"Pata ka botsho",
+"Fihla ngokumnyama",
+"Swartmaak"
+],
+"Black-out: page {list} was saved as a picture, so nothing under the black box can be recovered.": [
+"Ho pata ka botsho: leqephe {list} le bolokilwe e le setshwantsho, ka hona ha ho letho le ka tlase ho lebokose le letsho le ka fumanwang hape.",
+"Ukufihla ngokumnyama: ikhasi {list} ligcinwe njengesithombe, ngakho akukho okungaphansi kwebhokisi elimnyama okungabuyiswa.",
+"Swartmaak: bladsy {list} is as 'n prent gestoor, dus kan niks onder die swart blokkie teruggekry word nie."
+],
+"Black-out: pages {list} were saved as pictures, so nothing under the black boxes can be recovered.": [
+"Ho pata ka botsho: maqephe {list} a bolokilwe e le ditshwantsho, ka hona ha ho letho le ka tlase ho mabokose a matsho le ka fumanwang hape.",
+"Ukufihla ngokumnyama: amakhasi {list} agcinwe njengezithombe, ngakho akukho okungaphansi kwamabhokisi amnyama okungabuyiswa.",
+"Swartmaak: bladsye {list} is as prente gestoor, dus kan niks onder die swart blokkies teruggekry word nie."
+],
 "Blue": [
 "Bolou",
 "Okwesibhakabhaka",
@@ -545,6 +580,21 @@ window.CVi18nDict = {
 "O tswetswe",
 "Wazalwa",
 "Gebore"
+],
+"Bottom centre": [
+"Tlase bohareng",
+"Phansi phakathi",
+"Onder in die middel"
+],
+"Bottom left": [
+"Tlase ka ho le letshehadi",
+"Phansi kwesokunxele",
+"Links onder"
+],
+"Bottom right": [
+"Tlase ka ho le letona",
+"Phansi kwesokudla",
+"Regs onder"
 ],
 "Box": [
 "Lebokose",
@@ -686,6 +736,16 @@ window.CVi18nDict = {
 "Shintsha umbhalo kunoma iyiphi i-PDF, engeza umbhalo, izithombe, okugqamisiwe kanye nesiginesha yakho. Akukho uphawu lwamanzi, futhi ifayela lakho lihlala efonini yakho.",
 "Verander die teks in enige PDF, voeg teks, prente, uitligte en jou handtekening by. Geen watermerk nie, en jou lêer bly op jou foon."
 ],
+"Change the text in any PDF, fill in forms, add text, pictures and your signature, black out private details. No watermark, and your file stays on your phone.": [
+"Fetola mongolo PDF efe kapa efe, tlatsa diforomo, kenya mongolo, ditshwantsho le tshaeno ya hao, pata dintlha tsa lekunutu ka botsho. Ha ho letshwao la metsi, mme faele ya hao e dula founong ya hao.",
+"Shintsha umbhalo kunoma iyiphi i-PDF, gcwalisa amafomu, engeza umbhalo, izithombe nesiginesha yakho, fihla imininingwane eyimfihlo ngokumnyama. Akukho luphawu lwamanzi, futhi ifayela lakho lihlala efonini yakho.",
+"Verander die teks in enige PDF, vul vorms in, voeg teks, prente en jou handtekening by, maak privaat besonderhede swart. Geen watermerk nie, en jou lêer bly op jou foon."
+],
+"Change what you added": [
+"Fetola seo o se kentseng",
+"Shintsha okwengezile",
+"Verander wat jy bygevoeg het"
+],
 "Charcoal": [
 "Thokwa e lefifi",
 "Okumpunga okumnyama",
@@ -695,6 +755,11 @@ window.CVi18nDict = {
 "Nomoro ya ho qetela ha e lumellane - ka kopo hlahloba nomoro ya ID hape",
 "Inombolo yokugcina ayihambisani - sicela uphinde uhlole inombolo kamazisi",
 "Kontrolesyfer pas nie - kontroleer asseblief die ID-nommer weer"
+],
+"Check it before you send it: tables and special layouts may need tidying in Word. Scanned pages come in as pictures.": [
+"E hlahlobe pele o e romela: ditafole le dibopeho tse ikgethang di ka hloka ho hlophiswa ho Word. Maqephe a skeniweng a kena e le ditshwantsho.",
+"Lihlole ngaphambi kokuba ulithumele: amathebula nezakhiwo ezikhethekile kungadinga ukuhlelwa ku-Word. Amakhasi askeniwe angena njengezithombe.",
+"Kyk dit na voor jy dit stuur: tabelle en spesiale uitlegte moet dalk in Word reggemaak word. Geskandeerde bladsye kom as prente in."
 ],
 "Check your alternative number. It should have 10 digits.": [
 "Hlahloba nomoro ya hao e nngwe. E lokela ho ba le dinomoro tse 10.",
@@ -1241,6 +1306,11 @@ window.CVi18nDict = {
 "Kulandiwe: {name}",
 "Afgelaai: {name}"
 ],
+"Downloading the word reader (about 6 MB, only the first time)…": [
+"Ho jarollwa sebadi sa mantswe (hoo e ka bang 6 MB, lekgetlo la pele feela)…",
+"Kulandwa isifundi samagama (cishe ama-MB angu-6, okokuqala kuphela)…",
+"Laai die woordleser af (omtrent 6 MB, net die eerste keer)…"
+],
 "Downloads or another folder": [
 "Downloads kapa foldara e nngwe",
 "I-Downloads noma enye ifolda",
@@ -1356,6 +1426,11 @@ window.CVi18nDict = {
 "Hlela ku-CV",
 "Wysig in CV"
 ],
+"Edit it as it is now": [
+"E fetole kamoo e leng kateng hona jwale",
+"Yihlele njengoba injalo manje",
+"Wysig dit soos dit nou is"
+],
 "Edit letter": [
 "Fetola lengolo",
 "Hlela incwadi",
@@ -1365,6 +1440,11 @@ window.CVi18nDict = {
 "Fetola mongolo",
 "Hlela umbhalo",
 "Wysig teks"
+],
+"Editable Word file": [
+"Faele ya Word e ka fetolwang",
+"Ifayela le-Word elihlelekayo",
+"Wysigbare Word-lêer"
 ],
 "Edited {date}": [
 "E fetotswe {date}",
@@ -1531,6 +1611,16 @@ window.CVi18nDict = {
 "Ikugcwalisela usuku lokuzalwa, ubulili nobuzwe",
 "Vul jou geboortedatum, geslag en nasionaliteit vir jou in"
 ],
+"Find": [
+"Batla",
+"Thola",
+"Soek"
+],
+"Find and replace": [
+"Batla mme o nkele sebaka",
+"Thola futhi ushintshe",
+"Soek en vervang"
+],
 "Finding the document edges…": [
 "E batla mathoko a tokomane…",
 "Kuthungathwa imiphetho yedokhumenti…",
@@ -1586,6 +1676,21 @@ window.CVi18nDict = {
 "Owayengumphathi",
 "Voormalige bestuurder"
 ],
+"Found once": [
+"E fumanwe hang",
+"Kutholakale kanye",
+"Een keer gevind"
+],
+"Found {n} lines of text. Tap one to change it.": [
+"Ho fumanwe mela e {n} ya mongolo. Tobetsa o mong ho o fetola.",
+"Kutholakale imigqa engu-{n} yombhalo. Thepha owodwa ukuwushintsha.",
+"{n} reëls teks gevind. Tik op een om dit te verander."
+],
+"Found {n} times": [
+"E fumanwe ka makgetlo a {n}",
+"Kutholakale izikhathi ezingu-{n}",
+"{n} keer gevind"
+],
 "From my CV": [
 "Ho tswa ho CV ya ka",
 "Kusukela ku-CV yami",
@@ -1635,6 +1740,11 @@ window.CVi18nDict = {
 "Bong (ho CV ya hao)",
 "Ubulili (ku-CV yakho)",
 "Geslag (in jou CV)"
+],
+"Getting the word reader ready…": [
+"Ho lokiswa sebadi sa mantswe…",
+"Kulungiswa isifundi samagama…",
+"Maak die woordleser gereed…"
 ],
 "Give the details": [
 "Fana ka dintlha",
@@ -1800,6 +1910,11 @@ window.CVi18nDict = {
 "E nyane hakae?",
 "Kuncane kangakanani?",
 "Hoe klein?"
+],
+"How they look": [
+"Kamoo di shebahalang kateng",
+"Ukuthi zibukeka kanjani",
+"Hoe hulle lyk"
 ],
 "I declare that all the information provided (including any attachments) is complete and correct to the best of my knowledge.": [
 "Ke phatlalatsa hore dintlha tsohle tse fanweng (ho kenyeletsa dihokelo) di phethehile ebile di nepahetse ho ya ka tsebo ya ka.",
@@ -2116,6 +2231,11 @@ window.CVi18nDict = {
 "Kuyakhiywa…",
 "Sluit…"
 ],
+"Looking at the text on every page…": [
+"Ho shejwa mongolo leqepheng le leng le le leng…",
+"Kubhekwa umbhalo kuwo wonke amakhasi…",
+"Kyk na die teks op elke bladsy…"
+],
 "Looking for the page…": [
 "E batla leqephe…",
 "Kufunwa ikhasi…",
@@ -2165,6 +2285,11 @@ window.CVi18nDict = {
 "Etsa CV ya hao, lengolo la kopo le Z83 mahala fonong ya hao ka CV Maker SA:",
 "Yenza i-CV yakho, incwadi yesicelo ne-Z83 mahhala efonini yakho nge-CV Maker SA:",
 "Maak jou CV, dekbrief en Z83 gratis op jou foon met CV Maker SA:"
+],
+"Making a Word file…": [
+"Ho etswa faele ya Word…",
+"Kwenziwa ifayela le-Word…",
+"Maak 'n Word-lêer…"
 ],
 "Making a copy without the password…": [
 "E etsa kopi e se nang phasewete…",
@@ -2225,6 +2350,11 @@ window.CVi18nDict = {
 "Ke lenyalong (Married)",
 "Ngishadile",
 "Getroud"
+],
+"Match case": [
+"Ditlhaku tse kgolo le tse nyane di tshwane",
+"Ofeleba abakhulu nabancane bafane",
+"Hoofletters moet ooreenstem"
 ],
 "Matric certificate (NSC)": [
 "Setifikeiti sa matriki (NSC)",
@@ -2296,6 +2426,11 @@ window.CVi18nDict = {
 "Amanye ama-app",
 "Ander apps"
 ],
+"More colours": [
+"Mebala e meng",
+"Eminye imibala",
+"Meer kleure"
+],
 "More skills for my jobs": [
 "Bokgoni bo bong bakeng sa mesebetsi ya ka",
 "Amanye amakhono emisebenzi yami",
@@ -2340,6 +2475,11 @@ window.CVi18nDict = {
 "Isa hodimo",
 "Yisa phezulu",
 "Skuif op"
+],
+"Move, change or delete the text, pictures and other things you added": [
+"Sutsa, fetola kapa hlakola mongolo, ditshwantsho le dintho tse ding tseo o di kentseng",
+"Hambisa, shintsha noma susa umbhalo, izithombe nezinye izinto ozengezile",
+"Skuif, verander of vee die teks, prente en ander goed uit wat jy bygevoeg het"
 ],
 "Move, rotate, delete": [
 "Sutha, potolosa, hlakola",
@@ -2461,6 +2601,11 @@ window.CVi18nDict = {
 "Asikho isithombe",
 "Geen foto"
 ],
+"No words were found on this page.": [
+"Ha ho mantswe a fumanweng leqepheng lena.",
+"Awekho amagama atholakele kuleli khasi.",
+"Geen woorde is op hierdie bladsy gevind nie."
+],
 "None": [
 "Ha ho",
 "Lutho",
@@ -2481,6 +2626,11 @@ window.CVi18nDict = {
 "Akufakiwe",
 "Nie bygevoeg nie"
 ],
+"Not found. Scanned pages need \"Read the words\" first.": [
+"Ha e a fumanwa. Maqephe a skeniweng a hloka \"Bala mantswe\" pele.",
+"Akutholakalanga. Amakhasi askeniwe adinga \"Funda amagama\" kuqala.",
+"Nie gevind nie. Geskandeerde bladsye het eers \"Lees die woorde\" nodig."
+],
 "Not named yet": [
 "Ha e so fuwe lebitso",
 "Ayikaqanjwa igama",
@@ -2490,6 +2640,11 @@ window.CVi18nDict = {
 "Eseng hona jwale",
 "Hhayi manje",
 "Nie nou nie"
+],
+"Not on the first page": [
+"Eseng leqepheng la pele",
+"Hhayi ekhasini lokuqala",
+"Nie op die eerste bladsy nie"
 ],
 "Not saved": [
 "Ha e a bolokwa",
@@ -2596,6 +2751,11 @@ window.CVi18nDict = {
 "Isifundo esisodwa emugqeni ngamunye",
 "Een vak per reël"
 ],
+"Only PDFs and photos can be added. Skipped: {name}": [
+"Ho ka kenngwa feela di-PDF le ditshwantsho. Ho tlotsweng: {name}",
+"Kungangezwa ama-PDF nezithombe kuphela. Okweqiwe: {name}",
+"Net PDF's en foto's kan bygevoeg word. Oorgeslaan: {name}"
+],
 "Only if different": [
 "Feela haeba e fapane",
 "Kuphela uma kuhlukile",
@@ -2686,6 +2846,11 @@ window.CVi18nDict = {
 "I-PDF noma isithombe esivela kumafayela noma kugalari",
 "PDF of foto uit jou lêers of galery"
 ],
+"PDF to Word": [
+"PDF e be Word",
+"I-PDF ibe yi-Word",
+"PDF na Word"
+],
 "PDF to photos": [
 "PDF e be difoto",
 "I-PDF ibe yizithombe",
@@ -2740,6 +2905,11 @@ window.CVi18nDict = {
 "Leqephe le fumanwe - se tsukutsuhe",
 "Ikhasi litholakele - ungazamazami",
 "Bladsy gevind - hou stil"
+],
+"Page numbers": [
+"Dinomoro tsa maqephe",
+"Izinombolo zamakhasi",
+"Bladsynommers"
 ],
 "Page removed": [
 "Leqephe le tlositswe",
@@ -3066,6 +3236,16 @@ window.CVi18nDict = {
 "Funda noma iyiphi i-PDF",
 "Lees enige PDF"
 ],
+"Read the words on this page": [
+"Bala mantswe a leqephe lena",
+"Funda amagama akuleli khasi",
+"Lees die woorde op hierdie bladsy"
+],
+"Reading the words on this page… This can take a minute.": [
+"Ho balwa mantswe a leqephe lena… Sena se ka nka motsotso.",
+"Kufundwa amagama akuleli khasi… Lokhu kungathatha umzuzu.",
+"Lees die woorde op hierdie bladsy… Dit kan 'n minuut neem."
+],
 "Reason for leaving": [
 "Lebaka la ho tloha",
 "Isizathu sokuhamba",
@@ -3145,6 +3325,31 @@ window.CVi18nDict = {
 "Fetola lebitso",
 "Qamba kabusha",
 "Hernoem"
+],
+"Replace all": [
+"Nkela tsohle sebaka",
+"Shintsha konke",
+"Vervang almal"
+],
+"Replace with": [
+"Nkela sebaka ka",
+"Shintsha ngo",
+"Vervang met"
+],
+"Replaced once": [
+"Ho nketswe sebaka hang",
+"Kushintshwe kanye",
+"Een keer vervang"
+],
+"Replaced {n} times": [
+"Ho nketswe sebaka ka makgetlo a {n}",
+"Kushintshwe izikhathi ezingu-{n}",
+"{n} keer vervang"
+],
+"Replacing…": [
+"Ho nkelwa sebaka…",
+"Kuyashintshwa…",
+"Vervang…"
 ],
 "Required": [
 "E a hlokahala",
@@ -3511,6 +3716,16 @@ window.CVi18nDict = {
 "Isikhangiso",
 "Geborg"
 ],
+"Start at": [
+"Qala ka",
+"Qala ku",
+"Begin by"
+],
+"Start fresh from this file": [
+"Qala botjha ho tswa faeleng ena",
+"Qala kabusha kusukela kuleli fayela",
+"Begin van voor af met hierdie lêer"
+],
 "Start month": [
 "Kgwedi ya ho qala",
 "Inyanga yokuqala",
@@ -3630,6 +3845,11 @@ window.CVi18nDict = {
 "Tobetsa maqephe ho a kgetha, ebe o a potolosa, o a sutha, o a kopisa kapa o a hlakola.",
 "Thepha amakhasi ukuze uwakhethe, bese uwajikisa, uwahambisa, uwakopisha noma uwacisha.",
 "Tik bladsye om hulle te kies, en draai, skuif, kopieer of skrap hulle dan."
+],
+"Tap text to black it out, or tap anywhere for a black box. Nothing under it can be recovered.": [
+"Tobetsa mongolo ho o pata ka botsho, kapa tobetsa kae kapa kae bakeng sa lebokose le letsho. Ha ho letho le ka tlase ho lona le ka fumanwang hape.",
+"Thepha umbhalo ukuwufihla ngokumnyama, noma uthephe noma kuphi ukuze uthole ibhokisi elimnyama. Akukho okungaphansi kwalo okungabuyiswa.",
+"Tik op teks om dit swart te maak, of tik enige plek vir 'n swart blokkie. Niks daaronder kan teruggekry word nie."
 ],
 "Tap text to remove it, or tap anywhere to cover with white.": [
 "Tobetsa mongolo ho o tlosa, kapa tobetsa kae kapa kae ho kwahela ka bosweu.",
@@ -3851,6 +4071,11 @@ window.CVi18nDict = {
 "Amaphasiwedi amabili awafani.",
 "Die twee wagwoorde is nie dieselfde nie."
 ],
+"The word reader did not load. Check your internet connection and try again.": [
+"Sebadi sa mantswe ha sea jarolla. Hlahloba kgokahano ya inthanete mme o leke hape.",
+"Isifundi samagama asilayishekanga. Hlola uxhumano lwakho lwe-inthanethi bese uzama futhi.",
+"Die woordleser het nie gelaai nie. Kyk na jou internetverbinding en probeer weer."
+],
 "Their job title": [
 "Lebitso la mosebetsi wa bona",
 "Isihloko somsebenzi wabo",
@@ -3861,10 +4086,20 @@ window.CVi18nDict = {
 "Awekho ama-CV angalondolozwa okwamanje",
 "Daar is nog geen CV's om te rugsteun nie"
 ],
+"They go in after this page": [
+"A kena kamora leqephe lena",
+"Angena emva kwaleli khasi",
+"Hulle kom ná hierdie bladsy"
+],
 "This PDF has a password": [
 "PDF ena e na le phasewete",
 "Le PDF inephasiwedi",
 "Hierdie PDF het 'n wagwoord"
+],
+"This PDF has boxes to fill in. Tap a box to type in it.": [
+"PDF ena e na le mabokose a ho tlatswa. Tobetsa lebokose ho ngola ho lona.",
+"Le PDF inamabhokisi okugcwalisa. Thepha ibhokisi ukuze ubhale kulo.",
+"Hierdie PDF het blokkies om in te vul. Tik op 'n blokkie om daarin te tik."
 ],
 "This PDF is already as small as it can be.": [
 "PDF ena e se e le nyane ka hohle ka moo e ka bang ka teng.",
@@ -3881,6 +4116,11 @@ window.CVi18nDict = {
 "Le PDF ivikelwe ngephasiwedi futhi ingaphuma ingenalutho. Faka isithombe sayo esikhundleni salokho.",
 "Hierdie PDF is met 'n wagwoord beskerm en kan leeg uitkom. Voeg eerder 'n foto daarvan by."
 ],
+"This PDF was edited in CV Maker SA": [
+"PDF ena e fetotswe ho CV Maker SA",
+"Le PDF ihlelwe ku-CV Maker SA",
+"Hierdie PDF is in CV Maker SA gewysig"
+],
 "This PDF was locked, so its pages were saved as pictures.": [
 "PDF ena e ne e notletswe, ka hona maqephe a yona a bolokilwe e le ditshwantsho.",
 "Le PDF ibikhiyiwe, ngakho amakhasi ayo agcinwe njengezithombe.",
@@ -3890,6 +4130,11 @@ window.CVi18nDict = {
 "Faele ena ya Word ha e a ka ya balwa.",
 "Leli fayela le-Word alikwazanga ukufundwa.",
 "Hierdie Word-lêer kon nie gelees word nie."
+],
+"This box cannot be changed.": [
+"Lebokose lena le ke ke la fetolwa.",
+"Leli bhokisi alikwazi ukushintshwa.",
+"Hierdie blokkie kan nie verander word nie."
 ],
 "This changes the app screens. Your CV, cover letter and Z83 stay in English, as employers expect.": [
 "Sena se fetola diskrine tsa app. CV ya hao, lengolo la kopo le Z83 di dula ka Senyesemane, jwalo ka ha bahiri ba lebeletse.",
@@ -3921,10 +4166,20 @@ window.CVi18nDict = {
 "Leli fayela alisekho efonini.",
 "Hierdie lêer is nie meer op die foon nie."
 ],
+"This line only": [
+"Mola ona feela",
+"Lo mugqa kuphela",
+"Net hierdie reël"
+],
 "This page has no text that can be changed (it may be a scan). Use White-out and Add text instead.": [
 "Leqephe lena ha le na mongolo o ka fetolwang (e ka ba sekena). Sebedisa Pata ka bosweu le Kenya mongolo.",
 "Leli khasi alinawo umbhalo ongashintshwa (kungenzeka liskeniwe). Sebenzisa u-Mboza ngokumhlophe no-Engeza umbhalo.",
 "Hierdie bladsy het geen teks wat verander kan word nie (dit is dalk 'n skandering). Gebruik eerder Witmaak en Voeg teks by."
+],
+"This page is a picture (a scan), so its words cannot be changed yet.": [
+"Leqephe lena ke setshwantsho (se skeniwe), ka hona mantswe a lona ha a kgone ho fetolwa hajwale.",
+"Leli khasi liyisithombe (liskeniwe), ngakho amagama alo awakwazi ukushintshwa okwamanje.",
+"Hierdie bladsy is 'n prent ('n skandering), dus kan sy woorde nog nie verander word nie."
 ],
 "This phone cannot add a password to a PDF.": [
 "Founo ena e ke ke ya kenya phasewete ho PDF.",
@@ -3935,6 +4190,11 @@ window.CVi18nDict = {
 "Founo ena e ke ke ya boloka ditokomane ka mora hore app e kwalwe. Jarolla PDF ya hao pele o kwala app.",
 "Le foni ayikwazi ukugcina amadokhumenti ngemva kokuvala i-app. Landa i-PDF yakho ngaphambi kokuvala i-app.",
 "Hierdie foon kan nie dokumente hou nadat die app toegemaak is nie. Laai jou PDF af voordat jy die app toemaak."
+],
+"This phone's web browser is too old to read scanned pages. Update Android System WebView or Chrome.": [
+"Sebatli sa founo ena se tsofetse haholo ho bala maqephe a skeniweng. Ntjhafatsa Android System WebView kapa Chrome.",
+"Isiphequluli sale foni sidala kakhulu ukufunda amakhasi askeniwe. Buyekeza i-Android System WebView noma i-Chrome.",
+"Hierdie foon se webblaaier is te oud om geskandeerde bladsye te lees. Werk Android System WebView of Chrome by."
 ],
 "Tick": [
 "Tiki",
@@ -3960,6 +4220,21 @@ window.CVi18nDict = {
 "Boiteko bo bongata haholo. Ema metsotswana e {n}.",
 "Imizamo miningi kakhulu. Linda imizuzwana engu-{n}.",
 "Te veel pogings. Wag {n} sekondes."
+],
+"Top centre": [
+"Hodimo bohareng",
+"Phezulu phakathi",
+"Bo in die middel"
+],
+"Top left": [
+"Hodimo ka ho le letshehadi",
+"Phezulu kwesokunxele",
+"Links bo"
+],
+"Top right": [
+"Hodimo ka ho le letona",
+"Phezulu kwesokudla",
+"Regs bo"
 ],
 "Total years of experience": [
 "Kakaretso ya dilemo tsa boiphihlelo",
@@ -4010,6 +4285,11 @@ window.CVi18nDict = {
 "Ngola diforomong, saena, tshwaya",
 "Bhala emafomini, sayina, maka",
 "Tik op vorms, onderteken, merk"
+],
+"Type the words to look for.": [
+"Ngola mantswe ao o a batlang.",
+"Bhala amagama ofuna ukuwathola.",
+"Tik die woorde om na te soek."
 ],
 "Type your own answer": [
 "Ngola karabo ya hao",
@@ -4141,6 +4421,11 @@ window.CVi18nDict = {
 "Ungaqala nini?",
 "Wanneer kan jy begin?"
 ],
+"Where": [
+"Kae",
+"Kuphi",
+"Waar"
+],
 "Where advertised": [
 "Moo o phatlaladitsweng teng",
 "Lapho kukhangiswe khona",
@@ -4171,10 +4456,20 @@ window.CVi18nDict = {
 "Incwadi iya kubani",
 "Aan wie die brief gaan"
 ],
+"Whole paragraph ({n} lines)": [
+"Serapa sohle (mela e {n})",
+"Isigaba sonke (imigqa engu-{n})",
+"Hele paragraaf ({n} reëls)"
+],
 "Whole photo": [
 "Foto yohle",
 "Isithombe sonke",
 "Hele foto"
+],
+"Whole words": [
+"Mantswe a felletseng",
+"Amagama aphelele",
+"Hele woorde"
 ],
 "Widowed": [
 "Ke mohlolohadi / mohlolohali (Widowed)",
@@ -4365,6 +4660,11 @@ window.CVi18nDict = {
 "PDF ya hao jwale e na le phasewete",
 "I-PDF yakho manje inephasiwedi",
 "Jou PDF het nou 'n wagwoord"
+],
+"Your Word file is ready": [
+"Faele ya hao ya Word e se e lokile",
+"Ifayela lakho le-Word selilungile",
+"Jou Word-lêer is gereed"
 ],
 "Your career objective is long. Two or three sentences is enough.": [
 "Sepheo sa hao sa mosebetsi se selelele. Dipolelo tse pedi kapa tse tharo di lekane.",

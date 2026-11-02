@@ -703,6 +703,38 @@ body[data-view="pdfview"] main, body[data-view="pdfsign"] main { max-width: none
 .etools .row1 button .ico { margin-bottom: 4px; }
 .etools .row1 button.on { background: var(--green-l); color: var(--green); }
 .etools .hint2 { font-size: 12.5px; color: var(--muted); text-align: center; padding: 2px 10px 10px; min-height: 18px; }
+/* PDF editor: black-out, the PDF's own form boxes, page numbers, find and replace, text style */
+.mk.redact { background: #000; }
+.mk.redact.sel { outline-color: #F4B400; }
+.mk.t .rs { right: -14px; bottom: auto; top: 50%; margin-top: -14px; }
+.ff { position: absolute; background: rgba(30, 86, 184, .08); box-shadow: inset 0 0 0 1px rgba(30, 86, 184, .5); border-radius: 2px; display: flex; align-items: center; overflow: hidden; pointer-events: none; color: #111; font-family: "F-libsans", Arial, sans-serif; }
+.ff span { white-space: pre; padding: 0 2px; line-height: 1.1; }
+.ff.multi { align-items: flex-start; }
+.ff.multi span { white-space: pre-wrap; }
+.ff b { margin-left: auto; padding-right: 2px; font-size: 10px; color: #1E56B8; }
+.ff.ff-check svg { width: 100%; height: 100%; }
+.ff.ff-radio { border-radius: 50%; justify-content: center; }
+.ff .rdot { width: 50%; height: 50%; border-radius: 50%; background: #111; }
+.ff.ro { background: rgba(0, 0, 0, .03); box-shadow: none; }
+.pnum { position: absolute; color: #444; font-family: "F-libsans", Arial, sans-serif; white-space: nowrap; pointer-events: none; line-height: 1; }
+.hint-btn { display: inline-block; margin: 6px 0 0; padding: 7px 14px; border-radius: 16px; border: 0; background: var(--green); color: #fff; font-weight: 700; font-size: 12.5px; }
+.seg2 { display: flex; gap: 6px; margin: 0 16px 8px; }
+.seg2 button { flex: 1; padding: 8px 6px; border-radius: 10px; border: 1.5px solid var(--line); background: #fff; font-weight: 700; font-size: 13px; color: #34403b; }
+.seg2 button.on, .pn-pos button.on { border-color: var(--green); background: var(--green-l); color: var(--green); }
+.fr-opts { display: flex; flex-wrap: wrap; gap: 6px 18px; margin-top: 10px; font-size: 14px; }
+.fr-opts label, .pn-row label { display: flex; align-items: center; gap: 8px; }
+.fr-res { max-height: 38vh; overflow-y: auto; padding: 0 16px; }
+.fr-note { font-size: 13.5px; color: var(--muted); padding: 4px 0 8px; }
+.fr-hit { display: block; width: 100%; text-align: left; border: 0; border-top: 1px solid var(--line); background: none; padding: 9px 2px; font-size: 13.5px; color: var(--ink, #1C2421); }
+.fr-hit b { display: block; font-size: 12px; color: var(--green); }
+.txh.flash { background: rgba(244, 180, 0, .35); box-shadow: 0 0 0 2px #F4B400; animation: frflash 2.4s ease-out forwards; }
+@keyframes frflash { 80% { opacity: 1; } 100% { opacity: 0; } }
+.pn-pos { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 6px; padding: 0 16px 8px; }
+.pn-pos button { padding: 9px 4px; border-radius: 10px; border: 1.5px solid var(--line); background: #fff; font-size: 12.5px; font-weight: 700; color: #34403b; }
+.pn-row { display: flex; flex-wrap: wrap; gap: 10px 18px; align-items: center; font-size: 14px; }
+.ftb button.on { background: rgba(255, 255, 255, .2); border-radius: 6px; }
+.cpick { position: relative; display: flex; width: 17px; height: 17px; border-radius: 50%; align-items: center; justify-content: center; font-size: 14px; line-height: 1; background: conic-gradient(#f33, #ff3, #3f3, #3ff, #33f, #f3f, #f33); color: #fff; text-shadow: 0 0 2px #000; overflow: hidden; }
+.cpick input { position: absolute; left: 0; top: 0; opacity: 0; width: 100%; height: 100%; border: 0; padding: 0; }
 .sig-pick { display: flex; align-items: center; padding: 10px 18px; border-top: 1px solid #EEF2F0; width: 100%; border-left: 0; border-right: 0; border-bottom: 0; background: none; text-align: left; }
 .sig-pick img { height: 46px; max-width: 160px; object-fit: contain; margin-right: 14px; background: #F7F9F8; border-radius: 8px; padding: 4px; }
 .sig-pick span { flex: 1; font-size: 15px; }

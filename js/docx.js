@@ -21,6 +21,8 @@
     var p = '';
     if (o.font) p += '<w:rFonts w:ascii="' + esc(o.font) + '" w:hAnsi="' + esc(o.font) + '" w:cs="' + esc(o.font) + '" w:eastAsia="' + esc(o.font) + '"/>';
     if (o.b) p += '<w:b/><w:bCs/>';
+    if (o.i) p += '<w:i/><w:iCs/>';
+    if (o.strike) p += '<w:strike/>';
     if (o.caps) p += '<w:caps/>';
     if (o.color) p += '<w:color w:val="' + hex(o.color) + '"/>';
     if (o.sp) p += '<w:spacing w:val="' + Math.round(o.sp) + '"/>';
@@ -42,6 +44,7 @@
     var p = '';
     if (o.keepNext) p += '<w:keepNext/>';
     if (o.keepLines) p += '<w:keepLines/>';
+    if (o.pbb) p += '<w:pageBreakBefore/>';
     if (FRAME && !o.noFrame) p += FRAME;
     if (o.bdr) {
       p += '<w:pBdr>' + ['top', 'left', 'bottom', 'right'].map(function (s) { return o.bdr[s] ? bdr(s, o.bdr[s]) : ''; }).join('') + '</w:pBdr>';
@@ -660,7 +663,8 @@
       rels.push('<Relationship Id="rIdH2" Type="http://schemas.openxmlformats.org/officeDocument/2006/relationships/header" Target="header2.xml"/>');
       hdrRefs += '<w:headerReference w:type="first" r:id="rIdH2"/>';
     }
-    var sect = '<w:sectPr>' + hdrRefs + '<w:pgSz w:w="' + PGW + '" w:h="' + PGH + '"/>' +
+    var pw = ctx.pgw || PGW, ph = ctx.pgh || PGH;
+    var sect = '<w:sectPr>' + hdrRefs + '<w:pgSz w:w="' + pw + '" w:h="' + ph + '"' + (pw > ph ? ' w:orient="landscape"' : '') + '/>' +
       '<w:pgMar w:top="' + s.mar.top + '" w:right="' + s.mar.right + '" w:bottom="' + s.mar.bottom + '" w:left="' + s.mar.left + '" w:header="' + s.mar.header + '" w:footer="' + s.mar.footer + '" w:gutter="0"/>' +
       (s.pgBorders || '') + '<w:cols w:space="708"/>' + (s.titlePg ? '<w:titlePg/>' : '') + '<w:docGrid w:linePitch="360"/></w:sectPr>';
     // Word needs a paragraph after a final table
@@ -700,6 +704,42 @@
     return zip.generateAsync({ type: 'uint8array', compression: 'DEFLATE', mimeType: 'application/vnd.openxmlformats-officedocument.wordprocessingml.document' });
   }
 
-  window.CVDocx = { make: makeDocx, letter: makeLetterDocx };
-  if (window.CVLibs) window.CVLibs.wrap(window.CVDocx, ['make', 'letter'], 'zip');
+  /* ---------- a plain Word file from blocks (PDF to Word) ----------
+     blocks: [{ type: 'p', runs: [{ t, b, i, u, s, sz (points), font, color }], jc, before (points), line (share of single spacing),
+                ind (points from the left margin), tabs: [points], pbb (starts a new page) }
+              | { type: 'img', src (JPEG or PNG data URL), w, h (points), jc, before, ind, pbb }]
+     page: { w, h, top, right, bottom, left } in points */
+  function imageRun(ctx, id, wPt, hPt) {
+    var cx = Math.round(wPt * 12700), cy = Math.round(hPt * 12700), n = ++ctx.drawingId;
+    return '<w:r><w:drawing><wp:inline distT="0" distB="0" distL="0" distR="0"><wp:extent cx="' + cx + '" cy="' + cy + '"/><wp:effectExtent l="0" t="0" r="0" b="0"/>' +
+      '<wp:docPr id="' + n + '" name="Picture ' + n + '"/><wp:cNvGraphicFramePr><a:graphicFrameLocks noChangeAspect="1"/></wp:cNvGraphicFramePr>' +
+      '<a:graphic><a:graphicData uri="http://schemas.openxmlformats.org/drawingml/2006/picture"><pic:pic><pic:nvPicPr><pic:cNvPr id="' + n + '" name="picture' + n + '"/><pic:cNvPicPr/></pic:nvPicPr>' +
+      '<pic:blipFill><a:blip r:embed="' + id + '"/><a:stretch><a:fillRect/></a:stretch></pic:blipFill>' +
+      '<pic:spPr><a:xfrm><a:off x="0" y="0"/><a:ext cx="' + cx + '" cy="' + cy + '"/></a:xfrm><a:prstGeom prst="rect"><a:avLst/></a:prstGeom></pic:spPr></pic:pic>' +
+      '</a:graphicData></a:graphic></wp:inline></w:drawing></w:r>';
+  }
+  async function plain(blocks, page, title) {
+    var ctx = newCtx({}), body = '', tw = function (pt) { return Math.max(0, Math.round(pt * 20)); };
+    FRAME = null; SCALE = 1;
+    blocks.forEach(function (b) {
+      var po = { jc: b.jc && b.jc !== 'left' ? b.jc : null, pbb: !!b.pbb, sp: { before: tw(b.before || 0), after: 0 } };
+      if (b.ind) po.ind = { left: tw(b.ind) };
+      if (b.type === 'img') {
+        var id = ctx.addImage(b.src); if (!id) return;
+        body += P(imageRun(ctx, id, b.w, b.h), po);
+        return;
+      }
+      if (b.line) po.sp.line = Math.max(200, Math.round(240 * b.line));
+      if (b.tabs && b.tabs.length) po.tabs = b.tabs.map(function (x) { return { pos: tw(x) }; });
+      body += P(b.runs.map(function (r) { return R(r.t, { font: r.font, b: r.b, i: r.i, u: r.u, strike: r.s, sz: Math.max(2, Math.round(r.sz * 2)), color: r.color }); }), po);
+    });
+    if (!body) body = P('');
+    ctx.pgw = tw(page.w); ctx.pgh = tw(page.h);
+    ctx.sect = { mar: { top: tw(page.top), right: tw(page.right), bottom: tw(page.bottom), left: tw(page.left), header: 360, footer: 360 } };
+    ctx.defaults = { font: page.font || 'Calibri', sz: 22 };
+    return pack(body, ctx, title || 'Document', 'CV Maker SA');
+  }
+
+  window.CVDocx = { make: makeDocx, letter: makeLetterDocx, plain: plain };
+  if (window.CVLibs) window.CVLibs.wrap(window.CVDocx, ['make', 'letter', 'plain'], 'zip');
 })();

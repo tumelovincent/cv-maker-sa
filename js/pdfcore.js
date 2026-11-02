@@ -114,7 +114,8 @@
   }
   var MAXPX = 12e6;
   // draws page i (0-based) onto a new canvas; width = CSS width, ratio = pixel density, extra = extra rotation
-  function renderPage(doc, i, width, ratio, extra) {
+  // opts.forms: leave form fields out (the editor shows them itself, so they can be filled in)
+  function renderPage(doc, i, width, ratio, extra, opts) {
     return doc.getPage(i + 1).then(function (page) {
       var rot = (page.rotate + (extra || 0)) % 360;
       var base = page.getViewport({ scale: 1, rotation: rot });
@@ -125,7 +126,9 @@
       cv.width = Math.max(1, Math.floor(vp.width)); cv.height = Math.max(1, Math.floor(vp.height));
       var g = cv.getContext('2d');
       g.fillStyle = '#fff'; g.fillRect(0, 0, cv.width, cv.height);
-      return page.render({ canvasContext: g, viewport: vp }).promise.then(function () { page.cleanup(); return cv; });
+      var AM = window.pdfjsLib && window.pdfjsLib.AnnotationMode, rp = { canvasContext: g, viewport: vp };
+      if (AM) rp.annotationMode = opts && opts.forms ? AM.ENABLE_FORMS : AM.ENABLE;
+      return page.render(rp).promise.then(function () { page.cleanup(); return cv; });
     });
   }
   function thumb(doc, i, width, extra) {
@@ -470,14 +473,63 @@
     return [d / det, -b / det, -c / det, a / det, (c * f - d * e) / det, (b * e - a * f) / det];
   }
   function apply(m, x, y) { return [m[0] * x + m[2] * y + m[4], m[1] * x + m[3] * y + m[5]]; }
-  /* marks: [{ page, type: 'text'|'check'|'cross'|'img'|'white'|'ink'|'hl'|'rect'|'line', x, y, w, h, size, color, text, src, pts, lw }]
+  /* marks: [{ page, type: 'text'|'check'|'cross'|'img'|'white'|'ink'|'hl'|'rect'|'line'|'redact', x, y, w, h, size, color, text, src, pts, lw }]
      All positions are in points on the page as it is shown (top-left origin).
-     text: font 'roboto'|'carlito'|'caladea', bold. white: fill (colour of the cover), eb (band of a line of text to take
-     out of the PDF, see CVPdfEdit.eraseText). line: from (x, y) to (x + w, y + h), arrow.
+     text: font (any of the app's fonts), bold, italic, u (underline), s (strike-through), lh (line height as a share of the size),
+     w (box width), wrap (lines wrap at w), align ('center': each line centred in the box).
+     white: fill (colour of the cover), eb (band of a line of text to take out of the PDF, see CVPdfEdit.eraseText).
+     line: from (x, y) to (x + w, y + h), arrow. redact: a black box; every letter under it is taken out of the PDF, and when it
+     also covers a picture, a drawing, a form field or text that cannot be measured, that page is saved as a picture.
      info: page info from pageInfo() for every page; asc: text baseline as a share of the font size (a number, or one per font).
-     opt.report: an object that gets the number of pieces of original text taken out ({ erased }). */
+     opt.form: { field name: value } for the PDF's own form fields (text, true/false for tick boxes, the option for the others);
+     opt.formMarks: marks that show those values when the file has to be rebuilt from pictures (locked files).
+     opt.pnum: page numbers { pos: 'bc'|'br'|'bl'|'tc'|'tr'|'tl', fmt: 0-3, start, skip (none on the first page) }.
+     opt.report: an object that gets the number of pieces of original text taken out ({ erased }).
+     Returns { bytes, flat, pictured: [indexes of pages saved as pictures because of a black-out] }. */
+  var EDIT_FONTS = { libsans: [400, 700], libserif: [400, 700] }, ITALIC = { roboto: 1, carlito: 1, caladea: 1, libsans: 1, libserif: 1 };
+  function fontFile(fam, bold, italic) {
+    var have = (window.CV_FONTS || {})[fam] || EDIT_FONTS[fam];
+    if (!have) { fam = 'roboto'; have = [400, 700]; }
+    var want = bold ? 700 : 400, w = have.slice().sort(function (a, b) { return Math.abs(a - want) - Math.abs(b - want) || b - a; })[0];
+    var it = !!italic && !!ITALIC[fam];
+    return { id: fam + '-' + w + (it ? 'i' : ''), skew: !!italic && !it };
+  }
+  // the lines a text mark is written on: its own lines, and when it wraps, broken between words to fit the box
+  function textRows(m, measure) {
+    var rows = [];
+    String(m.text || '').replace(/\t/g, '    ').split('\n').forEach(function (para) {
+      if (!m.wrap || !m.w) { rows.push(para); return; }
+      var line = '';
+      para.split(' ').forEach(function (word) {
+        var t = line ? line + ' ' + word : word;
+        if (!line || measure(t) <= m.w + 0.01) { line = t; }
+        else { rows.push(line); line = word; }
+        // a word longer than the box is broken
+        while (measure(line) > m.w + 0.01 && line.length > 1) {
+          var k = line.length - 1; while (k > 1 && measure(line.slice(0, k)) > m.w) k--;
+          rows.push(line.slice(0, k)); line = line.slice(k);
+        }
+      });
+      rows.push(line);
+    });
+    return rows;
+  }
+  function overlap(a, b) { return a[0] < b[0] + b[2] && a[0] + a[2] > b[0] && a[1] < b[1] + b[3] && a[1] + a[3] > b[1]; }
+  function markBox(m) {
+    if (m.type === 'ink') { var xs = m.pts.map(function (p) { return p[0]; }), ys = m.pts.map(function (p) { return p[1]; }); return [Math.min.apply(null, xs), Math.min.apply(null, ys), Math.max.apply(null, xs) - Math.min.apply(null, xs), Math.max.apply(null, ys) - Math.min.apply(null, ys)]; }
+    if (m.type === 'text') { var n = String(m.text || '').split('\n'), lw = Math.max.apply(null, n.map(function (x) { return x.length; })) * m.size * 0.62; return [m.align === 'center' && !m.wrap ? m.x + (m.w || 0) / 2 - lw / 2 : m.x, m.y, m.wrap && m.w ? m.w : lw, m.size * (m.lh || 1.15) * (n.length + (m.wrap ? 6 : 0))]; }
+    if (m.type === 'line') return [Math.min(m.x, m.x + m.w), Math.min(m.y, m.y + m.h), Math.abs(m.w), Math.abs(m.h)];
+    return [m.x, m.y, m.w, m.h];
+  }
+  var PNUM = ['{n}', 'Page {n} of {total}', '{n} / {total}', 'Page {n}'];
+  function pnumText(pn, k, count) {
+    var first = pn.skip ? 1 : 0; if (k < first) return '';
+    var start = Math.max(0, Math.round(+pn.start || 1)), n = start + k - first, total = start + count - first - 1;
+    return (PNUM[pn.fmt] || PNUM[0]).replace('{n}', n).replace('{total}', total);
+  }
   async function addMarks(bytes, marks, info, opt) {
     opt = opt || {};
+    marks = marks.slice();
     var doc = null, flat = false;
     try { doc = await loadEditable(bytes); if (doc.isEncrypted) doc = null; } catch (e) { doc = null; }
     if (!doc) {
@@ -495,33 +547,93 @@
     }
     doc.registerFontkit(window.fontkit);
     var fonts = {};
-    async function font(fam, w) {
-      var id = (/^(roboto|carlito|caladea)$/.test(fam || '') ? fam : 'roboto') + '-' + w;
-      if (!fonts[id]) fonts[id] = await doc.embedFont(await fontBytes(id), { subset: true });
-      return fonts[id];
+    async function font(id, full) {
+      var k = id + (full ? '*' : '');
+      if (!fonts[k]) fonts[k] = await doc.embedFont(await fontBytes(id), { subset: !full });
+      return fonts[k];
     }
-    var pages = doc.getPages();
+    var pages = doc.getPages(), PE = window.CVPdfEdit;
+    // the PDF's own form fields
+    var formVals = opt.form && Object.keys(opt.form).length ? opt.form : null;
+    if (formVals && flat) marks = marks.concat(opt.formMarks || []);
+    if (formVals && !flat) {
+      var form = null; try { form = doc.getForm(); } catch (e) { form = null; }
+      if (form) {
+        Object.keys(formVals).forEach(function (name) {
+          var v = formVals[name], f = null;
+          try { f = form.getField(name); } catch (e) { return; }
+          try {
+            if (f instanceof L.PDFTextField) {
+              var tv = String(v == null ? '' : v), ml = f.getMaxLength(); if (ml != null && tv.length > ml) tv = tv.slice(0, ml);
+              // a box for several lines with "automatic" size would get one huge line: use a normal size
+              if (f.isMultiline()) { var da = ''; try { da = f.acroField.getDefaultAppearance() || ''; } catch (e) { da = ''; } var dm = /(\d+(?:\.\d+)?)\s+Tf/.exec(da); if (!dm || +dm[1] === 0 || +dm[1] > 14) f.setFontSize(10); }
+              f.setText(tv);
+            }
+            else if (f instanceof L.PDFCheckBox) { if (v) f.check(); else f.uncheck(); }
+            else if (f instanceof L.PDFRadioGroup) {
+              // pdf.js names a radio button by its appearance; with an option list that is its place in the list
+              var ro = f.getOptions(), rv = String(v || '');
+              if (ro.indexOf(rv) < 0 && /^\d+$/.test(rv) && ro[+rv] != null) rv = ro[+rv];
+              if (rv) f.select(rv); else f.clear();
+            }
+            else if (f instanceof L.PDFDropdown || f instanceof L.PDFOptionList) { if (v) f.select(String(v)); else f.clear(); }
+          } catch (e) { /* this field keeps what it had */ }
+        });
+        try { form.updateFieldAppearances(await font('roboto-400', true)); } catch (e) { /* the viewer draws them */ }
+      }
+    }
     // replaced lines: take the original words out of the page first (not on pictures of locked files)
-    var erased = 0;
-    if (!flat && window.CVPdfEdit) {
+    // when the words really came out, the white cover is not needed (it would also hide lines and colours under it)
+    var erased = 0, clean = [];
+    if (!flat && PE) {
       var bands = {};
-      marks.forEach(function (m) { if (m.type === 'white' && m.eb) (bands[m.page] = bands[m.page] || []).push(m.eb); });
-      Object.keys(bands).forEach(function (pg) { if (info[pg]) { try { erased += window.CVPdfEdit.eraseText(doc, +pg, bands[pg], info[pg].t); } catch (e) { /* the cover still hides it */ } } });
+      marks.forEach(function (m) { if (m.type === 'white' && m.eb) (bands[m.page] = bands[m.page] || []).push(m); });
+      Object.keys(bands).forEach(function (pg) {
+        if (!info[pg]) return;
+        var st = [];
+        try { erased += PE.eraseText(doc, +pg, bands[pg].map(function (m) { return m.eb; }), info[pg].t, st); } catch (e) { st = []; /* the cover still hides it */ }
+        bands[pg].forEach(function (m, k) { if (m.key && st[k] && st[k].removed && !st[k].kept) clean.push(m); });
+      });
     }
+    // black-out: every letter under a box goes; pages where it covers more than text become pictures
+    var red = {}, pictured = [];
+    marks.forEach(function (m) { if (m.type === 'redact' && pages[m.page]) (red[m.page] = red[m.page] || []).push([m.x, m.y, m.w, m.h]); });
+    Object.keys(red).forEach(function (pg) {
+      var k = +pg, boxes = red[pg], pic = flat;
+      if (!pic && PE) {
+        var r = { unsure: true }, pb = null;
+        try { r = PE.eraseArea(doc, k, boxes, info[k].t); erased += r.removed; } catch (e) { r = { unsure: true }; }
+        try { pb = PE.paintBoxes(doc, k, info[k].t); } catch (e) { pb = null; }
+        pic = r.unsure || !pb || pb.some(function (b) { return boxes.some(function (x) { return overlap(b, x); }); });
+      } else if (!PE) pic = true;
+      // things added in the editor under a black box
+      if (!pic) pic = marks.some(function (m) { return m.page === k && m.type !== 'redact' && m.type !== 'white' && m.type !== 'hl' && boxes.some(function (x) { return overlap(markBox(m), x); }); });
+      if (pic) pictured.push(k);
+    });
     if (opt.report) opt.report.erased = erased;
     function ascOf(f) { var a = opt.asc; return typeof a === 'object' && a ? (a[f || 'roboto'] || a.roboto || 0.92) : (a || 0.92); }
-    for (var i = 0; i < marks.length; i++) {
-      var m = marks[i], page = pages[m.page], pinf = info[m.page];
+    var order = marks.filter(function (m) { return m.type !== 'redact'; }).concat(marks.filter(function (m) { return m.type === 'redact'; }));
+    for (var i = 0; i < order.length; i++) {
+      var m = order[i], page = pages[m.page], pinf = info[m.page];
       if (!page || !pinf) continue;
       var inv = invert(pinf.t), rot = L.degrees(pinf.rotate || 0);
       var c = hexColor(m.color || '#1B3C8C');
       var P = function (x, y) { return apply(inv, x, y); };
       if (m.type === 'text') {
-        var f = await font(m.font, m.bold ? 700 : 400), lines = String(m.text || '').split('\n'), lh = m.size * 1.15;
-        for (var li = 0; li < lines.length; li++) {
-          if (!lines[li]) continue;
-          var o = P(m.x, m.y + li * lh + m.size * ascOf(m.font));
-          page.drawText(lines[li], { x: o[0], y: o[1], size: m.size, font: f, color: c, rotate: rot });
+        var ff = fontFile(m.font, m.bold, m.italic), f = await font(ff.id), lhf = m.lh || 1.15, lh = m.size * lhf;
+        var meas = function (t) { return f.widthOfTextAtSize(t, m.size); }, rows = textRows(m, meas);
+        var base0 = m.y + m.size * (ascOf(m.font) + (lhf - 1.15) / 2);
+        for (var li = 0; li < rows.length; li++) {
+          var row = rows[li]; if (!row) continue;
+          var tw = meas(row), x0 = m.align === 'center' ? m.x + ((m.w || tw) - tw) / 2 : m.x, by = base0 + li * lh, o = P(x0, by);
+          var dopt = { x: o[0], y: o[1], size: m.size, font: f, color: c, rotate: rot };
+          if (ff.skew) dopt.ySkew = L.degrees(12);
+          page.drawText(row, dopt);
+          [[m.u, m.size * 0.13], [m.s, -m.size * 0.27]].forEach(function (d) {
+            if (!d[0]) return;
+            var a1 = P(x0, by + d[1]), a2 = P(x0 + tw, by + d[1]);
+            page.drawLine({ start: { x: a1[0], y: a1[1] }, end: { x: a2[0], y: a2[1] }, thickness: Math.max(0.4, m.size * 0.06), color: c });
+          });
         }
       } else if (m.type === 'img') {
         var data = dataUrlBytes(m.src);
@@ -529,9 +641,10 @@
         var emb = /^data:image\/png/.test(m.src) ? await doc.embedPng(data) : await doc.embedJpg(data);
         var bl = P(m.x, m.y + m.h);
         page.drawImage(emb, { x: bl[0], y: bl[1], width: m.w, height: m.h, rotate: rot });
-      } else if (m.type === 'white') {
+      } else if (m.type === 'white' || m.type === 'redact') {
+        if (clean.indexOf(m) >= 0) continue;
         var b2 = P(m.x, m.y + m.h);
-        page.drawRectangle({ x: b2[0], y: b2[1], width: m.w, height: m.h, color: m.fill ? hexColor(m.fill) : L.rgb(1, 1, 1), rotate: rot });
+        page.drawRectangle({ x: b2[0], y: b2[1], width: m.w, height: m.h, color: m.type === 'redact' ? L.rgb(0, 0, 0) : m.fill ? hexColor(m.fill) : L.rgb(1, 1, 1), rotate: rot });
       } else if (m.type === 'hl') {
         var b3 = P(m.x, m.y + m.h);
         page.drawRectangle({ x: b3[0], y: b3[1], width: m.w, height: m.h, color: hexColor(m.color || '#FFE14D'), opacity: 0.42, blendMode: L.BlendMode.Multiply, rotate: rot });
@@ -565,9 +678,45 @@
         });
       }
     }
+    // page numbers
+    if (opt.pnum) {
+      var pn = opt.pnum, pfont = await font('libsans-400'), pos = pn.pos || 'bc', grey = L.rgb(0.27, 0.27, 0.27);
+      for (var k = 0; k < pages.length; k++) {
+        var txt = pnumText(pn, k, pages.length), pinf2 = info[k] || { w: pages[k].getWidth(), h: pages[k].getHeight(), rotate: 0, t: [1, 0, 0, -1, 0, pages[k].getHeight()] };
+        if (!txt) continue;
+        var tw2 = pfont.widthOfTextAtSize(txt, 10), mx = 36;
+        var px = pos[1] === 'l' ? mx : pos[1] === 'r' ? pinf2.w - mx - tw2 : (pinf2.w - tw2) / 2, py = pos[0] === 't' ? 30 : pinf2.h - 24;
+        var q2 = apply(invert(pinf2.t), px, py);
+        pages[k].drawText(txt, { x: q2[0], y: q2[1], size: 10, font: pfont, color: grey, rotate: L.degrees(pinf2.rotate || 0) });
+      }
+    }
     if (opt.title) stampMeta(doc, opt.title);
     var out = await doc.save({ useObjectStreams: true });
-    return { bytes: out, flat: flat };
+    if (pictured.length) out = await picturePages(out, pictured, info);
+    return { bytes: out, flat: flat, pictured: pictured };
+  }
+  // pages saved as one picture each (after a black-out), with their form fields taken out of the file
+  async function picturePages(bytes, list, info) {
+    var src = await open(bytes), d2 = await L.PDFDocument.load(bytes, { updateMetadata: false }), form = null;
+    try { form = d2.getForm(); } catch (e) { form = null; }
+    for (var j = 0; j < list.length; j++) {
+      var k = list[j], inf = info[k], cv = await renderPage(src, k, inf.w * 200 / 72, 1);
+      var img = await d2.embedJpg(await canvasJpg(cv, 0.88));
+      cv.width = cv.height = 1;
+      if (form) {
+        var page = d2.getPage(k), annots = page.node.Annots(), set = [];
+        if (annots) for (var a = 0; a < annots.size(); a++) set.push(annots.lookup(a));
+        form.getFields().forEach(function (f) {
+          try { if (f.acroField.getWidgets().some(function (w) { return set.indexOf(w.dict) >= 0; })) form.removeField(f); } catch (e) { /* ignore */ }
+        });
+      }
+      var np = d2.insertPage(k, [inf.w, inf.h]);
+      np.drawImage(img, { x: 0, y: 0, width: inf.w, height: inf.h });
+      d2.removePage(k + 1);
+      info[k] = { w: inf.w, h: inf.h, rotate: 0, t: [1, 0, 0, -1, 0, inf.h] };
+    }
+    src.destroy();
+    return d2.save({ useObjectStreams: true });
   }
   function hexColor(h) {
     var m = /^#?([0-9a-f]{6})$/i.exec(h) || [0, '1B3C8C'], n = parseInt(m[1], 16);
@@ -595,6 +744,7 @@
     open: open, pageInfo: pageInfo, allPageInfo: allPageInfo, renderPage: renderPage, thumb: thumb, pageCount: pageCount,
     imagesToPdf: imagesToPdf, photoJpg: photoJpg, merge: merge, organise: organise, extract: extract,
     compress: compress, unlock: unlock, watermark: watermark, protect: protect, addMarks: addMarks, toPhotos: toPhotos,
+    fontFile: fontFile, textRows: textRows, pnumText: pnumText,
     md5: md5, rc4: rc4, A4: A4
   };
   if (window.CVLibs) window.CVLibs.wrap(window.CVPdfTools, ['pageCount', 'imagesToPdf', 'merge', 'organise', 'extract', 'compress', 'unlock',

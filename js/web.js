@@ -185,6 +185,7 @@
      ?template=aurora   use that design, for a new CV or for one already saved
      ?start=z83         a new Z83 form
      ?start=editpdf     the PDF tools, with the Edit PDF file chooser open
+     ?start=toword      the PDF tools, with the PDF to Word file chooser open
      The link is then cleaned up, so refreshing the page does not start another CV. */
   (function () {
     var q; try { q = new URLSearchParams(location.search); } catch (e) { return; }
@@ -208,7 +209,7 @@
       return;
     }
     if (start === 'z83') { fresh(); show(['home', 'edit', 'z83']); return; }
-    if (start === 'editpdf') { show(['home', 'pdftools']); if (A.PDF && A.PDF.runTool) setTimeout(function () { A.PDF.runTool('edit'); }, 250); return; }
+    if (start === 'editpdf' || start === 'toword') { show(['home', 'pdftools']); if (A.PDF && A.PDF.runTool) setTimeout(function () { A.PDF.runTool(start === 'toword' ? 'toword' : 'edit'); }, 250); return; }
     var t = tpl && TP && TP.list.filter(function (x) { return x.id === tpl; })[0];
     if (!t) return;
     if (!S.list.length) { fresh(t.id); show(['home', 'edit']); A.toast(T('{name} is your design. Fill in your details.', { name: t.name }), 5000); return; }

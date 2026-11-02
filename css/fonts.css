@@ -35,3 +35,18 @@
 @font-face{font-family:"F-roboto";src:url("../fonts/roboto-700.ttf") format("truetype");font-weight:700;font-style:normal;font-display:block}
 @font-face{font-family:"F-sourcesans";src:url("../fonts/sourcesans-400.ttf") format("truetype");font-weight:400;font-style:normal;font-display:block}
 @font-face{font-family:"F-sourcesans";src:url("../fonts/sourcesans-700.ttf") format("truetype");font-weight:700;font-style:normal;font-display:block}
+/* PDF editor only: italics and look-alikes of Arial and Times New Roman */
+@font-face{font-family:"F-roboto";src:url("../fonts/roboto-400i.ttf") format("truetype");font-weight:400;font-style:italic;font-display:swap}
+@font-face{font-family:"F-roboto";src:url("../fonts/roboto-700i.ttf") format("truetype");font-weight:700;font-style:italic;font-display:swap}
+@font-face{font-family:"F-carlito";src:url("../fonts/carlito-400i.ttf") format("truetype");font-weight:400;font-style:italic;font-display:swap}
+@font-face{font-family:"F-carlito";src:url("../fonts/carlito-700i.ttf") format("truetype");font-weight:700;font-style:italic;font-display:swap}
+@font-face{font-family:"F-caladea";src:url("../fonts/caladea-400i.ttf") format("truetype");font-weight:400;font-style:italic;font-display:swap}
+@font-face{font-family:"F-caladea";src:url("../fonts/caladea-700i.ttf") format("truetype");font-weight:700;font-style:italic;font-display:swap}
+@font-face{font-family:"F-libsans";src:url("../fonts/libsans-400.ttf") format("truetype");font-weight:400;font-style:normal;font-display:swap}
+@font-face{font-family:"F-libsans";src:url("../fonts/libsans-400i.ttf") format("truetype");font-weight:400;font-style:italic;font-display:swap}
+@font-face{font-family:"F-libsans";src:url("../fonts/libsans-700.ttf") format("truetype");font-weight:700;font-style:normal;font-display:swap}
+@font-face{font-family:"F-libsans";src:url("../fonts/libsans-700i.ttf") format("truetype");font-weight:700;font-style:italic;font-display:swap}
+@font-face{font-family:"F-libserif";src:url("../fonts/libserif-400.ttf") format("truetype");font-weight:400;font-style:normal;font-display:swap}
+@font-face{font-family:"F-libserif";src:url("../fonts/libserif-400i.ttf") format("truetype");font-weight:400;font-style:italic;font-display:swap}
+@font-face{font-family:"F-libserif";src:url("../fonts/libserif-700.ttf") format("truetype");font-weight:700;font-style:normal;font-display:swap}
+@font-face{font-family:"F-libserif";src:url("../fonts/libserif-700i.ttf") format("truetype");font-weight:700;font-style:italic;font-display:swap}
