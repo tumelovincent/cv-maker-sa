@@ -14,8 +14,10 @@
   }
   function start() {
     if (ready) return ready;
-    ready = Promise.all([get(BASE + 'tesseract-core-lstm.js', 'text'), get(BASE + 'ocr-worker.js', 'text'), get(BASE + 'tesseract-core-lstm.wasm'), get(BASE + 'eng.traineddata.gz')]).then(function (r) {
-      return gunzip(r[3]).then(function (data) {
+    // the Android app's packaging unpacks .gz files, so there the data is plain eng.traineddata
+    var app = !!window.AndroidBridge;
+    ready = Promise.all([get(BASE + 'tesseract-core-lstm.js', 'text'), get(BASE + 'ocr-worker.js', 'text'), get(BASE + 'tesseract-core-lstm.wasm'), get(BASE + (app ? 'eng.traineddata' : 'eng.traineddata.gz'))]).then(function (r) {
+      return (app ? Promise.resolve(new Uint8Array(r[3])) : gunzip(r[3])).then(function (data) {
         var url = URL.createObjectURL(new Blob([r[0], '\n;\n', r[1]], { type: 'application/javascript' }));
         worker = new Worker(url);
         return new Promise(function (res, rej) {

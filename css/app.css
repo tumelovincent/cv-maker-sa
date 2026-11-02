@@ -247,7 +247,7 @@ body.typing .actions { display: none; }
 .busy-card .spin { margin-right: 14px; }
 .spin { width: 26px; height: 26px; border-radius: 50%; border: 3px solid var(--green-l); border-top-color: var(--green); animation: sp .8s linear infinite; flex: none; }
 @keyframes sp { to { transform: rotate(360deg); } }
-.toast { position: fixed; left: 50%; transform: translateX(-50%); bottom: calc(90px + var(--safe-b)); z-index: 70; background: #1f2925; color: #fff; padding: 11px 16px; border-radius: 12px; font-size: 14px; max-width: 90vw; width: max-content; box-shadow: 0 6px 20px rgba(0,0,0,.25); }
+.toast { pointer-events: none; position: fixed; left: 50%; transform: translateX(-50%); bottom: calc(90px + var(--safe-b)); z-index: 70; background: #1f2925; color: #fff; padding: 11px 16px; border-radius: 12px; font-size: 14px; max-width: 90vw; width: max-content; box-shadow: 0 6px 20px rgba(0,0,0,.25); }
 body.typing .toast { bottom: 16px; }
 @media (prefers-reduced-motion: reduce) { .spin { animation-duration: 2s; } .progress .fill, .fsec-h .chev { transition: none; } }
 @media (min-width: 560px) { .tcard { width: 33.333%; } .hero h1 { font-size: 32px; } }
