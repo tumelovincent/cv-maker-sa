@@ -46,7 +46,9 @@
     };
   }
 
-  function sampleCV() {
+  // show = true: the CV in pictures and previews (template strip, empty-CV preview, website gallery), with the
+  // developer's own name and public contacts. Without it: the made-up sample people open and edit as their own CV.
+  function sampleCV(show) {
     var c = blankCV();
     c.templateId = 'classic';
     c.personal = { surname: 'Mokoena', firstNames: 'Thabo Sipho', headline: 'Retail Merchandiser',
@@ -76,6 +78,10 @@
       { name: 'Mrs L. Dlamini', relationship: 'Principal', company: 'Thabong Secondary School', phone: '057 765 4321', email: '' }
     ];
     c.declaration = false;
+    if (show) {
+      c.personal.surname = 'Tau'; c.personal.firstNames = 'Tumelo Vincent';
+      c.contact.phone = '068 404 2600'; c.contact.altPhone = ''; c.contact.email = 'tumelovincent558@gmail.com';
+    }
     return c;
   }
 

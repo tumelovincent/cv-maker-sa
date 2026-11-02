@@ -14,7 +14,7 @@
     function tip(t, sec, vars) { out.push({ level: 'tip', text: t, sec: sec, vars: vars }); }
 
     if (!p.firstNames || !p.surname) fix('Add your first name and surname.', 'personal');
-    else if (p.firstNames === p.firstNames.toLowerCase() || p.surname === p.surname.toLowerCase()) tip('Start your names with capital letters (for example Thabo Mokoena).', 'personal');
+    else if (p.firstNames === p.firstNames.toLowerCase() || p.surname === p.surname.toLowerCase()) tip('Start your names with capital letters (for example Tumelo Tau).', 'personal');
     if (p.idNumber && !D.parseSAID(p.idNumber).valid) fix('Your ID number does not look right. Check all 13 digits.', 'personal');
 
     if (!c.phone) fix('Add a cell number so employers can call you.', 'contact');

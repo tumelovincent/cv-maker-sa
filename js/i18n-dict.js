@@ -111,6 +111,11 @@ window.CVi18nDict = {
 "Faka amafayela e-PDF nge-\"Khetha amafayela\" esikrinini samadokhumenti.",
 "Voeg PDF-lêers by met \"Kies lêers\" op die dokumente-skerm."
 ],
+"Add a blank page after it": [
+"Kenya leqephe le se nang letho kamora lona",
+"Engeza ikhasi elingenalutho emva kwalo",
+"Voeg 'n leë bladsy daarna by"
+],
 "Add a cell number so employers can call you.": [
 "Kenya nomoro ya selefouno hore bahiri ba tle ba o letsetse.",
 "Faka inombolo yeselula ukuze abaqashi bakwazi ukukushayela.",
@@ -246,6 +251,11 @@ window.CVi18nDict = {
 "Engeza isifundo esifushane",
 "Voeg kort kursus by"
 ],
+"Add text": [
+"Kenya mongolo",
+"Engeza umbhalo",
+"Voeg teks by"
+],
 "Add the company name for {name}.": [
 "Kenya lebitso la khampani bakeng sa {name}.",
 "Faka igama lenkampani ku-{name}.",
@@ -320,6 +330,11 @@ window.CVi18nDict = {
 "E kenya leqephe…",
 "Kufakwa ikhasi…",
 "Voeg bladsy by…"
+],
+"Adding picture…": [
+"E kenya setshwantsho…",
+"Kungezwa isithombe…",
+"Voeg prent by…"
 ],
 "Adding {n} documents…": [
 "E kenya ditokomane tse {n}…",
@@ -415,6 +430,11 @@ window.CVi18nDict = {
 "Na o etsa kgwebo le Mmuso, kapa o Motsamaisi wa khampani ya setjhaba kapa ya poraefete e etsang kgwebo le Mmuso?",
 "Ingabe wenza ibhizinisi noHulumeni, noma unguMqondisi wenkampani yomphakathi noma ezimele eyenza ibhizinisi noHulumeni?",
 "Doen jy sake met die Staat, of is jy 'n direkteur van 'n openbare of private maatskappy wat sake met die Staat doen?"
+],
+"Arrow": [
+"Motsu",
+"Umcibisholo",
+"Pyl"
 ],
 "As a supporting document": [
 "E le tokomane e tshehetsang",
@@ -526,6 +546,11 @@ window.CVi18nDict = {
 "Wazalwa",
 "Gebore"
 ],
+"Box": [
+"Lebokose",
+"Ibhokisi",
+"Blokkie"
+],
 "Brown": [
 "Sootho",
 "Okunsundu",
@@ -580,6 +605,11 @@ window.CVi18nDict = {
 "CV e sebedisitsweng",
 "I-CV esetshenzisiwe",
 "CV gebruik"
+],
+"Calibri": [
+"Calibri",
+"Calibri",
+"Calibri"
 ],
 "Camera, finds the page edges": [
 "Khamera, e fumana mathoko a leqephe",
@@ -636,10 +666,25 @@ window.CVi18nDict = {
 "Shintsha isifanekiso",
 "Verander sjabloon"
 ],
+"Change text": [
+"Fetola mongolo",
+"Shintsha umbhalo",
+"Verander teks"
+],
+"Change text, add pictures, sign": [
+"Fetola mongolo, kenya ditshwantsho, saena",
+"Shintsha umbhalo, engeza izithombe, sayina",
+"Verander teks, voeg prente by, teken"
+],
 "Change the order, or hide a section you do not want on this CV.": [
 "Fetola tatellano, kapa o pate karolo eo o sa e batleng ho CV ena.",
 "Shintsha ukulandelana, noma ufihle isigaba ongasifuni kule CV.",
 "Verander die volgorde, of versteek 'n afdeling wat jy nie op hierdie CV wil hê nie."
+],
+"Change the text in any PDF, add text, pictures, highlights and your signature. No watermark, and your file stays on your phone.": [
+"Fetola mongolo ho PDF efe kapa efe, kenya mongolo, ditshwantsho, ditotobatso le tshaeno ya hao. Ha ho letshwao la metsi, mme faele ya hao e dula fonong ya hao.",
+"Shintsha umbhalo kunoma iyiphi i-PDF, engeza umbhalo, izithombe, okugqamisiwe kanye nesiginesha yakho. Akukho uphawu lwamanzi, futhi ifayela lakho lihlala efonini yakho.",
+"Verander die teks in enige PDF, voeg teks, prente, uitligte en jou handtekening by. Geen watermerk nie, en jou lêer bly op jou foon."
 ],
 "Charcoal": [
 "Thokwa e lefifi",
@@ -1081,6 +1126,16 @@ window.CVi18nDict = {
 "Cisha leli fayela?",
 "Skrap hierdie lêer?"
 ],
+"Delete this page": [
+"Hlakola leqephe lena",
+"Susa leli khasi",
+"Skrap hierdie bladsy"
+],
+"Delete this page?": [
+"Hlakola leqephe lena?",
+"Susa leli khasi?",
+"Skrap hierdie bladsy?"
+],
 "Department that advertised the post": [
 "Lefapha le phatlaladitseng mosebetsi",
 "Umnyango okhangise isikhundla",
@@ -1281,6 +1336,11 @@ window.CVi18nDict = {
 "Hlela i-CV",
 "Wysig CV"
 ],
+"Edit PDF": [
+"Fetola PDF",
+"Hlela i-PDF",
+"Wysig PDF"
+],
 "Edit Z83": [
 "Fetola Z83",
 "Hlela i-Z83",
@@ -1300,6 +1360,11 @@ window.CVi18nDict = {
 "Fetola lengolo",
 "Hlela incwadi",
 "Wysig brief"
+],
+"Edit text": [
+"Fetola mongolo",
+"Hlela umbhalo",
+"Wysig teks"
 ],
 "Edited {date}": [
 "E fetotswe {date}",
@@ -1385,6 +1450,11 @@ window.CVi18nDict = {
 "F. Boiphihlelo ba mosebetsi",
 "F. Ulwazi lomsebenzi",
 "F. Werkservaring"
+],
+"FREE": [
+"MAHALA",
+"MAHHALA",
+"GRATIS"
 ],
 "Fair": [
 "Ho lekane",
@@ -1701,6 +1771,11 @@ window.CVi18nDict = {
 "Ibanga eliphezulu owaliphasa",
 "Hoogste graad geslaag"
 ],
+"Highlight": [
+"Totobatsa",
+"Gqamisa",
+"Uitlig"
+],
 "Hobbies & interests": [
 "Boithabiso le dithahasello",
 "Okuthandayo nezinto ezikuthakazelisayo",
@@ -1971,6 +2046,11 @@ window.CVi18nDict = {
 "Shiya kungabhaliwe ukuze iqale ngo-\"Dear Sir/Madam\".",
 "Los leeg om met \"Dear Sir/Madam\" te begin."
 ],
+"Leave it empty to remove the text.": [
+"E tlohele e se na letho ho tlosa mongolo.",
+"Kushiye kungenalutho ukuze ususe umbhalo.",
+"Laat dit leeg om die teks te verwyder."
+],
 "Leave without saving?": [
 "Tloha o sa boloka?",
 "Uyahamba ungagcinile?",
@@ -1990,6 +2070,11 @@ window.CVi18nDict = {
 "E bobebe",
 "Okulula",
 "Lig"
+],
+"Line": [
+"Mola",
+"Umugqa",
+"Lyn"
 ],
 "Link copied": [
 "Lehokelo le kopilwe",
@@ -2065,6 +2150,11 @@ window.CVi18nDict = {
 "Etsa PDF e nyane (bakeng sa imeile le diwebsaete tsa mesebetsi)",
 "Yenza i-PDF ibe ncane (okwe-imeyili namawebhusayithi emisebenzi)",
 "Maak die PDF kleiner (vir e-pos en werksportale)"
+],
+"Make your CV, cover letter and Z83 - and now edit any PDF for free.": [
+"Etsa CV ya hao, lengolo la kopo le Z83 - mme jwale o fetole PDF efe kapa efe mahala.",
+"Yenza i-CV yakho, incwadi yesicelo ne-Z83 - futhi manje uhlele noma iyiphi i-PDF mahhala.",
+"Maak jou CV, dekbrief en Z83 - en wysig nou enige PDF gratis."
 ],
 "Make your CV, cover letter and Z83 - and now scan, sign and fix any PDF.": [
 "Etsa CV ya hao, lengolo la kopo le Z83 - mme jwale o ka skena, wa saena le ho lokisa PDF efe kapa efe.",
@@ -2231,6 +2321,11 @@ window.CVi18nDict = {
 "Hambisa",
 "Skuif"
 ],
+"Move down": [
+"Isa tlase",
+"Yisa phansi",
+"Skuif af"
+],
 "Move earlier": [
 "Sutha ho ya pele",
 "Hambisa phambili",
@@ -2240,6 +2335,11 @@ window.CVi18nDict = {
 "Sutha ho ya morao",
 "Hambisa emuva",
 "Skuif later"
+],
+"Move up": [
+"Isa hodimo",
+"Yisa phezulu",
+"Skuif op"
 ],
 "Move, rotate, delete": [
 "Sutha, potolosa, hlakola",
@@ -2651,6 +2751,16 @@ window.CVi18nDict = {
 "Ikhasi {n}",
 "Bladsy {n}"
 ],
+"Page {n} of {total}": [
+"Leqephe la {n} ho a {total}",
+"Ikhasi {n} kwangu-{total}",
+"Bladsy {n} van {total}"
+],
+"Page {n} will be taken out of the PDF.": [
+"Leqephe la {n} le tla ntshwa ho PDF.",
+"Ikhasi {n} lizokhishwa ku-PDF.",
+"Bladsy {n} sal uit die PDF gehaal word."
+],
 "Pages": [
 "Maqephe",
 "Amakhasi",
@@ -2750,6 +2860,11 @@ window.CVi18nDict = {
 "Aterese ya bodulo",
 "Ikheli lendawo ohlala kuyo",
 "Fisiese adres"
+],
+"Picture": [
+"Setshwantsho",
+"Isithombe",
+"Prent"
 ],
 "Planning to apply": [
 "Ke rera ho etsa kopo",
@@ -3091,6 +3206,11 @@ window.CVi18nDict = {
 "Iphephile ezicelweni zemisebenzi ku-inthanethi.",
 "Veilig vir aanlyn werksaansoeke."
 ],
+"Sans": [
+"Sans",
+"Sans",
+"Sans"
+],
 "Save": [
 "Boloka",
 "Gcina",
@@ -3225,6 +3345,11 @@ window.CVi18nDict = {
 "Lwetse",
 "Septhemba",
 "September"
+],
+"Serif": [
+"Serif",
+"Serif",
+"Serif"
 ],
 "Set up a PIN": [
 "Beha PIN",
@@ -3396,10 +3521,10 @@ window.CVi18nDict = {
 "Qala ngomsebenzi wakho wakamuva. Ama-learnership, ama-internship nomsebenzi wokuzithandela nakho kuyabalwa.",
 "Begin met jou mees onlangse werk. Leerlingskappe, internskappe en vrywillige werk tel ook."
 ],
-"Start your names with capital letters (for example Thabo Mokoena).": [
-"Qala mabitso a hao ka ditlhaku tse kgolo (mohlala Thabo Mokoena).",
-"Qala amagama akho ngosonhlamvukazi (isibonelo Thabo Mokoena).",
-"Begin jou name met hoofletters (byvoorbeeld Thabo Mokoena)."
+"Start your names with capital letters (for example Tumelo Tau).": [
+"Qala mabitso a hao ka ditlhaku tse kgolo (mohlala Tumelo Tau).",
+"Qala amagama akho ngosonhlamvukazi (isibonelo Tumelo Tau).",
+"Begin jou name met hoofletters (byvoorbeeld Tumelo Tau)."
 ],
 "Status": [
 "Boemo",
@@ -3476,6 +3601,11 @@ window.CVi18nDict = {
 "Thatha ingaphambili lekhadi likamazisi",
 "Neem die voorkant van die ID-kaart"
 ],
+"Tap a line of text to highlight it.": [
+"Tobetsa mohala wa mongolo ho o totobatsa.",
+"Thepha umugqa wombhalo ukuze uwugqamise.",
+"Tik op 'n reël teks om dit uit te lig."
+],
 "Tap all that apply, then tap Done.": [
 "Tobetsa tsohle tse amehang, ebe o tobetsa Qetile.",
 "Thepha konke okufanelekile, bese uthepha Qedile.",
@@ -3485,6 +3615,11 @@ window.CVi18nDict = {
 "Tobetsa lebokose ka leng ho le tshwaya.",
 "Thepha ibhokisi ngalinye ukuze ulimake.",
 "Tik elke blokkie om dit te merk."
+],
+"Tap on a line of text.": [
+"Tobetsa mohala wa mongolo.",
+"Thepha umugqa wombhalo.",
+"Tik op 'n reël teks."
 ],
 "Tap pages to choose them": [
 "Tobetsa maqephe ho a kgetha",
@@ -3496,10 +3631,20 @@ window.CVi18nDict = {
 "Thepha amakhasi ukuze uwakhethe, bese uwajikisa, uwahambisa, uwakopisha noma uwacisha.",
 "Tik bladsye om hulle te kies, en draai, skuif, kopieer of skrap hulle dan."
 ],
+"Tap text to remove it, or tap anywhere to cover with white.": [
+"Tobetsa mongolo ho o tlosa, kapa tobetsa kae kapa kae ho kwahela ka bosweu.",
+"Thepha umbhalo ukuze uwususe, noma uthephe noma kuphi ukuze umboze ngokumhlophe.",
+"Tik op teks om dit te verwyder, of tik enige plek om dit met wit te bedek."
+],
 "Tap the pages you want, then save them as a new PDF.": [
 "Tobetsa maqephe ao o a batlang, ebe o a boloka e le PDF e ntjha.",
 "Thepha amakhasi owafunayo, bese uwagcina njenge-PDF entsha.",
 "Tik die bladsye wat jy wil hê, en stoor hulle dan as 'n nuwe PDF."
+],
+"Tap the text you want to change.": [
+"Tobetsa mongolo oo o batlang ho o fetola.",
+"Thepha umbhalo ofuna ukuwushintsha.",
+"Tik op die teks wat jy wil verander."
 ],
 "Tap to cover something with white.": [
 "Tobetsa ho pata ntho ka bosweu.",
@@ -3511,6 +3656,11 @@ window.CVi18nDict = {
 "Thepha ukuze uzibone ngaphambi kokuthumela i-CV yakho",
 "Tik om hulle te sien voordat jy jou CV stuur"
 ],
+"Tap where the box should go.": [
+"Tobetsa moo lebokose le lokelang ho ba teng.",
+"Thepha lapho ibhokisi kufanele libe khona.",
+"Tik waar die blokkie moet kom."
+],
 "Tap where the cross should go.": [
 "Tobetsa moo sefapano se lokelang ho ba teng.",
 "Thepha lapho isiphambano kufanele sibe khona.",
@@ -3520,6 +3670,11 @@ window.CVi18nDict = {
 "Tobetsa moo letsatsi le lokelang ho ba teng.",
 "Thepha lapho usuku kufanele lube khona.",
 "Tik waar die datum moet kom."
+],
+"Tap where the line should go.": [
+"Tobetsa moo mola o lokelang ho ba teng.",
+"Thepha lapho umugqa kufanele ube khona.",
+"Tik waar die lyn moet kom."
 ],
 "Tap where the text should go.": [
 "Tobetsa moo mongolo o lokelang ho ba teng.",
@@ -3619,6 +3774,11 @@ window.CVi18nDict = {
 "That image could not be opened": [
 "Setshwantsho seo ha se a ka sa bulwa",
 "Leso sithombe asikwazanga ukuvulwa",
+"Daardie prent kon nie oopgemaak word nie"
+],
+"That picture could not be opened": [
+"Setshwantsho seo ha se a bulega",
+"Leso sithombe asivulekanga",
 "Daardie prent kon nie oopgemaak word nie"
 ],
 "The PINs did not match. Try again.": [
@@ -3761,6 +3921,11 @@ window.CVi18nDict = {
 "Leli fayela alisekho efonini.",
 "Hierdie lêer is nie meer op die foon nie."
 ],
+"This page has no text that can be changed (it may be a scan). Use White-out and Add text instead.": [
+"Leqephe lena ha le na mongolo o ka fetolwang (e ka ba sekena). Sebedisa Pata ka bosweu le Kenya mongolo.",
+"Leli khasi alinawo umbhalo ongashintshwa (kungenzeka liskeniwe). Sebenzisa u-Mboza ngokumhlophe no-Engeza umbhalo.",
+"Hierdie bladsy het geen teks wat verander kan word nie (dit is dalk 'n skandering). Gebruik eerder Witmaak en Voeg teks by."
+],
 "This phone cannot add a password to a PDF.": [
 "Founo ena e ke ke ya kenya phasewete ho PDF.",
 "Le foni ayikwazi ukufaka iphasiwedi ku-PDF.",
@@ -3806,10 +3971,20 @@ window.CVi18nDict = {
 "Zama omunye usayizi",
 "Probeer 'n ander grootte"
 ],
+"Turn left": [
+"Fetolela ka ho le letshehadi",
+"Phendulela kwesobunxele",
+"Draai links"
+],
 "Turn off PIN lock": [
 "Tima senotlolo sa PIN",
 "Cisha ukukhiya nge-PIN",
 "Skakel PIN-slot af"
+],
+"Turn right": [
+"Fetolela ka ho le letona",
+"Phendulela kwesokudla",
+"Draai regs"
 ],
 "Turning your Word file into a PDF…": [
 "E fetola faele ya hao ya Word hore e be PDF…",
@@ -4026,6 +4201,11 @@ window.CVi18nDict = {
 "Ulwazi lomsebenzi",
 "Werkservaring"
 ],
+"Working…": [
+"E a sebetsa…",
+"Kuyasebenza…",
+"Besig…"
+],
 "Would you tell a friend about CV Maker SA? (Yes / Maybe / No)": [
 "Na o ka bolella motswalle ka CV Maker SA? (E / Mohlomong / Tjhe)",
 "Ungatshela umngane nge-CV Maker SA? (Yebo / Mhlawumbe / Cha)",
@@ -4191,6 +4371,11 @@ window.CVi18nDict = {
 "Inhloso yakho yomsebenzi inde. Imisho emibili noma emithathu yanele.",
 "Jou loopbaandoelwit is lank. Twee of drie sinne is genoeg."
 ],
+"Your changes to the PDF will be lost.": [
+"Diphetoho tsa hao ho PDF di tla lahleha.",
+"Izinguquko zakho ku-PDF zizolahleka.",
+"Jou veranderinge aan die PDF sal verlore gaan."
+],
 "Your changes to the letter text will be replaced.": [
 "Diphetoho tsa hao mongolong wa lengolo di tla nkelwa sebaka.",
 "Izinguquko zakho embhalweni wencwadi zizoshintshwa.",
@@ -4200,6 +4385,11 @@ window.CVi18nDict = {
 "Diphetoho tsa hao maqepheng di tla lahleha.",
 "Izinguquko zakho emakhasini zizolahleka.",
 "Jou veranderinge aan die bladsye sal verlore gaan."
+],
+"Your edited PDF is ready": [
+"PDF ya hao e fetotsweng e se e lokile",
+"I-PDF yakho ehleliwe isilungile",
+"Jou gewysigde PDF is gereed"
 ],
 "Your email address does not look right. Check it for typing mistakes.": [
 "Aterese ya hao ya imeile ha e bonahale e nepahetse. E hlahlobe hore e se be le diphoso tsa ho thaepa.",
@@ -4350,6 +4540,11 @@ window.CVi18nDict = {
 "mohl. The HR Manager",
 "isib. The HR Manager",
 "bv. The HR Manager"
+],
+"e.g. Tumelo Vincent": [
+"mohl. Tumelo Vincent",
+"isib. Tumelo Vincent",
+"bv. Tumelo Vincent"
 ],
 "e.g. interview on Monday at 10:00, bring certified copies": [
 "mohl. puisano ka Mantaha ka 10:00, tlisa dikopi tse netefaditsweng",

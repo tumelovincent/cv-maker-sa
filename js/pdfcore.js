@@ -470,9 +470,12 @@
     return [d / det, -b / det, -c / det, a / det, (c * f - d * e) / det, (b * e - a * f) / det];
   }
   function apply(m, x, y) { return [m[0] * x + m[2] * y + m[4], m[1] * x + m[3] * y + m[5]]; }
-  /* marks: [{ page, type: 'text'|'check'|'cross'|'img'|'white'|'ink', x, y, w, h, size, color, text, src, pts, lw }]
+  /* marks: [{ page, type: 'text'|'check'|'cross'|'img'|'white'|'ink'|'hl'|'rect'|'line', x, y, w, h, size, color, text, src, pts, lw }]
      All positions are in points on the page as it is shown (top-left origin).
-     info: page info from pageInfo() for every page; asc: text baseline as a share of the font size. */
+     text: font 'roboto'|'carlito'|'caladea', bold. white: fill (colour of the cover), eb (band of a line of text to take
+     out of the PDF, see CVPdfEdit.eraseText). line: from (x, y) to (x + w, y + h), arrow.
+     info: page info from pageInfo() for every page; asc: text baseline as a share of the font size (a number, or one per font).
+     opt.report: an object that gets the number of pieces of original text taken out ({ erased }). */
   async function addMarks(bytes, marks, info, opt) {
     opt = opt || {};
     var doc = null, flat = false;
@@ -492,8 +495,21 @@
     }
     doc.registerFontkit(window.fontkit);
     var fonts = {};
-    async function font(w) { if (!fonts[w]) fonts[w] = await doc.embedFont(await fontBytes('roboto-' + w), { subset: true }); return fonts[w]; }
+    async function font(fam, w) {
+      var id = (/^(roboto|carlito|caladea)$/.test(fam || '') ? fam : 'roboto') + '-' + w;
+      if (!fonts[id]) fonts[id] = await doc.embedFont(await fontBytes(id), { subset: true });
+      return fonts[id];
+    }
     var pages = doc.getPages();
+    // replaced lines: take the original words out of the page first (not on pictures of locked files)
+    var erased = 0;
+    if (!flat && window.CVPdfEdit) {
+      var bands = {};
+      marks.forEach(function (m) { if (m.type === 'white' && m.eb) (bands[m.page] = bands[m.page] || []).push(m.eb); });
+      Object.keys(bands).forEach(function (pg) { if (info[pg]) { try { erased += window.CVPdfEdit.eraseText(doc, +pg, bands[pg], info[pg].t); } catch (e) { /* the cover still hides it */ } } });
+    }
+    if (opt.report) opt.report.erased = erased;
+    function ascOf(f) { var a = opt.asc; return typeof a === 'object' && a ? (a[f || 'roboto'] || a.roboto || 0.92) : (a || 0.92); }
     for (var i = 0; i < marks.length; i++) {
       var m = marks[i], page = pages[m.page], pinf = info[m.page];
       if (!page || !pinf) continue;
@@ -501,10 +517,10 @@
       var c = hexColor(m.color || '#1B3C8C');
       var P = function (x, y) { return apply(inv, x, y); };
       if (m.type === 'text') {
-        var f = await font(m.bold ? 700 : 400), lines = String(m.text || '').split('\n'), lh = m.size * 1.15;
+        var f = await font(m.font, m.bold ? 700 : 400), lines = String(m.text || '').split('\n'), lh = m.size * 1.15;
         for (var li = 0; li < lines.length; li++) {
           if (!lines[li]) continue;
-          var o = P(m.x, m.y + li * lh + m.size * (opt.asc || 0.92));
+          var o = P(m.x, m.y + li * lh + m.size * ascOf(m.font));
           page.drawText(lines[li], { x: o[0], y: o[1], size: m.size, font: f, color: c, rotate: rot });
         }
       } else if (m.type === 'img') {
@@ -515,7 +531,24 @@
         page.drawImage(emb, { x: bl[0], y: bl[1], width: m.w, height: m.h, rotate: rot });
       } else if (m.type === 'white') {
         var b2 = P(m.x, m.y + m.h);
-        page.drawRectangle({ x: b2[0], y: b2[1], width: m.w, height: m.h, color: L.rgb(1, 1, 1), rotate: rot });
+        page.drawRectangle({ x: b2[0], y: b2[1], width: m.w, height: m.h, color: m.fill ? hexColor(m.fill) : L.rgb(1, 1, 1), rotate: rot });
+      } else if (m.type === 'hl') {
+        var b3 = P(m.x, m.y + m.h);
+        page.drawRectangle({ x: b3[0], y: b3[1], width: m.w, height: m.h, color: hexColor(m.color || '#FFE14D'), opacity: 0.42, blendMode: L.BlendMode.Multiply, rotate: rot });
+      } else if (m.type === 'rect') {
+        var b4 = P(m.x, m.y + m.h), lw4 = m.lw || 1.5;
+        page.drawRectangle({ x: b4[0], y: b4[1], width: m.w, height: m.h, borderColor: c, borderWidth: lw4, rotate: rot });
+      } else if (m.type === 'line') {
+        var lw5 = m.lw || 1.5, a1 = P(m.x, m.y), a2 = P(m.x + m.w, m.y + m.h);
+        page.drawLine({ start: { x: a1[0], y: a1[1] }, end: { x: a2[0], y: a2[1] }, thickness: lw5, color: c, lineCap: L.LineCapStyle.Round });
+        if (m.arrow) {
+          // two short lines at the end make the arrow head (worked out on the page as shown, then turned into PDF points)
+          var ang = Math.atan2(m.h, m.w), hl = Math.max(6, lw5 * 4);
+          [ang + Math.PI - 0.5, ang + Math.PI + 0.5].forEach(function (aa) {
+            var e = P(m.x + m.w + Math.cos(aa) * hl, m.y + m.h + Math.sin(aa) * hl);
+            page.drawLine({ start: { x: a2[0], y: a2[1] }, end: { x: e[0], y: e[1] }, thickness: lw5, color: c, lineCap: L.LineCapStyle.Round });
+          });
+        }
       } else {
         var pts = m.type === 'check' ? [[[0.1, 0.55], [0.38, 0.84], [0.92, 0.14]]] :
           m.type === 'cross' ? [[[0.14, 0.14], [0.86, 0.86]], [[0.86, 0.14], [0.14, 0.86]]] : [m.pts];

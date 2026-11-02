@@ -59,7 +59,8 @@ li { margin: 5px 0; }
 .g-feat a { display: block; background: var(--green); color: #fff; border-radius: 14px; padding: 16px 18px; text-decoration: none; }
 .g-feat a b { display: block; font-family: "F-montserrat", sans-serif; font-size: 18px; }
 .g-feat a span { display: block; font-size: 15px; opacity: .9; margin-top: 3px; }
-@media (min-width: 640px) { .g-feat { grid-template-columns: 1fr 1fr; } }
+.g-feat a.g-pdf { background: var(--green-d); border-left: 6px solid var(--gold); }
+@media (min-width: 640px) { .g-feat { grid-template-columns: 1fr 1fr; } .g-feat a.g-pdf { grid-column: 1 / -1; } }
 /* the CV examples list: two columns on wider screens */
 @media (min-width: 640px) { .g-list.g-jobs { display: grid; grid-template-columns: 1fr 1fr; gap: 0 12px; } }
 .g-letter p { margin: 8px 0; }

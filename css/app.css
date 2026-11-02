@@ -679,12 +679,21 @@ body[data-view="pdfview"] main, body[data-view="pdfsign"] main { max-width: none
 .mk svg { position: absolute; left: 0; top: 0; width: 100%; height: 100%; overflow: visible; }
 .mk img { width: 100%; height: 100%; display: block; pointer-events: none; }
 .mk.white { background: #fff; box-shadow: inset 0 0 0 1px #E3E7E5; }
+.mk.t.f-carlito { font-family: "F-carlito", sans-serif; }
+.mk.t.f-caladea { font-family: "F-caladea", serif; }
+.mk.hl { opacity: .42; mix-blend-mode: multiply; }
+.mk.hl.sel { opacity: .6; }
+.mk.ln.sel { outline-offset: -6px; }
+/* lines of text that can be changed or highlighted */
+.txh { position: absolute; border-radius: 3px; background: rgba(30, 86, 184, .07); box-shadow: 0 0 0 1px rgba(30, 86, 184, .45); pointer-events: none; }
 .mk.sel { outline: 1.5px dashed #1E56B8; outline-offset: 3px; }
 .mk .rs { display: none; position: absolute; right: -14px; bottom: -14px; width: 28px; height: 28px; touch-action: none; }
 .mk .rs::after { content: ""; position: absolute; left: 7px; top: 7px; width: 12px; height: 12px; background: #fff; border: 2.5px solid #1E56B8; border-radius: 50%; }
 .mk.sel .rs { display: block; }
 .ink-svg { position: absolute; left: 0; top: 0; width: 100%; height: 100%; pointer-events: none; overflow: visible; }
-.ftb { position: fixed; display: flex; background: #1F2624; border-radius: 10px; padding: 2px; box-shadow: 0 4px 12px rgba(0,0,0,.3); z-index: 30; }
+.ftb { position: fixed; display: flex; flex-wrap: wrap; max-width: calc(100vw - 16px); background: #1F2624; border-radius: 10px; padding: 2px; box-shadow: 0 4px 12px rgba(0,0,0,.3); z-index: 30; }
+.ftb .dot.on { box-shadow: 0 0 0 2px #fff, 0 0 0 4px #F4B400; }
+.inp-wrap .hint { font-size: 12.5px; color: var(--muted); margin-top: 6px; }
 .ftb button { color: #fff; font-size: 13px; font-weight: 700; padding: 8px 11px; border: 0; background: none; display: flex; align-items: center; }
 .ftb button + button { border-left: 1px solid rgba(255,255,255,.18); }
 .ftb .dot { width: 15px; height: 15px; border-radius: 50%; box-shadow: 0 0 0 2px #fff; display: block; }
@@ -906,4 +915,20 @@ a.see-all { text-decoration: none; }
   body[data-view="home"] .steps span { font-size: 16px; }
   body[data-view="home"] .cv-card .nm2 { font-size: 18px; }
   body[data-view="home"] .credit { font-size: 14.5px; }
+}
+/* the big "Edit PDF" card, first in the PDF tools */
+.tool-feat { display: flex; align-items: center; gap: 14px; width: 100%; margin: 0 0 8px; padding: 14px 12px 14px 14px; border: 0; border-radius: 16px; text-align: left;
+  background: linear-gradient(135deg, #0B5D4B, #11785F); color: #fff; box-shadow: 0 6px 16px rgba(11, 93, 75, .25); cursor: pointer; }
+.tool-feat:active { filter: brightness(.95); }
+.tool-feat .tf-ic { flex: none; width: 52px; height: 52px; border-radius: 15px; background: #F4B400; display: flex; align-items: center; justify-content: center; }
+.tool-feat .tf-ic .ico { width: 28px; height: 28px; stroke: #1C2421; }
+.tool-feat .tf-t { flex: 1; min-width: 0; }
+.tool-feat .tf-t b { display: flex; align-items: center; gap: 8px; font-family: "F-montserrat", sans-serif; font-size: 17px; }
+.tool-feat .tf-t b em { font-style: normal; font-family: "F-dmsans", sans-serif; font-size: 11px; font-weight: 700; letter-spacing: .5px; background: #F4B400; color: #1C2421; border-radius: 6px; padding: 2px 6px; }
+.tool-feat .tf-t > span { display: block; font-size: 13.5px; line-height: 1.4; color: #D5EAE3; margin-top: 3px; }
+.tool-feat .tf-go { flex: none; width: 22px; height: 22px; stroke: #F4B400; }
+@media (min-width: 1400px) {
+  body[data-view="home"] .tool-feat { padding: 18px 20px; }
+  body[data-view="home"] .tool-feat .tf-t b { font-size: 21px; }
+  body[data-view="home"] .tool-feat .tf-t > span { font-size: 16px; }
 }

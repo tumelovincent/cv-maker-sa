@@ -36,7 +36,10 @@
     file: 'M7.5 3H14l5 5v11.5a1.5 1.5 0 0 1-1.5 1.5h-10A1.5 1.5 0 0 1 6 19.5v-15A1.5 1.5 0 0 1 7.5 3z M14 3v5h5',
     folder: 'M3.5 7A1.5 1.5 0 0 1 5 5.5h4l2 2h8A1.5 1.5 0 0 1 20.5 9v8.5A1.5 1.5 0 0 1 19 19H5a1.5 1.5 0 0 1-1.5-1.5z',
     print: 'M7 9V3.5h10V9 M7 17H4.5A1.5 1.5 0 0 1 3 15.5v-5A1.5 1.5 0 0 1 4.5 9h15a1.5 1.5 0 0 1 1.5 1.5v5a1.5 1.5 0 0 1-1.5 1.5H17 M7 14h10v6.5H7z',
-    edit: 'M4 20h4l10.5-10.5-4-4L4 16z M13.5 6.5l4 4', left: 'M15 5l-7 7 7 7', right: 'M9 5l7 7-7 7', up: 'M5 15l7-7 7 7', down: 'M5 9l7 7 7-7',
+    edit: 'M4 20h4l10.5-10.5-4-4L4 16z M13.5 6.5l4 4',
+    edtext: 'M3.5 6.5V4.5h11v2 M9 4.5v12 M6.5 16.5h5 M13 20.5v-2.6l5.6-5.6 2.6 2.6-5.6 5.6z',
+    pdfedit: 'M7.5 3H14l5 5v3 M14 3v5h5 M6 19.5v-15A1.5 1.5 0 0 1 7.5 3 M6 19.5A1.5 1.5 0 0 0 7.5 21H11 M9 9h3 M9 12.5h4 M14 21v-2.6l5.4-5.4 2.6 2.6-5.4 5.4z',
+    hl: 'M9.5 18.5l-4 1 1-4L15.8 6.2a2.1 2.1 0 0 1 3 3z M14 8l3 3 M3.5 21.5h17', rect: 'M4.5 6h15v12h-15z', line: 'M5 19L19 5 M12 5h7v7', left: 'M15 5l-7 7 7 7', right: 'M9 5l7 7-7 7', up: 'M5 15l7-7 7 7', down: 'M5 9l7 7 7-7',
     zoomin: 'M10.5 4a6.5 6.5 0 1 0 0 13 6.5 6.5 0 0 0 0-13z M20 20l-4.8-4.8 M10.5 7.5v6 M7.5 10.5h6', id: 'M4 6.5A1.5 1.5 0 0 1 5.5 5h13A1.5 1.5 0 0 1 20 6.5v11a1.5 1.5 0 0 1-1.5 1.5h-13A1.5 1.5 0 0 1 4 17.5z M8.5 9.5a1.8 1.8 0 1 0 0 3.6 1.8 1.8 0 0 0 0-3.6z M6 16c.5-1.5 1.5-2.2 2.5-2.2s2 .7 2.5 2.2 M13.5 10h4 M13.5 13.5h3'
   };
   function ic(k, cls, style) {
@@ -263,6 +266,7 @@
 
   /* ---------- the tools ---------- */
   var TOOLS = {
+    edit: ['pdfedit', 'c-blue', 'Edit PDF', 'Change text, add pictures, sign', 'Edit PDF'],
     scan: ['scan', 'c-green', 'Scan to PDF', 'Camera, finds the page edges', 'Scan'],
     photos: ['photos', 'c-green', 'Photos to PDF', 'From your gallery', 'Photos to PDF'],
     word: ['word', 'c-green', 'Word to PDF', '.docx letters and CVs', 'Word to PDF'],
@@ -277,6 +281,11 @@
     lock: ['lock', 'c-red', 'Password', 'Lock a PDF', 'Password'],
     more: ['dots', 'c-gold', 'More tools', '', 'More tools']
   };
+  // the big "Edit PDF" card, first in the PDF tools
+  function feature() {
+    return '<button class="tool-feat" data-tool="edit"><span class="tf-ic">' + ic('pdfedit') + '</span><span class="tf-t"><b>' + T('Edit PDF') + '<em>' + T('FREE') + '</em></b><span>' +
+      T('Change the text in any PDF, add text, pictures, highlights and your signature. No watermark, and your file stays on your phone.') + '</span></span>' + ic('right', 'tf-go') + '</button>';
+  }
   function tile(k, small) {
     var t = TOOLS[k];
     return '<button class="tool ' + t[1] + '" data-tool="' + k + '"><div class="ic">' + ic(t[0]) + '</div><b>' + T(small ? t[4] : t[2]) + '</b>' + (small || !t[3] ? '' : '<small>' + T(t[3]) + '</small>') + '</button>';
@@ -289,13 +298,15 @@
     if (k === 'word') { wordFlow(); return; }
     if (k === 'merge') { M.items = []; A.go('merge'); return; }
     if (k === 'protect') { P.src = null; A.go('protect'); return; }
-    var titles = { open: 'Open PDF', sign: 'Fill & sign', tophotos: 'PDF to photos', split: 'Split', organise: 'Organise pages', compress: 'Compress', lock: 'Password' };
-    choose({ title: T(titles[k]), photos: k === 'sign' }).then(function (l) {
+    var titles = { edit: 'Edit PDF', open: 'Open PDF', sign: 'Fill & sign', tophotos: 'PDF to photos', split: 'Split', organise: 'Organise pages', compress: 'Compress', lock: 'Password' };
+    choose({ title: T(titles[k]), photos: k === 'sign' || k === 'edit' }).then(function (l) {
       var src = l[0];
       if (k === 'sign' && src.kind === 'image') { photoToPdf(src).then(function (s2) { if (A.PDF.startSign) A.PDF.startSign(s2); }); return; }
+      if (k === 'edit' && src.kind === 'image') { photoToPdf(src).then(function (s2) { if (A.PDF.startEdit) A.PDF.startEdit(s2); }); return; }
       if (src.kind !== 'pdf') { toast(T('Please choose a PDF file.')); return; }
       if (k === 'open') { keepAndOpen(src); return; }
       if (k === 'sign') { if (A.PDF.startSign) A.PDF.startSign(src); return; }
+      if (k === 'edit') { if (A.PDF.startEdit) A.PDF.startEdit(src); return; }
       if (k === 'tophotos') { photosSheet(src); return; }
       if (k === 'split' || k === 'organise') { startPages(src, k); return; }
       if (k === 'compress') { C.src = src; C.res = null; A.go('compress'); return; }
@@ -314,8 +325,8 @@
     Files.add(src.bytes, src.name).then(function (meta) { A.done(); openFile(meta); }, failMsg);
   }
   A.hooks.homeTools = function () {
-    return '<section class="block" style="margin-top:20px"><div class="block-h"><h2>' + T('PDF tools') + '<span class="new-pill">' + T('NEW') + '</span></h2><button class="see-all" data-tool="more">' + T('See all {n}', { n: 12 }) + '</button></div>' +
-      '<div class="tg four">' + (window.innerWidth >= 1400 ? ['scan', 'photos', 'word', 'open', 'sign', 'tophotos', 'merge', 'split', 'organise', 'compress', 'protect', 'lock']
+    return '<section class="block" style="margin-top:20px"><div class="block-h"><h2>' + T('PDF tools') + '<span class="new-pill">' + T('NEW') + '</span></h2><button class="see-all" data-tool="more">' + T('See all {n}', { n: 13 }) + '</button></div>' +
+      feature() + '<div class="tg four">' + (window.innerWidth >= 1400 ? ['scan', 'photos', 'word', 'open', 'sign', 'tophotos', 'merge', 'split', 'organise', 'compress', 'protect', 'lock']
         : ['scan', 'photos', 'open', 'sign', 'merge', 'compress', 'protect', 'more']).map(function (k) { return tile(k, true); }).join('') + '</div></section>';
   };
   document.addEventListener('click', function (e) {
@@ -336,7 +347,7 @@
     title: function () { return T('PDF tools'); },
     actions: function () { return ''; },
     render: function (el) {
-      var h = '<div class="grp">' + T('Make a PDF') + '</div><div class="tg">' + tile('scan') + tile('photos') + tile('word') + '</div>' +
+      var h = feature() + '<div class="grp">' + T('Make a PDF') + '</div><div class="tg">' + tile('scan') + tile('photos') + tile('word') + '</div>' +
         '<div class="grp">' + T('View & edit') + '</div><div class="tg">' + tile('open') + tile('sign') + tile('tophotos') + '</div>' +
         '<div class="grp">' + T('Pages') + '</div><div class="tg">' + tile('merge') + tile('split') + tile('organise') + '</div>' +
         '<div class="grp">' + T('Size & safety') + '</div><div class="tg">' + tile('compress') + tile('protect') + tile('lock') + '</div>';
@@ -443,7 +454,7 @@
       if (!V.file) { S.stack.pop(); A.render(); return; }
       el.innerHTML = '<div class="vw" id="vw"><div class="vw-pages" id="vw-pages"><div class="busy-card" style="box-shadow:none;background:none;color:#DDE6E2"><div class="spin"></div>' + T('Opening…') + '</div></div></div>' +
         '<div class="pchip" id="vw-chip" hidden></div><div class="zoom"><button data-vz="1" aria-label="' + esc(T('Zoom in')) + '">+</button><button data-vz="-1" aria-label="' + esc(T('Zoom out')) + '">&minus;</button></div>' +
-        '<div class="tbar"><button data-vt="sign">' + ic('fill') + T('Fill & sign') + '</button><button data-vt="pages">' + ic('grid') + T('Pages') + '</button>' +
+        '<div class="tbar"><button data-vt="edit">' + ic('pdfedit') + T('Edit') + '</button><button data-vt="sign">' + ic('fill') + T('Fill & sign') + '</button><button data-vt="pages">' + ic('grid') + T('Pages') + '</button>' +
         '<button data-vt="compress">' + ic('compress') + T('Compress') + '</button><button data-vt="photos">' + ic('topics') + T('To photos') + '</button><button data-vt="share">' + ic('share') + T('Share') + '</button></div>';
       var job = ++V.job;
       ensureDoc().then(function () { if (job === V.job && top() === 'pdfview') layoutPages(); }).catch(function (e) {
@@ -505,6 +516,7 @@
     var t = e.target.closest('[data-vt]'); if (!t || !V.file) return;
     var a = t.getAttribute('data-vt'), src = { name: V.file.name, kind: 'pdf', meta: V.file, bytes: V.bytes, pw: V.pw };
     if (a === 'sign') { if (A.PDF.startSign) A.PDF.startSign(src); }
+    if (a === 'edit') { if (A.PDF.startEdit) A.PDF.startEdit(src); }
     if (a === 'pages') startPages(src, 'organise');
     if (a === 'compress') { C.src = src; C.res = null; A.go('compress'); }
     if (a === 'photos') photosSheet(src);

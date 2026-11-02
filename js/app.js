@@ -240,14 +240,14 @@
   var SHOWCASE = ['classic', 'aurora', 'mzansi', 'midnight', 'horizon', 'lagoon', 'kalahari', 'roadmap'];
   var SHOWCASE_WIDE = ['navy', 'ats', 'protea', 'timeline']; // 4 more on big screens, so the row has 12 smaller pictures
   var sampleForShow = null;
-  function showcaseCV() { if (!sampleForShow) sampleForShow = D.sampleCV(); return sampleForShow; }
+  function showcaseCV() { if (!sampleForShow) sampleForShow = D.sampleCV(true); return sampleForShow; }
   function renderHome() {
     var n = TP.list.length;
     var sorted = S.list.slice().sort(function (a, b) { return b.updated - a.updated; });
     var h = '<section class="hero">' +
       (window.CVi18n ? '<div class="hero-top"><button class="hero-lang" id="hero-lang" aria-label="' + esc(T('Language') + ': ' + window.CVi18n.name()) + '">' + svg('globe') + '<span>' + esc(window.CVi18n.name()) + '</span></button></div>' : '') +
       '<h1>' + T('Your CV, ready for South African employers') + '</h1>' +
-      '<p class="hero-sub">' + T('Make your CV, cover letter and Z83 - and now scan, sign and fix any PDF.') + '</p>' +
+      '<p class="hero-sub">' + T('Make your CV, cover letter and Z83 - and now edit any PDF for free.') + '</p>' +
       '<button class="btn gold block hero-cta" id="new-cv">' + svg('plus') + T('Create new CV') + '</button>' +
       (sorted.length ? '' : '<button class="hero-link" id="try-sample">' + T('Open a sample CV') + '</button>') +
       // two CV pages beside the text on wide screens (hidden on phones)
@@ -392,7 +392,7 @@
   // field: [path, label, type, opts]
   var SECTIONS = [
     { id: 'personal', t: 'Personal details', s: 'Name, ID number and other details', done: function (c) { return c.personal.firstNames && c.personal.surname; },
-      f: [['personal.firstNames', 'First name(s)', 'text', { ph: 'e.g. Thabo Sipho' }], ['personal.surname', 'Surname', 'text', {}],
+      f: [['personal.firstNames', 'First name(s)', 'text', { ph: 'e.g. Tumelo Vincent' }], ['personal.surname', 'Surname', 'text', {}],
         ['personal.displayName', 'Name at the top of the CV', 'text', { opt: 1, ph: 'Leave blank to use first name + surname' }],
         ['personal.headline', 'Job title or what you do', 'text', { opt: 1, ph: 'e.g. General Worker, Cashier, Electrician', hint: 'Shown under your name on the modern templates' }],
         ['personal.idNumber', 'SA ID number', 'id', { opt: 1, ph: '13-digit ID number' }],
@@ -870,7 +870,7 @@
   var tplObserver = null;
   function renderTemplates() {
     var c = S.cur || { templateId: '', photo: '', showPhoto: true, personal: {} };
-    var data = hasContent(c) ? c : Object.assign(D.sampleCV(), { photo: c.photo, showPhoto: c.showPhoto });
+    var data = hasContent(c) ? c : Object.assign(D.sampleCV(true), { photo: c.photo, showPhoto: c.showPhoto });
     if (!c.photo && !hasContent(c)) data.photo = '';
     // phones 2 columns, tablets 3, computers 5 (the gallery is wider there, see "Larger screens" in app.css)
     var wide = window.matchMedia && matchMedia('(min-width: 1000px)').matches;
