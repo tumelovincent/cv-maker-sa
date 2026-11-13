@@ -82,3 +82,10 @@ li { margin: 5px 0; }
 .tp-use { display: inline-block; margin-top: 4px; color: var(--green); font-weight: 700; font-size: 14px; }
 .tp-card a:hover .tp-pic { box-shadow: 0 0 0 2px var(--green), 0 6px 18px rgba(0,0,0,.1); }
 @media (min-width: 900px) { .tp-grid { grid-template-columns: repeat(auto-fill, minmax(180px, 1fr)); gap: 22px 18px; } }
+/* interview questions on the CV example pages; contact list on the About page */
+.g-qa { margin: 12px 0; }
+.g-qa dt { font-weight: 700; margin-top: 12px; }
+.g-qa dd { margin: 2px 0 0; color: var(--muted); }
+.g-contact { list-style: none; padding: 0; margin: 12px 0; }
+.g-contact li { background: #fff; border: 1px solid var(--line); border-radius: 12px; padding: 12px 16px; margin: 8px 0; }
+.g-contact b { display: block; }
