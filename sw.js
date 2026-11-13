@@ -1,5 +1,5 @@
 /* CV Maker SA - keeps the app on the phone so it opens and works without internet. Made by web/build.sh. */
-var VERSION = '20261102-a27259db';
+var VERSION = '20261113-6c335985';
 var CACHE = 'cvmaker-' + VERSION;
 var FILES = [
 "./",
@@ -68,36 +68,7 @@ var FILES = [
 "img/icons/icon-512.png",
 "img/icons/maskable-192.png",
 "img/icons/maskable-512.png",
-"js/app.js",
-"js/checker.js",
-"js/data.js",
-"js/docx.js",
-"js/duties.js",
-"js/feedback.js",
-"js/files.js",
-"js/fontmanifest.js",
-"js/i18n-dict.js",
-"js/i18n.js",
-"js/letter.js",
-"js/libs.js",
-"js/ocr.js",
-"js/paginate.js",
-"js/pdf.js",
-"js/pdfcore.js",
-"js/pdfedit.js",
-"js/pdfword.js",
-"js/sponsors.js",
-"js/templates-mod.js",
-"js/templates.js",
-"js/ui-apply.js",
-"js/ui-more.js",
-"js/ui-pdf.js",
-"js/ui-scan.js",
-"js/ui-sign.js",
-"js/ui-sponsor.js",
-"js/web.js",
-"js/word.js",
-"js/z83.js",
+"js/app.ca440544.js",
 "js/lib/docx-preview.min.js",
 "js/lib/fontkit.umd.min.js",
 "js/lib/jszip.min.js",
@@ -105,13 +76,23 @@ var FILES = [
 "js/lib/pdfjs.min.js",
 "js/lib/pdfjs.worker.min.js"
 ];
+// Not downloaded until someone uses them (to save people's data), then kept like the rest: the word list for Sesotho,
+// isiZulu and Afrikaans. If this phone already has it, an update brings its new copy along, so the language keeps
+// working without internet.
+var IF_USED = ['js/i18n-dict.js'];
 self.addEventListener('install', function (e) {
   // first visit: the page has just downloaded many of these files, so take them from the browser's own cache
   // instead of using the person's data twice. Updates: always fetch fresh copies.
   e.waitUntil(caches.keys().then(function (keys) {
     var update = keys.some(function (k) { return k.indexOf('cvmaker-') === 0; });
     return caches.open(CACHE).then(function (c) {
-      return c.addAll(FILES.map(function (f) { return new Request(f, { cache: update ? 'reload' : 'default' }); }));
+      return c.addAll(FILES.map(function (f) { return new Request(f, { cache: update ? 'reload' : 'default' }); })).then(function () {
+        return Promise.all(IF_USED.map(function (f) {
+          return caches.match(f).then(function (had) {
+            if (had) return c.add(new Request(f, { cache: 'reload' })).catch(function () { return c.put(f, had); });
+          });
+        }));
+      });
     });
   }));
 });

@@ -964,3 +964,13 @@ a.see-all { text-decoration: none; }
   body[data-view="home"] .tool-feat .tf-t b { font-size: 21px; }
   body[data-view="home"] .tool-feat .tf-t > span { font-size: 16px; }
 }
+
+/* website: links to the site's own pages under the credit on the front page, and the first screen that is already in
+   the page before the app has loaded (web/home.static.html) */
+.site-links { display: flex; flex-wrap: wrap; justify-content: center; gap: 4px 6px; margin: 16px 0 6px; }
+.site-links a { color: var(--green); font-weight: 600; font-size: 14px; text-decoration: none; padding: 8px 10px; border-radius: 8px; }
+.site-links a:hover, .site-links a:focus-visible { text-decoration: underline; }
+.pre-list { margin: 0; padding: 14px 16px 14px 34px; background: var(--card); border-radius: 14px; box-shadow: 0 0 0 1px var(--line); line-height: 1.5; }
+.pre-list li { margin: 5px 0; }
+.pre-note { margin: 0 2px 12px; padding: 12px 14px; background: #FFF6DB; border: 1px solid #F0D58A; border-radius: 12px; font-size: 14px; line-height: 1.45; }
+@media (min-width: 900px) { body[data-view="home"] .site-links a { font-size: 15px; } }
