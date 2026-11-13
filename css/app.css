@@ -974,3 +974,4 @@ a.see-all { text-decoration: none; }
 .pre-list li { margin: 5px 0; }
 .pre-note { margin: 0 2px 12px; padding: 12px 14px; background: #FFF6DB; border: 1px solid #F0D58A; border-radius: 12px; font-size: 14px; line-height: 1.45; }
 @media (min-width: 900px) { body[data-view="home"] .site-links a { font-size: 15px; } }
+.show-pic { display: block; width: 100%; height: 100%; object-fit: cover; object-position: top center; }
